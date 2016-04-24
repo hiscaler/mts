@@ -124,6 +124,14 @@ class Archive extends \yii\db\ActiveRecord
     }
 
     /**
+     * 所属节点
+     */
+    public function getNode()
+    {
+        return $this->hasOne(Node::className(), ['id' => 'node_id']);
+    }
+
+    /**
      * 正文
      * @return ActiveRecord
      */
@@ -162,7 +170,7 @@ class Archive extends \yii\db\ActiveRecord
     {
         parent::afterFind();
         if (!$this->isNewRecord) {
-            $this->ownerLabels = Label::getArchiveLabelIds($this->id, static::className2Id());
+            $this->ownerLabels = Label::getArchiveLabelIds($this->id, $this->model_name);
             $this->_oldOwnerLabels = $this->ownerLabels;
         }
     }
@@ -211,8 +219,8 @@ class Archive extends \yii\db\ActiveRecord
             if ($insertLabels) {
                 $rows = [];
                 $tenantId = MTS::getTenantId();
-                foreach ($insertLabels as $attributeId) {
-                    $rows[] = [$this->id, static::className2Id(), $attributeId, $tenantId];
+                foreach ($insertLabels as $labelId) {
+                    $rows[] = [$this->id, $this->model_name, $labelId, $tenantId];
                 }
                 if ($rows) {
                     $db->createCommand()->batchInsert('{{%archive_label}}', ['archive_id', 'model_name', 'label_id', 'tenant_id'], $rows)->execute();
@@ -223,7 +231,7 @@ class Archive extends \yii\db\ActiveRecord
             if ($deleteLabels) {
                 $db->createCommand()->delete('{{%archive_label}}', [
                     'archive_id' => $this->id,
-                    'model_name' => static::className2Id(),
+                    'model_name' => $this->model_name,
                     'label_id' => $deleteLabels
                 ])->execute();
                 $db->createCommand("UPDATE {{%label}} SET [[frequency]] = [[frequency]] - 1 WHERE [[id]] IN (" . implode(', ', $deleteLabels) . ")")->execute();
@@ -239,6 +247,7 @@ class Archive extends \yii\db\ActiveRecord
     {
         parent::afterDelete();
         \Yii::$app->getDb()->delete('{{%archive_content}}', ['archive_id' => $this->id])->execute();
+        \Yii::$app->getDb()->delete('{{%archive_label}}', ['archive_id' => $this->id])->execute();
     }
 
 }

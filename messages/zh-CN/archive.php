@@ -8,7 +8,7 @@ return array(
     'Title' => '标题',
     'Short Title' => '副标题',
     'Content' => '正文',
-    'Tag' => '标签',
+    'Tags' => '标签',
     'Alias' => '别名',
     'Ordering' => '排序',
     'Node' => '所属节点',

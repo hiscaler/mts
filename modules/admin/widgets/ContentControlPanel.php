@@ -2,18 +2,12 @@
 
 namespace app\modules\admin\widgets;
 
-use app\models\BaseCode;
-use app\models\Tenant;
-use app\models\User;
-use app\models\MTS;
 use Yii;
-use yii\base\Widget;
-use yii\helpers\ArrayHelper;
 
 /**
  * 内容控制面板
  */
-class ContentControlPanel extends Widget
+class ContentControlPanel extends \yii\base\Widget
 {
 
     public $title;
@@ -36,13 +30,8 @@ class ContentControlPanel extends Widget
                 'active' => $controllerId == 'friendly-links',
             ],
             [
-                'label' => Yii::t('app', 'Archives'),
-                'url' => ['archives/index'],
-                'active' => $controllerId == 'archives' && $modelName == null,
-            ],
-            [
                 'label' => Yii::t('app', 'News'),
-                'url' => ['archives/index', 'modelName' => 'news'],
+                'url' => ['archives/index', 'modelName' => 'app-models-News'],
                 'active' => $controllerId == 'archives' && $modelName = 'news',
             ],
         ];

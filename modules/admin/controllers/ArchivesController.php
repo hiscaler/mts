@@ -41,7 +41,7 @@ class ArchivesController extends ContentController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'modelName' => "\\app\\models\\" . $modelName,
+                'modelName' => $modelName,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
         ]);

@@ -33,7 +33,10 @@ $this->params['menus'] = [
                 'attribute' => 'ordering',
                 'contentOptions' => ['class' => 'ordering'],
             ],
-            'node_id',
+            [
+                'attribute' => 'node.name',
+                'contentOptions' => ['class' => 'node-name'],
+            ],
             'model_name',
             [
                 'attribute' => 'title',
