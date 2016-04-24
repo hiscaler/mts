@@ -53,8 +53,8 @@ class Node extends BaseTree {
             ['parameters', 'default', 'value' => function() {
                     $modelName = explode('-', $this->model_name);
                     $controller = strtolower(Inflector::pluralize(end($modelName)));
-                    return "i:{$controller}/index~~/{$controller}/index.twig\r
-l:{$controller}/list~~/{$controller}/list.twig\r
+                    return "i:{$controller}/index~~/{$controller}/index.twig
+l:{$controller}/list~~/{$controller}/list.twig
 v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
             }],
             ['alias', 'match', 'pattern' => '/^[a-zA-Z0-9]{1,}[_-]{0,1}[a-zA-Z0-9-\/]{0,}[a-zA-Z0-9]{0,}+$/'],

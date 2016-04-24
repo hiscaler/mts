@@ -6,13 +6,17 @@ class Module extends \yii\base\Module
 {
 
     public $controllerNamespace = 'app\modules\admin\controllers';
+
 //    public $layout = 'main';
 
     public function init()
     {
         parent::init();
-
-        // custom initialization code goes here
+        \Yii::$app->setComponents([
+            'formatter' => [
+                'class' => 'app\modules\admin\extensions\Formatter',
+            ],
+        ]);
     }
 
 }

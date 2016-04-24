@@ -1,7 +1,7 @@
 <?php
 
-use common\models\User;
-use common\models\Yad;
+use app\models\User;
+use app\models\MTS;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -9,7 +9,7 @@ use yii\helpers\Url;
 
 $this->title = Yii::$app->name;
 
-$isAdministrator = Yad::getUserRole() == User::ROLE_ADMINISTRATOR;
+$isAdministrator = MTS::getUserRole() == User::ROLE_ADMINISTRATOR;
 ?>
 
 <div id='tenants-list' class="message-box">
@@ -27,7 +27,7 @@ $isAdministrator = Yad::getUserRole() == User::ROLE_ADMINISTRATOR;
                 <?php foreach ($tenants as $tenant): ?>
                     <li>
                         <div class="base">
-                            <a href="<?= Url::to(['/default/change-tenant', 'tenantId' => $tenant['id']]) ?>">
+                            <a href="<?= Url::to(['default/change-tenant', 'tenantId' => $tenant['id']]) ?>">
                                 <span class="name">
                                     <em><?= $tenant['domain_name'] ?></em>
                                     <?= $tenant['name'] ?>
@@ -37,14 +37,14 @@ $isAdministrator = Yad::getUserRole() == User::ROLE_ADMINISTRATOR;
                         </div>
                         <?php
                         $actionOutput = Html::a('访问站点', 'http://' . $tenant['domain_name'], [
-                                    'class' => 'first' . ($isAdministrator ? '' : ' last'),
-                                    'target' => '_blank',
+                                'class' => 'first' . ($isAdministrator ? '' : ' last'),
+                                'target' => '_blank',
                         ]);
                         if ($isAdministrator) {
-                            $actionOutput .= Html::a('管理', ['/admin/tenants/update', 'id' => $tenant['id']]);
-                            $actionOutput .= Html::a('停止', ['/admin/tenants/toggle'], [
-                                        'class' => 'btn-disable-tenant last',
-                                        'data-key' => $tenant['id']
+                            $actionOutput .= Html::a('管理', ['tenants/update', 'id' => $tenant['id']]);
+                            $actionOutput .= Html::a('停止', ['tenants/toggle'], [
+                                    'class' => 'btn-disable-tenant last',
+                                    'data-key' => $tenant['id']
                             ]);
                         }
                         echo Html::tag('div', $actionOutput, ['class' => 'actions']);

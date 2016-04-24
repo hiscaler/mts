@@ -192,11 +192,11 @@ class DefaultController extends Controller
     {
         $this->layout = 'base';
         $tenants = Yii::$app->getDb()->createCommand('SELECT [[id]], [[name]], [[domain_name]], [[description]] FROM {{%tenant}} WHERE [[enabled]] = :enabled AND [[id]] IN (SELECT [[tenant_id]] FROM {{%tenant_user}} WHERE [[user_id]] = :userId)')->bindValues([
-                ':enabled' => Option::BOOLEAN_TRUE,
+                ':enabled' => \app\models\Constant::BOOLEAN_TRUE,
                 ':userId' => Yii::$app->getUser()->getId()
             ])->queryAll();
 
-        return $this->render('choiceTenant', [
+        return $this->render('choice-tenant', [
                 'tenants' => $tenants,
         ]);
     }

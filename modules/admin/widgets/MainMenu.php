@@ -18,8 +18,8 @@ class MainMenu extends \yii\base\Widget
             ],
             [
                 'label' => Yii::t('app', 'Content Management'),
-                'url' => ['default/index'],
-                'active' => in_array($controllerId, ['news']),
+                'url' => ['content/index'],
+                'active' => in_array($controllerId, ['content']),
             ],
         ];
     }

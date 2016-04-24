@@ -20,7 +20,7 @@ return [
     'User' => '普通用户',
     'Register IP' => '注册 IP',
     'Login Count' => '登陆次数',
-    'Last Login Time' => '最后登陆时间',
+    'Last Login Datetime' => '最后登陆时间',
     'Last Login IP' => '最后登陆 IP',
     'Last Change Password Time' => '最后密码修改时间',
     'Pending' => '待审核',

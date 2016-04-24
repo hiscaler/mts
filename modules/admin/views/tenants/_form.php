@@ -29,22 +29,24 @@ use yii\widgets\ActiveForm;
         }
         ?>
 
-        <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+        <?= $form->field($model, 'modules')->checkboxList(\app\models\Option::modulesOptions(true)) ?>
 
         <?= $form->field($model, 'language')->dropDownList(MTS::getLanguages(), ['prompt' => '']) ?>
 
         <?= $form->field($model, 'timezone')->dropDownList(MTS::getTimezones(), ['prompt' => '']) ?>
 
-        <?= $form->field($model, 'date_format')->textInput(['maxlength' => 20]) ?>
+        <?= $form->field($model, 'date_format')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'time_format')->textInput(['maxlength' => 20]) ?>
+        <?= $form->field($model, 'time_format')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'datetime_format')->textInput(['maxlength' => 20]) ?>
+        <?= $form->field($model, 'datetime_format')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'domain_name')->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'domain_name')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'description')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-large']) ?>
-        
+        <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'class' => 'g-text g-text-large']) ?>
+
         <?= $form->field($model, 'enabled')->checkbox([], false) ?>
 
         <div class="form-group buttons">

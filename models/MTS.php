@@ -80,15 +80,15 @@ class MTS {
      */
     public static function setTenantData($tenantId) {
         $db = Yii::$app->db;
-        $tenantUser = $db->createCommand('SELECT [[t.role]], [[t.rule_id]], [[u.role]] AS [[user_role]] FROM {{%tenant_user}} t LEFT JOIN {{%user}} u ON [[t.user_id]] = [[u.id]] WHERE [[t.tenant_id]] = :tenantId AND [[t.user_id]] = :userId AND [[t.enabled]] = :enabled')->bindValues([
+        $tenantUser = $db->createCommand('SELECT [[t.role]], [[t.rule_id]] FROM {{%tenant_user}} t LEFT JOIN {{%user}} u ON [[t.user_id]] = [[u.id]] WHERE [[t.tenant_id]] = :tenantId AND [[t.user_id]] = :userId AND [[t.enabled]] = :enabled')->bindValues([
                     ':tenantId' => (int) $tenantId,
-                    ':userId' => Yii::$app->user->id,
-                    ':enabled' => Option::BOOLEAN_TRUE
+                    ':userId' => Yii::$app->getUser()->getId(),
+                    ':enabled' => Constant::BOOLEAN_TRUE
                 ])->queryOne();
         if ($tenantUser !== false) {
             $tenant = $db->createCommand('SELECT [[id]], [[name]], [[language]], [[timezone]], [[date_format]], [[time_format]], [[datetime_format]], [[domain_name]] FROM {{%tenant}} WHERE [[id]] = :id AND [[enabled]] = :enabled')->bindValues([
                         ':id' => (int) $tenantId,
-                        ':enabled' => Option::BOOLEAN_TRUE
+                        ':enabled' => Constant::BOOLEAN_TRUE
                     ])->queryOne();
             if ($tenant) {
                 $cookie = new Cookie(['name' => '_tenant', 'httpOnly' => true]);
@@ -103,7 +103,7 @@ class MTS {
                     'domainName' => $tenant['domain_name'],
                     'role' => $tenantUser['role'], // 站点管理用户角色
                     'rule' => $tenantUser['rule_id'], // 站点管理用户审核规则
-                    'systemRole' => $tenantUser['user_role'], // 登陆帐号全系统中的角色
+//                    'systemRole' => $tenantUser['user_role'], // 登陆帐号全系统中的角色
                 ];
                 $cookie->expire = time() + 86400 * 365;
                 Yii::$app->getResponse()->getCookies()->add($cookie);

@@ -33,7 +33,7 @@ class Toolbar extends Widget
 
                 $items = [
                     [
-                        'label' => '[ ' . Yii::t('language', MTS::getLanguage()) . ' ] ' . MTS::getLanguage() . MTS::getTenantName(),
+                        'label' => '[ ' . Yii::t('language', MTS::getLanguage()) . ' ] ' . MTS::getTenantName(),
                         'url' => '###',
                         'options' => ['class' => 'change-tenant'],
                         'items' => $tenants,

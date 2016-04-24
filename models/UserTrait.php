@@ -32,4 +32,12 @@ trait UserTrait
         return $this->hasOne(\app\models\User::className(), ['id' => 'deleted_by'])->select(['id', 'nickname']);
     }
 
+    public static function className2Id($className = null)
+    {
+        if ($className === null) {
+            $className = static::className();
+        }
+        return str_replace('\\', '-', $className);
+    }
+
 }

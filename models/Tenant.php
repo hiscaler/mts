@@ -178,7 +178,7 @@ class Tenant extends \yii\db\ActiveRecord
      */
     public static function modules()
     {
-        return Yii::$app->db->createCommand('SELECT [[module_name]] FROM {{%tenant_module}} WHERE [[tenant_id]] = :tenantId')->bindValue(':tenantId', MTS::getTenantId(), PDO::PARAM_INT)->queryColumn();
+        return Yii::$app->getDb()->createCommand('SELECT [[module_name]] FROM {{%tenant_module}} WHERE [[tenant_id]] = :tenantId')->bindValue(':tenantId', MTS::getTenantId(), PDO::PARAM_INT)->queryColumn();
     }
 
     // Events
