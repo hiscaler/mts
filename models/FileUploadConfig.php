@@ -27,8 +27,10 @@ use yii\helpers\Inflector;
  * @property integer $deleted_by
  * @property integer $deleted_at
  */
-class FileUploadConfig extends BaseActiveRecord
+class FileUploadConfig extends \yii\db\ActiveRecord
 {
+
+    use UserTrait;
 
     public $model_attribute;
 
@@ -252,7 +254,7 @@ class FileUploadConfig extends BaseActiveRecord
         foreach ($tableSchemas as $tableSchema) {
             $rawColumns = $tableSchema->columns;
             $modelName = Inflector::id2camel(str_replace($talbePrefix, '', $tableSchema->name), '_');
-            $modelName = 'common-models-' . $modelName;
+            $modelName = 'app-models-' . $modelName;
             if (isset($contentModules[$modelName])) {
                 $attributeLabels = Yii::createObject(BaseActiveRecord::id2ClassName($modelName))->attributeLabels();
                 foreach ($rawColumns as $name => $column) {

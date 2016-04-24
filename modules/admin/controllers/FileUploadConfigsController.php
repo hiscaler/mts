@@ -2,22 +2,20 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\Constant;
-use app\models\GroupOption;
-use app\models\GroupOptionSearch;
+use app\models\FileUploadConfig;
+use app\models\FileUploadConfigSearch;
 use app\models\MTS;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 /**
- * 分组设置管理
+ * 附件上传设置管理
  * 
  * @author hiscaler <hiscaler@gmail.com>
  */
-class GroupOptionsController extends Controller
+class FileUploadConfigsController extends Controller
 {
 
     public function behaviors()
@@ -27,7 +25,7 @@ class GroupOptionsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'index', 'create', 'update', 'view', 'delete', 'toggle'],
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -37,19 +35,18 @@ class GroupOptionsController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
-                    'toggle' => ['post'],
                 ],
             ],
         ];
     }
 
     /**
-     * Lists all GroupOption models.
+     * Lists all FileUploadConfig models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new GroupOptionSearch();
+        $searchModel = new FileUploadConfigSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -59,7 +56,7 @@ class GroupOptionsController extends Controller
     }
 
     /**
-     * Displays a single GroupOption model.
+     * Displays a single FileUploadConfig model.
      * @param integer $id
      * @return mixed
      */
@@ -71,19 +68,16 @@ class GroupOptionsController extends Controller
     }
 
     /**
-     * Creates a new GroupOption model.
+     * Creates a new FileUploadConfig model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($groupName = null, $ordering = null)
+    public function actionCreate()
     {
-        $model = new GroupOption();
-        $model->group_name = !empty($groupName) ? $groupName : null;
-        $model->ordering = $ordering ? : 0;
-        $model->enabled = Constant::BOOLEAN_TRUE;
+        $model = new FileUploadConfig();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect([ 'create', 'groupName' => $model->group_name, 'ordering' => $model->ordering + 1]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                     'model' => $model,
@@ -92,7 +86,7 @@ class GroupOptionsController extends Controller
     }
 
     /**
-     * Updates an existing GroupOption model.
+     * Updates an existing FileUploadConfig model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -102,7 +96,7 @@ class GroupOptionsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                     'model' => $model,
@@ -111,7 +105,7 @@ class GroupOptionsController extends Controller
     }
 
     /**
-     * Deletes an existing GroupOption model.
+     * Deletes an existing FileUploadConfig model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -123,51 +117,16 @@ class GroupOptionsController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionToggle()
-    {
-        $id = Yii::$app->request->post('id');
-        $db = Yii::$app->getDb();
-        $value = $db->createCommand('SELECT [[enabled]] FROM {{%group_option}} WHERE [[id]] = :id ANd [[tenant_id]] = :tenantId')->bindValues([
-                ':id' => (int) $id,
-                ':tenantId' => MTS::getTenantId()
-            ])->queryScalar();
-        if ($value !== null) {
-            $value = !$value;
-            $now = time();
-            $db->createCommand()->update('{{%group_option}}', [ 'enabled' => $value, 'updated_at' => $now, 'updated_by' => Yii::$app->getUser()->getId()], '[[id]] = :id', [ ':id' => (int) $id])->execute();
-            $responseData = [
-                'success' => true,
-                'data' => [
-                    'value' => $value,
-                    'updatedAt' => Yii::$app->getFormatter()->asDate($now),
-                    'updatedBy' => Yii::$app->getUser()->getIdentity()->username,
-                ],
-            ];
-        } else {
-            $responseData = [
-                'success' => false,
-                'error' => [
-                    'message' => '数据有误',
-                ],
-            ];
-        }
-
-        return new Response([
-            'format' => Response::FORMAT_JSON,
-            'data' => $responseData,
-        ]);
-    }
-
     /**
-     * Finds the GroupOption model based on its primary key value.
+     * Finds the FileUploadConfig model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return GroupOption the loaded model
+     * @return FileUploadConfig the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        $model = GroupOption::find()->where([
+        $model = FileUploadConfig::find()->where([
                 'id' => (int) $id,
                 'tenant_id' => MTS::getTenantId(),
             ])->one();

@@ -43,7 +43,7 @@ class DashboardControlPanel extends Widget
             $systemManageItems = [
                 'label' => Yii::t('app', 'System Management'),
                 'url' => ['tenants/index'],
-                'active' => in_array($controllerId, ['tenants', 'labels', 'nodes']),
+                'active' => in_array($controllerId, ['tenants', 'labels', 'nodes', 'file-upload-configs', 'group-options']),
                 'items' => [
                     [
                         'label' => Yii::t('app', 'Tenants'),
@@ -56,9 +56,19 @@ class DashboardControlPanel extends Widget
                         'active' => $controllerId == 'labels',
                     ],
                     [
-                        'label' => Yii::t('app', '节点管理'),
+                        'label' => Yii::t('app', 'Nodes'),
                         'url' => ['nodes/index'],
                         'active' => $controllerId == 'nodes',
+                    ],
+                    [
+                        'label' => Yii::t('app', 'File Upload Configs'),
+                        'url' => ['file-upload-configs/index'],
+                        'active' => $controllerId == 'file-upload-configs',
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Group Options'),
+                        'url' => ['group-options/index'],
+                        'active' => $controllerId == 'group-options',
                     ],
                 ],
             ];
