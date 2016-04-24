@@ -75,7 +75,7 @@ class Label extends \yii\db\ActiveRecord
     }
 
     /**
-     * 获取自定义属性列表
+     * 获取推送位列表
      * @param boolean $all // 是否查询出所有数据
      * @param boolean $group // 是否分组
      * @return array
@@ -142,15 +142,14 @@ class Label extends \yii\db\ActiveRecord
     }
 
     /**
-     * 根据实体编号和实体名称获取关联的自定义属性编号列表
-     * @param integer $entityId
-     * @param string $entityName
+     * 根据文档编号和模型名称获取关联的推送位编号列表
+     * @param integer $archiveId
+     * @param string $modelName
      * @return array
      */
-    public static function getEntityAttributeIds($entityId, $entityName)
+    public static function getArchiveLabelIds($archiveId, $modelName)
     {
-        return [];
-        return Yii::$app->getDb()->createCommand('SELECT [[label_id]] FROM {{%entity_label}} WHERE [[entity_id]] = :entityId AND [[entity_name]] = :entityName')->bindValues([':entityId' => (int) $entityId, ':entityName' => $entityName])->queryColumn();
+        return Yii::$app->getDb()->createCommand('SELECT [[label_id]] FROM {{%archive_label}} WHERE [[archive_id]] = :archiveId AND [[model_name]] = :modelName')->bindValues([':archiveId' => (int) $archiveId, ':modelName' => $modelName])->queryColumn();
     }
 
     /**
