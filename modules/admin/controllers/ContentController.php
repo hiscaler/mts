@@ -12,9 +12,9 @@ class ContentController extends Controller
 
     public $layout = 'content';
 
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
+//    public function actionIndex()
+//    {
+//        return $this->render('index');
+//    }
 
 }

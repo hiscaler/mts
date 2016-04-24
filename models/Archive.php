@@ -117,6 +117,22 @@ class Archive extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getContent()
+    {
+        return $this->hasOne(ArchiveContent::className(), ['archive_id' => 'id']);
+    }
+
+    /**
+     * 保存正文内容
+     * @param ActiveReocrd $archiveContent
+     * @return boolean
+     */
+    public function saveContent($archiveContent)
+    {
+        $archiveContent->archive_id = $this->id;
+        return $archiveContent->save();
+    }
+
     // Events
     public function beforeSave($insert)
     {
@@ -125,6 +141,7 @@ class Archive extends \yii\db\ActiveRecord
                 $this->tenant_id = MTS::getTenantId();
             }
 
+            $this->has_thumbnail = !empty($this->thumbnail) ? Constant::BOOLEAN_TRUE : Constant::BOOLEAN_FALSE;
             $modelName = Yii::$app->getDb()->createCommand('SELECT [[model_name]] FROM {{%node}} WHERE [[id]] = :id', [':id' => $this->node_id])->queryScalar();
             $this->model_name = $modelName;
 
@@ -132,6 +149,12 @@ class Archive extends \yii\db\ActiveRecord
         } else {
             return false;
         }
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        \Yii::$app->getDb()->delete('{{%archive_content}}', ['archive_id' => $this->id])->execute();
     }
 
 }

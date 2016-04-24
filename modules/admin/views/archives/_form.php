@@ -47,6 +47,14 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
+        <?=
+        \yadjet\editor\UEditor::widget([
+            'form' => $form,
+            'model' => $contentModel,
+            'attribute' => 'content',
+        ])
+        ?>
+
         <?= $form->field($model, 'thumbnail')->textInput(['maxlength' => true]) ?>
 
         <div class="entry">

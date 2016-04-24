@@ -2,17 +2,18 @@
 
 namespace app\modules\admin\controllers;
 
-use Yii;
 use app\models\Archive;
+use app\models\ArchiveContent;
 use app\models\ArchiveSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use Yii;
+use yii\base\Model;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * ArchivesController implements the CRUD actions for Archive model.
  */
-class ArchivesController extends Controller
+class ArchivesController extends ContentController
 {
 
     /**
@@ -66,13 +67,25 @@ class ArchivesController extends Controller
     public function actionCreate($modelName)
     {
         $model = new Archive();
+        $contentModel = new ArchiveContent();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $post = Yii::$app->getRequest()->post();
+        if ($model->load($post) && $contentModel->load($post) && Model::validateMultiple([$model, $contentModel])) {
+            $db = Yii::$app->getDb();
+            $transaction = $db->beginTransaction();
+            try {
+                $model->save();
+                $model->saveContent($contentModel); // 保存正文内容
+                $transaction->commit();
+            } catch (Exception $e) {
+                $transaction->rollback();
+                throw new HttpException(500, $e->getMessage());
+            }
         } else {
             return $this->render('create', [
                     'modelName' => $modelName,
                     'model' => $model,
+                    'contentModel' => $contentModel,
             ]);
         }
     }
@@ -86,13 +99,27 @@ class ArchivesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $contentModel = $model->content ? : new ArchiveContent();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $post = Yii::$app->getRequest()->post();
+        if ($model->load($post) && $contentModel->load($post) && Model::validateMultiple([$model, $contentModel])) {
+            $db = Yii::$app->getDb();
+            $transaction = $db->beginTransaction();
+            try {
+                $model->save();
+                $model->saveContent($contentModel); // 保存正文内容
+                $transaction->commit();
+            } catch (Exception $e) {
+                $transaction->rollback();
+                throw new HttpException(500, $e->getMessage());
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                     'modelName' => $model->model_name,
                     'model' => $model,
+                    'contentModel' => $contentModel,
             ]);
         }
     }

@@ -26,9 +26,8 @@ class ContentControlPanel extends Widget
 
     public function getItems()
     {
-        $items = [];
-        $controller = $this->view->context;
-        $controllerId = $controller->id;
+        $controllerId = $this->view->context->id;
+        $modelName = Yii::$app->getRequest()->get('modelName');
 
         $items = [
             [
@@ -39,12 +38,12 @@ class ContentControlPanel extends Widget
             [
                 'label' => Yii::t('app', 'Archives'),
                 'url' => ['archives/index'],
-                'active' => $controllerId == 'archives',
+                'active' => $controllerId == 'archives' && $modelName == null,
             ],
             [
                 'label' => Yii::t('app', 'News'),
                 'url' => ['archives/index', 'modelName' => 'news'],
-                'active' => $controllerId == 'news',
+                'active' => $controllerId == 'archives' && $modelName = 'news',
             ],
         ];
 

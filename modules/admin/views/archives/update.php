@@ -20,6 +20,7 @@ $this->params['menus'] = [
     $this->render('_form', [
         'modelName' => $modelName,
         'model' => $model,
+        'contentModel' => $contentModel,
     ])
     ?>
 
