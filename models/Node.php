@@ -113,7 +113,7 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
             $sql .= '[[id]] IN (SELECT [[parent_id]] FROM {{%node_closure}} WHERE [[child_id]] IN (SELECT [[id]] FROM {{%node}} WHERE [[model_name]] = :modelName AND [[tenant_id]] = :tenantId))';
             $bindValues[':modelName'] = trim($modelName);
         }
-        $sql .= ' AND [[id]] IN (SELECT [[node_id]] FROM {{%auth_node}} WHERE [[user_id]] = :userId)';
+        $sql .= ' AND [[id]] IN (SELECT [[node_id]] FROM {{%user_auth_node}} WHERE [[user_id]] = :userId)';
         $bindValues[':userId'] = Yii::$app->getUser()->getId();
         $rawData = Yii::$app->getDb()->createCommand($sql)->bindValues($bindValues)->queryAll();
         if ($rawData) {
