@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
                 <legend><?= Yii::t('app', 'Entity Attributes') ?></legend>
                 <?php
                 foreach ($entityAttributes as $key => $attributes) {
-                    echo $form->field($model, 'labels')->checkboxList($attributes, ['unselect' => null])->label($key);
+                    echo $form->field($model, 'ownerLabels')->checkboxList($attributes, ['unselect' => null])->label($key);
                 }
                 ?>
             </fieldset>

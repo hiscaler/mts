@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
+use yii\web\HttpException;
 
 /**
  * This is the model class for table "{{%archive}}".
@@ -39,6 +42,8 @@ class Archive extends \yii\db\ActiveRecord
     use UserTrait;
 
     public $labels;
+    private $_oldOwnerLabels = [];
+    public $ownerLabels = [];
 
     /**
      * @inheritdoc
@@ -66,6 +71,7 @@ class Archive extends \yii\db\ActiveRecord
             [['tags'], 'string', 'max' => 200],
             [['thumbnail'], 'string', 'max' => 100],
             [['author'], 'string', 'max' => 20],
+            [['ownerLabels'], 'safe'],
         ];
     }
 
@@ -90,7 +96,7 @@ class Archive extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('archive', 'ID'),
-            'node_id' => Yii::t('archive', 'Node ID'),
+            'node_id' => Yii::t('archive', 'Node'),
             'model_name' => Yii::t('archive', 'Model Name'),
             'title' => Yii::t('archive', 'Title'),
             'keyword' => Yii::t('archive', 'Keyword'),
@@ -117,9 +123,27 @@ class Archive extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 正文
+     * @return ActiveRecord
+     */
     public function getContent()
     {
         return $this->hasOne(ArchiveContent::className(), ['archive_id' => 'id']);
+    }
+
+    /**
+     * 自定义属性
+     * @return ActiveRecord
+     */
+    public function getCustomeLabels()
+    {
+        return $this->hasMany(Label::className(), ['id' => 'label_id'])
+                ->select(['id', 'name'])
+                ->viaTable('{{%arvhive_label}}', ['archive_id' => 'id'], function ($query) {
+                    $query->where(['model_name' => static::className2Id()]);
+                }
+        );
     }
 
     /**
@@ -134,6 +158,15 @@ class Archive extends \yii\db\ActiveRecord
     }
 
     // Events
+    public function afterFind()
+    {
+        parent::afterFind();
+        if (!$this->isNewRecord) {
+            $this->ownerLabels = Label::getArchiveLabelIds($this->id, static::className2Id());
+            $this->_oldOwnerLabels = $this->ownerLabels;
+        }
+    }
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
@@ -148,6 +181,57 @@ class Archive extends \yii\db\ActiveRecord
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        // Entity attributes
+        $ownerLabels = $this->ownerLabels;
+        if (!is_array($this->_oldOwnerLabels)) {
+            $this->_oldOwnerLabels = [];
+        }
+        if (!is_array($ownerLabels)) {
+            $ownerLabels = [];
+        }
+
+        if ($insert) {
+            $insertLabels = $ownerLabels;
+            $deleteLabels = [];
+        } else {
+            $insertLabels = array_diff($ownerLabels, $this->_oldOwnerLabels);
+            $deleteLabels = array_diff($this->_oldOwnerLabels, $ownerLabels);
+        }
+
+        $db = Yii::$app->getDb();
+        $transaction = $db->beginTransaction();
+        try {
+            // Insert data
+            if ($insertLabels) {
+                $rows = [];
+                $tenantId = MTS::getTenantId();
+                foreach ($insertLabels as $attributeId) {
+                    $rows[] = [$this->id, static::className2Id(), $attributeId, $tenantId];
+                }
+                if ($rows) {
+                    $db->createCommand()->batchInsert('{{%archive_label}}', ['archive_id', 'model_name', 'label_id', 'tenant_id'], $rows)->execute();
+                    $db->createCommand("UPDATE {{%label}} SET [[frequency]] = [[frequency]] + 1 WHERE [[id]] IN (" . implode(', ', ArrayHelper::getColumn($rows, 2)) . ")")->execute();
+                }
+            }
+            // Delete data
+            if ($deleteLabels) {
+                $db->createCommand()->delete('{{%archive_label}}', [
+                    'archive_id' => $this->id,
+                    'model_name' => static::className2Id(),
+                    'label_id' => $deleteLabels
+                ])->execute();
+                $db->createCommand("UPDATE {{%label}} SET [[frequency]] = [[frequency]] - 1 WHERE [[id]] IN (" . implode(', ', $deleteLabels) . ")")->execute();
+            }
+            $transaction->commit();
+        } catch (Exception $e) {
+            $transaction->rollback();
+            throw new HttpException('500', $e->getMessage());
         }
     }
 
