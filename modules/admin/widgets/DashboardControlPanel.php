@@ -41,9 +41,9 @@ class DashboardControlPanel extends Widget
 //            }
             // 系统管理
             $systemManageItems = [
-                'label' => Yii::t('app', 'Tenants'),
+                'label' => Yii::t('app', 'System Management'),
                 'url' => ['tenants/index'],
-                'active' => in_array($controllerId, ['users', 'user-groups']),
+                'active' => in_array($controllerId, ['tenants', 'labels', 'nodes']),
                 'items' => [
                     [
                         'label' => Yii::t('app', 'Tenants'),
@@ -51,19 +51,9 @@ class DashboardControlPanel extends Widget
                         'active' => $controllerId == 'tenants',
                     ],
                     [
-                        'label' => Yii::t('app', 'Access Token'),
-                        'url' => ['users/index'],
-                        'active' => $controllerId == 'users',
-                    ],
-                    [
                         'label' => Yii::t('app', 'Labels'),
                         'url' => ['labels/index'],
                         'active' => $controllerId == 'labels',
-                    ],
-                    [
-                        'label' => Yii::t('app', 'Users'),
-                        'url' => ['users/index'],
-                        'active' => $controllerId == 'users',
                     ],
                     [
                         'label' => Yii::t('app', '节点管理'),
@@ -81,7 +71,7 @@ class DashboardControlPanel extends Widget
                 'items' => [
                     [
                         'label' => Yii::t('app', 'User Groups'),
-                        'url' => ['/user-groups/index'],
+                        'url' => ['user-groups/index'],
                         'active' => $controllerId == 'user-groups',
                     ],
                     [

@@ -17,7 +17,7 @@ class MainMenu extends \yii\base\Widget
                 'active' => in_array($controllerId, ['system', 'default', 'users', 'tenants', 'labels', 'nodes']),
             ],
             [
-                'label' => Yii::t('app', '内容管理'),
+                'label' => Yii::t('app', 'Content Management'),
                 'url' => ['default/index'],
                 'active' => in_array($controllerId, ['news']),
             ],
