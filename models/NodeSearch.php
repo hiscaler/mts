@@ -8,7 +8,7 @@ use yii\data\ArrayDataProvider;
 use yii\db\Query;
 
 /**
- * NodeSearch represents the model behind the search form about `common\models\Node`.
+ * NodeSearch represents the model behind the search form about `app\models\Node`.
  */
 class NodeSearch extends Node
 {

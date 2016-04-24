@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\FriendlyLink */
+/* @var $model app\models\FriendlyLink */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
             'modelClass' => Yii::t('model', 'Friendly Link'),

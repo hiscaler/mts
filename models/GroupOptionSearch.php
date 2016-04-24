@@ -7,7 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * GroupOptionSearch represents the model behind the search form about `common\models\GroupOption`.
+ * GroupOptionSearch represents the model behind the search form about `app\models\GroupOption`.
  */
 class GroupOptionSearch extends GroupOption
 {

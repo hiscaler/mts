@@ -2,7 +2,7 @@
 
 namespace app\modules\admin\widgets;
 
-use common\models\BaseCode;
+use app\models\BaseCode;
 use app\models\Tenant;
 use app\models\User;
 use app\models\MTS;

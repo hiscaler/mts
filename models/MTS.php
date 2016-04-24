@@ -179,7 +179,7 @@ class MTS {
 
     /**
      * Return table name by special model name
-     * For Example: MTS::modelName2TableName('common\models\news') return `news`, if
+     * For Example: MTS::modelName2TableName('app\models\news') return `news`, if
      * Use table prefix, will return `table_prifix_news` name
      * @param string $modelName
      * @return string

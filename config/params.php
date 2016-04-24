@@ -4,32 +4,32 @@ return [
     'adminEmail' => 'admin@example.com',
     'contentModules' => [
         /**
-         * common-models-Article' => [
+         * app-models-Article' => [
          *    id' => 'articles', // 控制器名称（唯一）
          *    label' => 'Articles', //  需要翻译的文本（app.php）
          *    url' => ['/articles/index'], // 访问 URL
          *    embedSiteManangement' => true, // 是否显示在站点管理项目中，如果想独立出来，可以设置为 false, 默认为 true
          * ],
          */
-        'common-models-Ad' => [
+        'app-models-Ad' => [
             'id' => 'ads',
             'label' => 'Ads',
             'url' => ['/ads/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-AdSpace' => [
+        'app-models-AdSpace' => [
             'id' => 'ad-spaces',
             'label' => 'Ad Spaces',
             'url' => ['/ad-spaces/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-Label' => [
+        'app-models-Label' => [
             'id' => 'labels',
             'label' => 'Labels',
             'url' => ['/labels/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-Album' => [
+        'app-models-Album' => [
             'id' => 'albums',
             'label' => 'Albums',
             'url' => ['/albums/index'],
@@ -37,140 +37,140 @@ return [
             'activeItems' => ['albums', 'album-photos'],
             'needAudit' => true,
         ],
-        'common-models-Article' => [
+        'app-models-Article' => [
             'id' => 'articles',
             'label' => 'Articles',
             'url' => ['/articles/index'],
             'enabled' => true,
         ],
-        'common-models-ClassicCase' => [
+        'app-models-ClassicCase' => [
             'id' => 'cases',
             'label' => 'Cases',
             'url' => ['/cases/index'],
             'enabled' => true,
             'needAudit' => true,
         ],
-        'common-models-Download' => [
+        'app-models-Download' => [
             'id' => 'downloads',
             'label' => 'Downloads',
             'url' => ['/downloads/index'],
             'enabled' => true,
             'needAudit' => true,
         ],
-        'common-models-Faq' => [
+        'app-models-Faq' => [
             'id' => 'faqs',
             'label' => 'Faqs',
             'url' => ['/faqs/index'],
             'enabled' => true,
             'needAudit' => true,
         ],
-        'common-models-Feedback' => [
+        'app-models-Feedback' => [
             'id' => 'feedbacks',
             'label' => 'Feedbacks',
             'url' => ['/feedbacks/index'],
             'enabled' => false,
         ],
-        'common-models-FileUploadConfig' => [
+        'app-models-FileUploadConfig' => [
             'id' => 'file-upload-configs',
             'label' => 'File Upload Configs',
             'url' => ['/file-upload-configs/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-FriendlyLink' => [
+        'app-models-FriendlyLink' => [
             'id' => 'friendly-links',
             'label' => 'Friendly Links',
             'url' => ['/friendly-links/index'],
             'enabled' => true,
         ],
-        'common-models-GroupOption' => [
+        'app-models-GroupOption' => [
             'id' => 'group-options',
             'label' => 'Group Options',
             'url' => ['/group-options/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-IpAccessRule' => [
+        'app-models-IpAccessRule' => [
             'id' => 'ip-access-rules',
             'label' => 'IP Access Rules',
             'url' => ['/ip-access-rules/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-Lookup' => [
+        'app-models-Lookup' => [
             'id' => 'lookups',
             'label' => 'Lookups',
             'url' => ['/lookups/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-Meta' => [
+        'app-models-Meta' => [
             'id' => 'meta',
             'label' => 'Meta',
             'url' => ['/meta/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-News' => [
+        'app-models-News' => [
             'id' => 'news',
             'label' => 'News',
             'url' => ['/news/index'],
             'enabled' => true,
             'needAudit' => true,
         ],
-        'common-models-Node' => [
+        'app-models-Node' => [
             'id' => 'nodes',
             'label' => 'Nodes',
             'url' => ['/nodes/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-Product' => [
+        'app-models-Product' => [
             'id' => 'products',
             'label' => 'Products',
             'url' => ['/products/index'],
             'enabled' => false,
             'needAudit' => true,
         ],
-        'common-models-QuickUrlShortcut' => [
+        'app-models-QuickUrlShortcut' => [
             'id' => 'quick-url-shortcuts',
             'label' => 'Quick Url Shortcuts',
             'url' => ['/quick-url-shortcuts/index'],
         ],
-        'common-models-SearchKeyword' => [
+        'app-models-SearchKeyword' => [
             'id' => 'search-keywords',
             'label' => 'Search Keywords',
             'url' => ['/search-keywords/index'],
             'enabled' => true,
             'needAudit' => false,
         ],
-        'common-models-Slide' => [
+        'app-models-Slide' => [
             'id' => 'slides',
             'label' => 'Slides',
             'url' => ['/slides/index'],
             'enabled' => false,
         ],
-        'common-models-BootDatum' => [
+        'app-models-BootDatum' => [
             'id' => 'boot-data',
             'label' => 'Boot Data',
             'url' => ['/boot-data/index'],
             'enabled' => true,
         ],
-        'common-models-Tag' => [
+        'app-models-Tag' => [
             'id' => 'tags',
             'label' => 'Tags',
             'url' => ['/tags/index'],
             'embedSiteManangement' => false,
         ],
-        'common-models-Video' => [
+        'app-models-Video' => [
             'id' => 'videos',
             'label' => 'Videos',
             'url' => ['/videos/index'],
             'enabled' => false,
             'needAudit' => true,
         ],
-        'common-models-Vote' => [
+        'app-models-Vote' => [
             'id' => 'votes',
             'label' => 'Votes',
             'url' => ['/votes/index'],
             'enabled' => false,
             'needAudit' => true,
         ],
-        'common-models-WorkflowRule' => [
+        'app-models-WorkflowRule' => [
             'id' => 'workflow-rules',
             'label' => 'Workflow Rules',
             'url' => ['/workflow-rules/index'],
@@ -178,7 +178,7 @@ return [
         ],
     ],
     'gridColumns' => [
-        'common-models-Ad' => [
+        'app-models-Ad' => [
             'space_id',
             'name',
             'url',
@@ -197,7 +197,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-AdSpace' => [
+        'app-models-AdSpace' => [
             'group_id',
             'alias',
             'name',
@@ -214,7 +214,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Album' => [
+        'app-models-Album' => [
             'ordering',
             'node_id',
             'group_id',
@@ -234,7 +234,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Article' => [
+        'app-models-Article' => [
             'ordering',
             'alias',
             'title',
@@ -249,7 +249,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-BasicCode' => [
+        'app-models-BasicCode' => [
             'ordering',
             'type',
             'code',
@@ -266,7 +266,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-ClassicCase' => [
+        'app-models-ClassicCase' => [
             'node_id',
             'alias',
             'title',
@@ -282,7 +282,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Download' => [
+        'app-models-Download' => [
             'ordering',
             'node_id',
             'group_id',
@@ -305,7 +305,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Faq' => [
+        'app-models-Faq' => [
             'ordering',
             'node_id',
             'title',
@@ -321,7 +321,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Feedback' => [
+        'app-models-Feedback' => [
             'group_id',
             'username',
             'tel',
@@ -334,7 +334,7 @@ return [
             'updated_by',
             'updated_at',
         ],
-        'common-models-FriendlyLink' => [
+        'app-models-FriendlyLink' => [
             'ordering',
             'group_id',
             'type',
@@ -351,7 +351,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Lookup' => [
+        'app-models-Lookup' => [
             'label',
             'description',
             'value',
@@ -364,7 +364,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Meta' => [
+        'app-models-Meta' => [
             'model_name',
             'name',
             'form_field_type',
@@ -380,7 +380,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-News' => [
+        'app-models-News' => [
             'ordering',
             'node_id',
             'title',
@@ -405,7 +405,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Product' => [
+        'app-models-Product' => [
             'ordering',
             'node_id',
             'sn',
@@ -425,7 +425,7 @@ return [
             'deleted_by',
             'deleted_at'
         ],
-        'common-models-Video' => [
+        'app-models-Video' => [
             'ordering',
             'group_id',
             'node_id',

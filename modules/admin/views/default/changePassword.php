@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $model app\models\User */
 
 $this->params['breadcrumbs'][] = Yii::t('app', 'Change Password');
 ?>

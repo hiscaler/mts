@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\Tenant */
+/* @var $model app\models\Tenant */
 
 $this->title = $tenant->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tenants'), 'url' => ['index']];

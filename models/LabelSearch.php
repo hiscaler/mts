@@ -7,7 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * LabelSearchSearch represents the model behind the search form about `common\models\LabelSearch`.
+ * LabelSearchSearch represents the model behind the search form about `app\models\LabelSearch`.
  */
 class LabelSearch extends Label
 {

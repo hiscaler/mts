@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use app\models\Option;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\LabelSearch */
+/* @var $model app\models\LabelSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="form-outside search-form form-layout-column" style="display: none">

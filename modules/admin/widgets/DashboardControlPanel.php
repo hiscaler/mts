@@ -2,7 +2,7 @@
 
 namespace app\modules\admin\widgets;
 
-use common\models\BaseCode;
+use app\models\BaseCode;
 use app\models\Tenant;
 use app\models\User;
 use app\models\MTS;
@@ -105,7 +105,7 @@ class DashboardControlPanel extends Widget
             }
 
             // 自定义属性
-            if (in_array('common-models-Attribute', $tenantModules)) {
+            if (in_array('app-models-Attribute', $tenantModules)) {
                 $attributes = [
                     'label' => Yii::t('app', 'Attributes'),
                     'url' => ['/attributes/index'],
@@ -140,49 +140,49 @@ class DashboardControlPanel extends Widget
                         'label' => Yii::t('app', 'Lookups'),
                         'url' => ['/lookups/index'],
                         'active' => $controllerId == 'lookups',
-                        'visible' => in_array('common-models-Lookup', $tenantModules)
+                        'visible' => in_array('app-models-Lookup', $tenantModules)
                     ],
                     [
                         'label' => Yii::t('app', 'Group Options'),
                         'url' => ['/group-options/index'],
                         'active' => $controllerId == 'group-options',
-                        'visible' => in_array('common-models-GroupOption', $tenantModules)
+                        'visible' => in_array('app-models-GroupOption', $tenantModules)
                     ],
                     [
                         'label' => Yii::t('app', 'File Upload Configs'),
                         'url' => ['/file-upload-configs/index'],
                         'active' => $controllerId == 'file-upload-configs',
-                        'visible' => in_array('common-models-FileUploadConfig', $tenantModules)
+                        'visible' => in_array('app-models-FileUploadConfig', $tenantModules)
                     ],
                     [
                         'label' => Yii::t('app', 'IP Access Rules'),
                         'url' => ['/ip-access-rules/index'],
                         'active' => $controllerId == 'ip-access-rules',
-                        'visible' => in_array('common-models-IpAccessRule', $tenantModules)
+                        'visible' => in_array('app-models-IpAccessRule', $tenantModules)
                     ],
                     [
                         'label' => Yii::t('app', 'Nodes'),
                         'url' => ['/nodes/index'],
                         'active' => $controllerId == 'nodes',
-                        'visible' => in_array('common-models-Node', $tenantModules)
+                        'visible' => in_array('app-models-Node', $tenantModules)
                     ],
                     [
                         'label' => Yii::t('app', 'Tags'),
                         'url' => ['/tags/index'],
                         'active' => $controllerId == 'tags',
-                        'visible' => in_array('common-models-Tag', $tenantModules)
+                        'visible' => in_array('app-models-Tag', $tenantModules)
                     ],
                     [
                         'label' => Yii::t('app', 'Ad Spaces'),
                         'url' => ['/ad-spaces/index'],
                         'active' => $controllerId == 'ad-spaces',
-                        'visible' => in_array('common-models-AdSpace', $tenantModules)
+                        'visible' => in_array('app-models-AdSpace', $tenantModules)
                     ],
                     [
                         'label' => Yii::t('app', 'Ads'),
                         'url' => ['/ads/index'],
                         'active' => $controllerId == 'ads',
-                        'visible' => in_array('common-models-Ad', $tenantModules)
+                        'visible' => in_array('app-models-Ad', $tenantModules)
                     ],
                 ],
             ];
@@ -205,7 +205,7 @@ class DashboardControlPanel extends Widget
                         'label' => Yii::t('app', 'Meta'),
                         'url' => ['/meta/index'],
                         'active' => $controllerId == 'meta',
-                        'visible' => in_array('common-models-Meta', $tenantModules)
+                        'visible' => in_array('app-models-Meta', $tenantModules)
                     ],
                     $userManageItems,
                     [
@@ -222,7 +222,7 @@ class DashboardControlPanel extends Widget
                         'label' => Yii::t('app', 'Workflow Rules'),
                         'url' => ['/workflow-rules/index'],
                         'active' => in_array($controllerId, ['workflow-rules', 'workflow-rule-definitions']),
-                        'visible' => in_array('common-models-WorkflowRule', $tenantModules)
+                        'visible' => in_array('app-models-WorkflowRule', $tenantModules)
                     ],
             ]);
         }

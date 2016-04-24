@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Label */
+/* @var $model app\models\Label */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="form-outside">

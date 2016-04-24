@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\Label */
+/* @var $model app\models\Label */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
         'modelClass' => Yii::t('model', 'Labels'),

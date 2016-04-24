@@ -6,7 +6,7 @@ use app\models\FriendlyLink;
 use yii\data\ActiveDataProvider;
 
 /**
- * FriendlyLinkSearch represents the model behind the search form about `common\models\FriendlyLink`.
+ * FriendlyLinkSearch represents the model behind the search form about `app\models\FriendlyLink`.
  */
 class FriendlyLinkSearch extends FriendlyLink
 {

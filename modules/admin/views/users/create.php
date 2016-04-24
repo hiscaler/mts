@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $model app\models\User */
 $this->title = Yii::t('app', 'Create {modelClass}', [
             'modelClass' => Yii::t('model', 'User'),
         ]);

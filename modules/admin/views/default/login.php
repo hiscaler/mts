@@ -1,6 +1,6 @@
 <?php
 
-use common\models\Lookup;
+use app\models\Lookup;
 use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

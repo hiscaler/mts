@@ -3,7 +3,7 @@
 use backend\widgets\TenantTabs;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Tenant */
+/* @var $model app\models\Tenant */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tenants'), 'url' => ['index']];

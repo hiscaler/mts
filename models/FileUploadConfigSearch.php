@@ -7,7 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * FileUploadConfigSearch represents the model behind the search form about `common\models\FileUploadConfig`.
+ * FileUploadConfigSearch represents the model behind the search form about `app\models\FileUploadConfig`.
  */
 class FileUploadConfigSearch extends FileUploadConfig
 {
