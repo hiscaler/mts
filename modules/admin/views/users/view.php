@@ -32,17 +32,17 @@ $this->params['menus'] = [
         DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'type:userType',
+//                'type:userType',
                 'username',
                 'nickname',
                 'email:email',
-                'role:userRole',
-                'status:userStatus',
+//                'role:userRole',
+//                'status:userStatus',
                 'register_ip',
                 'login_count',
                 'last_login_ip',
-                'last_login_time:datetime',
-                'last_change_password_time:datetime',
+                'last_login_datetime:datetime',
+//                'last_change_password_time:datetime',
                 [
                     'attribute' => 'created_by',
                     'value' => $model['creater']['nickname']

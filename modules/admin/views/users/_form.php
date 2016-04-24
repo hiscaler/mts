@@ -2,10 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use common\models\User;
+use app\models\User;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\User */
+/* @var $model app\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -28,7 +28,7 @@ use common\models\User;
 
         <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
 
-        <?= $form->field($model, 'role')->dropDownList(User::roleOptions(), ['prompt' => '']) ?>
+        <?php // $form->field($model, 'role')->dropDownList(User::roleOptions(), ['prompt' => '']) ?>
 
         <?= $form->field($model, 'status')->dropDownList(User::statusOptions(), ['prompt' => '']) ?>
 

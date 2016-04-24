@@ -2,11 +2,11 @@
 
 namespace app\modules\admin\controllers;
 
-use app\forms\ChangePasswordForm;
-use app\forms\RegisterForm;
-use app\models\UserSearch;
 use app\models\User;
 use app\models\UserLoginLog;
+use app\models\UserSearch;
+use app\modules\admin\forms\ChangePasswordForm;
+use app\modules\admin\forms\RegisterForm;
 use Yii;
 use yii\base\Security;
 use yii\data\ActiveDataProvider;

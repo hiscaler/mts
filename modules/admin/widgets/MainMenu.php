@@ -9,25 +9,19 @@ class MainMenu extends \yii\base\Widget
 
     public function getItems()
     {
-        $controller = $this->view->context;
-        $controllerId = $controller->id;
-        $items = [];
-        $moduleId = Yii::$app->controller->module->id;
-
-
-        $items[] = [
-            'label' => Yii::t('app', 'Products Management'),
-            'url' => ['/product/products/index'],
-            'active' => $moduleId == 'product',
+        $controllerId = $this->view->context->id;
+        return [
+            [
+                'label' => Yii::t('app', 'System Management'),
+                'url' => ['system/index'],
+                'active' => in_array($controllerId, ['system', 'default', 'users', 'tenants', 'labels', 'nodes']),
+            ],
+            [
+                'label' => Yii::t('app', '内容管理'),
+                'url' => ['default/index'],
+                'active' => in_array($controllerId, ['news']),
+            ],
         ];
-        $items[] = [
-            'label' => Yii::t('app', 'Shop Management'),
-            'url' => ['/shop/default/index'],
-            'active' => $moduleId == 'shop',
-        ];
-
-
-        return $items;
     }
 
     public function run()

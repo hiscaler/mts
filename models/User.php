@@ -23,7 +23,7 @@ use Yii;
  * @property string $register_ip
  * @property integer $login_count
  * @property string $last_login_ip
- * @property integer $last_login_time
+ * @property integer $last_login_datetime
  * @property integer $created_at
  * @property integer $created_by
  * @property integer $updated_at
@@ -68,9 +68,23 @@ class User extends BaseUser
             ['type', 'in', 'range' => array_keys(self::typeOptions())],
             ['status', 'default', 'value' => self::STATUS_PENDING],
             ['status', 'in', 'range' => array_keys(self::statusOptions())],
-            ['role', 'default', 'value' => self::ROLE_USER],
-            ['role', 'in', 'range' => array_keys(self::roleOptions())],
-            [['register_ip', 'last_login_ip', 'last_login_time', 'login_count'], 'safe'],
+//            ['role', 'default', 'value' => self::ROLE_USER],
+//            ['role', 'in', 'range' => array_keys(self::roleOptions())],
+            [['register_ip', 'last_login_ip', 'last_login_datetime', 'login_count'], 'safe'],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+            ],
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className()
+            ]
         ];
     }
 
@@ -98,7 +112,7 @@ class User extends BaseUser
             'role' => Yii::t('user', 'Role'),
             'register_ip' => Yii::t('user', 'Register IP'),
             'login_count' => Yii::t('user', 'Login Count'),
-            'last_login_time' => Yii::t('user', 'Last Login Time'),
+            'last_login_datetime' => Yii::t('user', 'Last Login Time'),
             'last_login_ip' => Yii::t('user', 'Last Login IP'),
         ]);
     }
@@ -145,7 +159,7 @@ class User extends BaseUser
             Yii::$app->db->createCommand()->insert('{{%tenant_user}}', [
                 'tenant_id' => MTS::getTenantId(),
                 'user_id' => $this->id,
-                'role' => $this->role,
+//                'role' => $this->role,
                 'rule_id' => 0,
                 'enabled' => Option::BOOLEAN_TRUE,
                 'user_group_id' => 0

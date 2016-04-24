@@ -95,9 +95,9 @@ class BaseUser extends \yii\db\ActiveRecord implements IdentityInterface {
     /**
      * @inheritdoc
      */
-    public function getRole() {
-        return $this->role;
-    }
+//    public function getRole() {
+//        return $this->role;
+//    }
 
     /**
      * @inheritdoc

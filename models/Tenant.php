@@ -62,6 +62,20 @@ class Tenant extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+            ],
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className()
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -210,7 +224,7 @@ class Tenant extends \yii\db\ActiveRecord
                 'user_id' => Yii::$app->user->id,
                 'role' => User::ROLE_ADMINISTRATOR,
                 'rule_id' => 0,
-                'enabled' => Option::BOOLEAN_TRUE,
+                'enabled' => Constant::BOOLEAN_TRUE,
                 'user_group_id' => 0
             ])->execute();
             $insertModules = $modules;
