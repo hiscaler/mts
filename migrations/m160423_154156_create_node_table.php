@@ -11,7 +11,7 @@ class m160423_154156_create_node_table extends Migration
             'id' => $this->primaryKey(),
             'alias' => $this->string()->notNull(),
             'name' => $this->string()->notNull(),
-            'model_name' => $this->string()->notNull(),
+            'model_name' => $this->string(60)->notNull(),
             'parameters' => $this->string()->notNull(),
             'parent_id' => $this->integer()->notNull()->defaultValue(0),
             'parent_ids' => $this->string(),

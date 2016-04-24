@@ -34,19 +34,22 @@ use yii\helpers\Inflector;
  * @property integer $deleted_at
  * @property integer $deleted_by
  */
-class Node extends BaseTree {
+class Node extends BaseTree
+{
 
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return '{{%node}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['alias', 'name', 'model_name', 'parent_id', 'ordering', 'entity_status'], 'required'],
             [['alias', 'name', 'parameters'], 'trim'],
@@ -56,11 +59,12 @@ class Node extends BaseTree {
                     return "i:{$controller}/index~~/{$controller}/index.twig
 l:{$controller}/list~~/{$controller}/list.twig
 v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
-            }],
+                }],
             ['alias', 'match', 'pattern' => '/^[a-zA-Z0-9]{1,}[_-]{0,1}[a-zA-Z0-9-\/]{0,}[a-zA-Z0-9]{0,}+$/'],
             [['enabled', 'entity_enabled'], 'boolean'],
             [['parent_id', 'level', 'ordering', 'direct_data_count', 'relation_data_count', 'entity_status', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_at', 'deleted_by'], 'integer'],
-            [['alias', 'name', 'parameters', 'parent_ids', 'parent_names', 'model_name'], 'string', 'max' => 255],
+            [['alias', 'name', 'parameters', 'parent_ids', 'parent_names'], 'string', 'max' => 255],
+            [['model_name'], 'string', 'max' => 60],
             ['parent_id', 'checkParentId'],
             ['alias', 'checkAlias'],
             ['alias', 'unique', 'targetAttribute' => ['alias', 'tenant_id']],
@@ -72,7 +76,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * @param string $attribute
      * @param array $params
      */
-    public function checkAlias($attribute, $params) {
+    public function checkAlias($attribute, $params)
+    {
         if ($this->parent_id == 0 && strpos($this->alias, '/') !== false) {
             $this->addError($attribute, '顶级结点别名中不能包含“/”符号。');
         }
@@ -81,7 +86,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), [
             'name' => Yii::t('node', 'Name'),
             'parameters' => Yii::t('node', 'parameters'),
@@ -100,7 +106,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * @param string $modelName
      * @return array
      */
-    public static function hashMapItems($modelName = null) {
+    public static function hashMapItems($modelName = null)
+    {
         $tenantId = MTS::getTenantId();
         $items = [];
         $sql = 'SELECT [[id]], [[name]], [[alias]], [[parent_id]], [[level]], [[ordering]] FROM {{%node}} WHERE ';
@@ -130,7 +137,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * 获取根节点信息（树形结构）
      * @return array
      */
-    public static function parentOptions($root = true) {
+    public static function parentOptions($root = true)
+    {
         $items = [];
         if ($root) {
             $items[] = Yii::t('node', 'Root');
@@ -162,7 +170,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * 获取根据排序和树形节点处理后的节点数据，用于在 table 中展示整棵节点树
      * @return array
      */
-    public static function getOrderedItems() {
+    public static function getOrderedItems()
+    {
         $nodes = Yii::$app->getDb()->createCommand('SELECT t.*, cu.nickname AS creater_nickname, uu.nickname AS updater_nickname, du.nickname AS deleter_nickname FROM {{%node}} t
             LEFT JOIN {{%user}} cu ON [[t.created_by]] = [[cu.id]]
             LEFT JOIN {{%user}} uu ON [[t.updated_by]] = [[uu.id]]
@@ -183,7 +192,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * @param integer $nodeId
      * @return mixed
      */
-    public static function getRoot($nodeId) {
+    public static function getRoot($nodeId)
+    {
         $node = Yii::$app->getDb()->createCommand('SELECT [[id]], [[name]], [[parent_id]] FROM {{%node}} WHERE [[id]] = :id')->bindValue(':id', (int) $nodeId, PDO::PARAM_INT)->queryOne();
         if ($node === false) {
             return null;
@@ -194,9 +204,9 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
             ];
         } else {
             $parentNode = Yii::$app->getDb()->createCommand('SELECT [[id]], [[name]] FROM {{%node}} WHERE [[tenant_id]] = :tenantId AND [[parent_id]] = 0 AND [[id]] IN (SELECT [[parent_id]] FROM {{%node_closure}} WHERE [[child_id]] = :id)')->bindValues([
-                        ':tenantId' => MTS::getTenantId(),
-                        ':id' => (int) $nodeId
-                    ])->queryOne();
+                    ':tenantId' => MTS::getTenantId(),
+                    ':id' => (int) $nodeId
+                ])->queryOne();
             if ($parentNode === false) {
                 return null;
             } else {
@@ -213,7 +223,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * @param integer $nodeId
      * @return mixed
      */
-    public static function getRootId($nodeId) {
+    public static function getRootId($nodeId)
+    {
         $node = self::getRoot($nodeId);
         return $node !== null ? $node['id'] : null;
     }
@@ -223,12 +234,14 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * @param integer $nodeId
      * @return mixed
      */
-    public static function getRootName($nodeId) {
+    public static function getRootName($nodeId)
+    {
         $node = self::getRoot($nodeId);
         return $node !== null ? $node['name'] : null;
     }
 
-    public static function getBreadcrumbs($id) {
+    public static function getBreadcrumbs($id)
+    {
         $breadcrumbs = Yii::$app->getDb()->createCommand('SELECT A.* FROM {{%nodes}} t INNER JOIN {{%node_closure}} c ON [[t.id]] = [[c.parent_id]] WHERE [[c.child_id]] = :childId ORDER BY [[c.level]] DESC')->bindValu(':childId', (int) $id)->queryAll();
 
         return $breadcrumbs;
@@ -238,7 +251,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * 获取实体记录默认值
      * @param integer $nodeId
      */
-    public static function getEntityDefaultValues($nodeId) {
+    public static function getEntityDefaultValues($nodeId)
+    {
         $defaultValues = [
             'status' => Constant::STATUS_PENDING,
             'enabled' => Constant::BOOLEAN_FALSE
@@ -255,14 +269,16 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
      * 实体默认状态
      * @return array
      */
-    public static function entityStatusOptions() {
+    public static function entityStatusOptions()
+    {
         return [
             Constant::STATUS_PENDING => Yii::t('app', 'Pending'),
             Constant::STATUS_PUBLISHED => Yii::t('app', 'Published')
         ];
     }
 
-    public function beforeSave($insert) {
+    public function beforeSave($insert)
+    {
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 $this->direct_data_count = 0;
@@ -289,7 +305,8 @@ v:{$controllerId}/view~<id:\d+>~/{$controllerId}/view.twig~.html";
         }
     }
 
-    public function afterDelete() {
+    public function afterDelete()
+    {
         parent::afterDelete();
         Yii::$app->getDb()->createCommand()->delete('{{%auth_node}}', ['node_id' => $this->id])->execute();
     }
