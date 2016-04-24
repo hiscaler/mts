@@ -14,12 +14,12 @@ class MainMenu extends \yii\base\Widget
             [
                 'label' => Yii::t('app', 'System Management'),
                 'url' => ['system/index'],
-                'active' => in_array($controllerId, ['system', 'default', 'users', 'tenants', 'labels', 'nodes']),
+                'active' => in_array($controllerId, ['system', 'default', 'users', 'tenants', 'labels', 'nodes', 'file-upload-configs', 'group-options']),
             ],
             [
                 'label' => Yii::t('app', 'Content Management'),
                 'url' => ['content/index'],
-                'active' => in_array($controllerId, ['content']),
+                'active' => in_array($controllerId, ['content', 'friendly-links']),
             ],
         ];
     }

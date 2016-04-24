@@ -36,6 +36,16 @@ class ContentControlPanel extends Widget
                 'url' => ['friendly-links/index'],
                 'active' => $controllerId == 'friendly-links',
             ],
+            [
+                'label' => Yii::t('app', 'Archives'),
+                'url' => ['archives/index'],
+                'active' => $controllerId == 'archives',
+            ],
+            [
+                'label' => Yii::t('app', 'News'),
+                'url' => ['archives/index', 'modelName' => 'news'],
+                'active' => $controllerId == 'news',
+            ],
         ];
 
 
