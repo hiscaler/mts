@@ -23,7 +23,7 @@ use yii\helpers\Inflector;
  */
 class Label extends \yii\db\ActiveRecord
 {
-    
+
     use UserTrait;
 
     /**
@@ -46,6 +46,20 @@ class Label extends \yii\db\ActiveRecord
             [['enabled'], 'boolean'],
             [['frequency', 'ordering', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
             [['alias', 'name'], 'string', 'max' => 255]
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+            ],
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className()
+            ]
         ];
     }
 
@@ -156,6 +170,7 @@ class Label extends \yii\db\ActiveRecord
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 $this->frequency = 0;
+                $this->tenant_id = MTS::getTenantId();
             }
             if (empty($this->alias)) {
                 $this->alias = Inflector::slug($this->name);
