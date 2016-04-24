@@ -10,6 +10,113 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+-- 导出  表 mts.mts_archive 结构
+CREATE TABLE IF NOT EXISTS `mts_archive` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `node_id` int(11) NOT NULL,
+  `model_name` varchar(30) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `keyword` varchar(255) DEFAULT NULL,
+  `description` text,
+  `tags` varchar(200) DEFAULT NULL,
+  `has_thumbnail` tinyint(1) NOT NULL DEFAULT '0',
+  `thumbnail` varchar(100) DEFAULT NULL,
+  `author` varchar(20) NOT NULL,
+  `source` varchar(30) NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `published_datetime` int(11) NOT NULL,
+  `clicks_count` int(11) NOT NULL DEFAULT '0',
+  `enabled_comment` tinyint(1) NOT NULL DEFAULT '0',
+  `comments_count` int(11) NOT NULL DEFAULT '0',
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `tenant_id` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `deleted_at` int(11) DEFAULT NULL,
+  `deleted_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 mts.mts_file_upload_config 结构
+CREATE TABLE IF NOT EXISTS `mts_file_upload_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `model_name` varchar(30) NOT NULL,
+  `attribute` varchar(30) NOT NULL,
+  `extensions` varchar(30) NOT NULL,
+  `min_size` smallint(6) NOT NULL DEFAULT '0',
+  `max_size` smallint(6) NOT NULL DEFAULT '0',
+  `thumb_width` smallint(6) DEFAULT '0',
+  `thumb_height` smallint(6) DEFAULT '0',
+  `tenant_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  `deleted_by` int(11) DEFAULT NULL,
+  `deleted_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 mts.mts_friendly_link 结构
+CREATE TABLE IF NOT EXISTS `mts_friendly_link` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` smallint(6) NOT NULL DEFAULT '0',
+  `type` smallint(6) NOT NULL DEFAULT '0',
+  `title` varchar(30) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `url` varchar(160) NOT NULL,
+  `url_open_target` varchar(6) NOT NULL,
+  `logo_path` varchar(100) DEFAULT NULL,
+  `ordering` int(11) NOT NULL DEFAULT '0',
+  `status` smallint(6) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `tenant_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  `deleted_at` int(11) DEFAULT NULL,
+  `deleted_by` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 mts.mts_group_option 结构
+CREATE TABLE IF NOT EXISTS `mts_group_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(30) NOT NULL,
+  `text` varchar(30) NOT NULL,
+  `value` varchar(30) NOT NULL,
+  `alias` varchar(30) DEFAULT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `defaulted` tinyint(1) NOT NULL DEFAULT '0',
+  `ordering` smallint(6) NOT NULL DEFAULT '0',
+  `description` varchar(100) DEFAULT NULL,
+  `tenant_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  `deleted_by` int(11) DEFAULT NULL,
+  `deleted_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
 -- 导出  表 mts.mts_label 结构
 CREATE TABLE IF NOT EXISTS `mts_label` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -45,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `mts_node` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `alias` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `model_name` varchar(255) NOT NULL,
+  `model_name` varchar(60) NOT NULL,
   `parameters` varchar(255) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   `parent_ids` varchar(255) DEFAULT NULL,
@@ -150,6 +257,15 @@ CREATE TABLE IF NOT EXISTS `mts_user` (
   `deleted_by` int(11) DEFAULT NULL,
   `deleted_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+
+
+-- 导出  表 mts.mts_user_auth_node 结构
+CREATE TABLE IF NOT EXISTS `mts_user_auth_node` (
+  `user_id` int(11) NOT NULL,
+  `node_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 数据导出被取消选择。
