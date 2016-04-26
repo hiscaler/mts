@@ -43,7 +43,7 @@ class DashboardControlPanel extends Widget
             $systemManageItems = [
                 'label' => Yii::t('app', 'System Management'),
                 'url' => ['tenants/index'],
-                'active' => in_array($controllerId, ['tenants', 'labels', 'nodes', 'file-upload-configs', 'group-options']),
+                'active' => in_array($controllerId, ['tenants', 'labels', 'nodes', 'file-upload-configs', 'group-options', 'lookups']),
                 'items' => [
                     [
                         'label' => Yii::t('app', 'Tenants'),
@@ -64,6 +64,11 @@ class DashboardControlPanel extends Widget
                         'label' => Yii::t('app', 'File Upload Configs'),
                         'url' => ['file-upload-configs/index'],
                         'active' => $controllerId == 'file-upload-configs',
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Lookups'),
+                        'url' => ['lookups/index'],
+                        'active' => $controllerId == 'lookups',
                     ],
                     [
                         'label' => Yii::t('app', 'Group Options'),

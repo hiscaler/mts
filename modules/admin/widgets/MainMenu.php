@@ -14,7 +14,7 @@ class MainMenu extends \yii\base\Widget
             [
                 'label' => Yii::t('app', 'System Management'),
                 'url' => ['system/index'],
-                'active' => in_array($controllerId, ['system', 'default', 'users', 'tenants', 'labels', 'nodes', 'file-upload-configs', 'group-options']),
+                'active' => in_array($controllerId, ['system', 'default', 'users', 'tenants', 'labels', 'nodes', 'file-upload-configs', 'group-options', 'lookups']),
             ],
             [
                 'label' => Yii::t('app', 'Content Management'),
