@@ -73,7 +73,6 @@ class FriendlyLink extends \yii\db\ActiveRecord
             [['title', 'url', 'description'], 'trim'],
             ['group_id', 'default', 'value' => 0],
             [['url'], 'url'],
-            ['url', 'unique', 'targetAttribute' => ['url', 'tenant_id']],
             [['enabled'], 'boolean'],
             [['group_id', 'type', 'ordering', 'status', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_by', 'deleted_at'], 'integer'],
             [['title', 'description', 'url', 'url_open_target'], 'string', 'max' => 255],
