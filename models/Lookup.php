@@ -87,8 +87,8 @@ class Lookup extends BaseActiveRecord
     {
         $rawData = Yii::$app->getDb()->createCommand('SELECT [[value]], [[return_type]] FROM ' . static::tableName() . ' WHERE [[tenant_id]] = :tenantId AND [[label]] = :label AND [[enabled]] = :enabled')->bindValues([
                 ':label' => strtoupper(trim($label)),
-                ':tenantId' => Yad::getTenantId(),
-                ':enabled' => Option::BOOLEAN_TRUE
+                ':tenantId' => MTS::getTenantId(),
+                ':enabled' => Constant::BOOLEAN_TRUE
             ])->queryOne();
         if ($rawData === false) {
             $value = $defaultValue;
