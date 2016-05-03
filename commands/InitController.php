@@ -46,15 +46,61 @@ class InitController extends \yii\console\Controller
             ];
             $db->createCommand()->insert('{{%user}}', $columns)->execute();
         } else {
-            echo "'{$username}' is exists.";
+            echo "'{$username}' is exists.\r\n";
         }
 
         return 0;
     }
 
+    private function _initLookup($tenantId = 1)
+    {
+        echo "Begin init lookup values\r\n";
+        $map = [
+            'site.name' => [
+                'description' => '站点名称',
+                'value' => '站点名称',
+                'return_type' => \app\models\Lookup::RETURN_TYPE_STRING,
+            ],
+            'icp' => [
+                'description' => 'ICP 备案号',
+                'value' => '201601010001',
+                'return_type' => \app\models\Lookup::RETURN_TYPE_STRING,
+            ],
+            'statistic_code' => [
+                'description' => '统计代码',
+                'value' => '',
+                'return_type' => \app\models\Lookup::RETURN_TYPE_STRING,
+            ],
+        ];
+        $now = time();
+        $rows = [];
+        foreach ($map as $key => $data) {
+            $rows[] = [
+                'label' => $key,
+                'description' => $data['description'],
+                'value' => $data['value'],
+                'return_type' => $data['return_type'],
+                'enabled' => 1,
+                'tenant_id' => (int) $tenantId,
+                'created_by' => 1,
+                'created_at' => $now,
+                'updated_by' => 1,
+                'updated_at' => $now,
+                'deleted_by' => null,
+                'deleted_at' => null,
+            ];
+        }
+
+        Yii::$app->getDb()->createCommand()->batchInsert('{{%lookup}}', ['label', 'description', 'value', 'return_type', 'enabled', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_by', 'deleted_at'], $rows)->execute();
+    }
+
     public function actionIndex()
     {
+        echo "Begin ......\r\n";
         $this->_initAdminUser();
+        $this->_initLookup();
+        echo 'Done.';
+        return 0;
     }
 
 }
