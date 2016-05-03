@@ -5,7 +5,7 @@ namespace app\modules\admin\controllers;
 use app\models\Constant;
 use app\models\Lookup;
 use app\models\LookupSearch;
-use app\models\Yad;
+use app\models\MTS;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -128,7 +128,7 @@ class LookupsController extends Controller
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled]] FROM {{%lookup}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
                 ':id' => (int) $id,
-                ':tenantId' => Yad::getTenantId()
+                ':tenantId' => MTS::getTenantId()
             ])->queryScalar();
         if ($value !== null) {
             $value = !$value;
@@ -165,7 +165,7 @@ class LookupsController extends Controller
     {
         $model = Lookup::find()->where([
                 'id' => (int) $id,
-                'tenant_id' => Yad::getTenantId(),
+                'tenant_id' => MTS::getTenantId(),
             ])->one();
 
         if ($model !== null) {
