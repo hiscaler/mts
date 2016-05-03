@@ -19,7 +19,8 @@ use yii\web\HttpException;
  * @property integer $isDraft
  * @property integer $tenant_id
  */
-class BaseActiveRecord extends ActiveRecord {
+class BaseActiveRecord extends ActiveRecord
+{
 
     /**
      * 默认排序值
@@ -43,7 +44,8 @@ class BaseActiveRecord extends ActiveRecord {
      * @return string
      */
 
-    public static function className2Id($className = null) {
+    public static function className2Id($className = null)
+    {
         if ($className === null) {
             $className = static::className();
         }
@@ -55,11 +57,13 @@ class BaseActiveRecord extends ActiveRecord {
      * @param string $id
      * @return string
      */
-    public static function id2ClassName($id) {
+    public static function id2ClassName($id)
+    {
         return str_replace('-', '\\', $id);
     }
 
-    public function rules() {
+    public function rules()
+    {
         $rules = [
             [['entityAttributes', 'entityNodeIds'], 'safe'],
             ['isDraft', 'boolean'],
@@ -92,7 +96,8 @@ class BaseActiveRecord extends ActiveRecord {
         return $rules;
     }
 
-    private function normalizeWords($value) {
+    private function normalizeWords($value)
+    {
         if (!empty($value)) {
             $value = UtilHelper::array2string(array_unique(UtilHelper::string2array(StringHelper::makeSemiangle($value))));
         }
@@ -103,7 +108,8 @@ class BaseActiveRecord extends ActiveRecord {
     /**
      * Normalizes the user-entered tags.
      */
-    public function normalizeTags($attribute, $params) {
+    public function normalizeTags($attribute, $params)
+    {
         if (!empty($this->tags)) {
             $this->tags = $this->normalizeWords($this->tags);
         }
@@ -112,13 +118,15 @@ class BaseActiveRecord extends ActiveRecord {
     /**
      * Normalizes the user-entered keywords.
      */
-    public function normalizeKeywords($attribute, $params) {
+    public function normalizeKeywords($attribute, $params)
+    {
         if (!empty($this->keywords)) {
             $this->keywords = $this->normalizeWords($this->keywords);
         }
     }
 
-    public function getNode() {
+    public function getNode()
+    {
         return $this->hasOne(Node::className(), ['id' => 'node_id'])->select(['id', 'name']);
     }
 
@@ -126,12 +134,13 @@ class BaseActiveRecord extends ActiveRecord {
      * 自定义属性
      * @return ActiveRecord
      */
-    public function getCustomeAttributes() {
+    public function getCustomeAttributes()
+    {
         return $this->hasMany(Attribute::className(), ['id' => 'attribute_id'])
-                        ->select(['id', 'name'])
-                        ->viaTable('{{%entity_attribute}}', ['entity_id' => 'id'], function ($query) {
-                            $query->where(['entity_name' => static::className2Id()]);
-                        }
+                ->select(['id', 'name'])
+                ->viaTable('{{%entity_attribute}}', ['entity_id' => 'id'], function ($query) {
+                    $query->where(['entity_name' => static::className2Id()]);
+                }
         );
     }
 
@@ -139,7 +148,8 @@ class BaseActiveRecord extends ActiveRecord {
      * 流程任务
      * @return ActiveRecord
      */
-    public function getTask() {
+    public function getTask()
+    {
         return $this->hasOne(WorkflowTask::className(), ['id' => 'task_id']);
     }
 
@@ -147,7 +157,8 @@ class BaseActiveRecord extends ActiveRecord {
      * Creater relational
      * @return ActiveQueryInterface the relational query object.
      */
-    public function getCreater() {
+    public function getCreater()
+    {
         return $this->hasOne(User::className(), ['id' => 'created_by'])->select(['id', 'nickname']);
     }
 
@@ -155,7 +166,8 @@ class BaseActiveRecord extends ActiveRecord {
      * Updater relational
      * @return ActiveQueryInterface the relational query object.
      */
-    public function getUpdater() {
+    public function getUpdater()
+    {
         return $this->hasOne(User::className(), ['id' => 'updated_by'])->select(['id', 'nickname']);
     }
 
@@ -163,11 +175,13 @@ class BaseActiveRecord extends ActiveRecord {
      * Deleter relational
      * @return ActiveQueryInterface the relational query object.
      */
-    public function getDeleter() {
+    public function getDeleter()
+    {
         return $this->hasOne(User::className(), ['id' => 'deleted_by'])->select(['id', 'nickname']);
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
@@ -203,7 +217,8 @@ class BaseActiveRecord extends ActiveRecord {
     }
 
     // Events
-    public function afterFind() {
+    public function afterFind()
+    {
         parent::afterFind();
         if (!$this->isNewRecord) {
             $this->entityAttributes = Label::getEntityAttributeIds($this->id, static::className2Id());
@@ -229,7 +244,8 @@ class BaseActiveRecord extends ActiveRecord {
         }
     }
 
-    public function beforeValidate() {
+    public function beforeValidate()
+    {
         if (parent::beforeValidate()) {
             if ($this->isNewRecord && $this->hasAttribute('tenant_id') && !$this->tenant_id) {
                 $this->tenant_id = MTS::getTenantId();
@@ -241,7 +257,8 @@ class BaseActiveRecord extends ActiveRecord {
         }
     }
 
-    public function beforeSave($insert) {
+    public function beforeSave($insert)
+    {
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 // 设置记录的 status 和 enabled 属性值
@@ -302,7 +319,8 @@ class BaseActiveRecord extends ActiveRecord {
         }
     }
 
-    public function afterSave($insert, $changedAttributes) {
+    public function afterSave($insert, $changedAttributes)
+    {
         parent::afterSave($insert, $changedAttributes);
         // Node Id
         if ($this->hasAttribute('node_id')) {
@@ -428,13 +446,14 @@ class BaseActiveRecord extends ActiveRecord {
 //        }
     }
 
-    public function afterDelete() {
+    public function afterDelete()
+    {
         parent::afterDelete();
         // Delete attribute relation data and update attribute frequency value
         $attributes = Yii::$app->db->createCommand('SELECT [[id]], [[attribute_id]] FROM {{%entity_attribute}} WHERE [[entity_id]] = :entityId AND [[entity_name]] = :entityName')->bindValues([
-                    ':entityId' => $this->id,
-                    ':entityName' => static::className2Id()
-                ])->queryAll();
+                ':entityId' => $this->id,
+                ':entityName' => static::className2Id()
+            ])->queryAll();
         if ($attributes) {
             Yii::$app->db->createCommand('DELETE FROM {{%entity_attribute}} WHERE [[id]] IN (' . implode(', ', ArrayHelper::getColumn($attributes, 'id')) . ')')->execute();
             Attribute::updateAll(['frequency' => -1], ['id' => ArrayHelper::getColumn($attributes, 'attribute_id')]);

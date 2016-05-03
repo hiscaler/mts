@@ -12,6 +12,7 @@ use app\models\Archive;
  */
 class ArchiveSearch extends Archive
 {
+
     /**
      * @inheritdoc
      */
@@ -89,4 +90,5 @@ class ArchiveSearch extends Archive
 
         return $dataProvider;
     }
+
 }

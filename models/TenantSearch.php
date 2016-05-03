@@ -9,12 +9,14 @@ use yii\data\ActiveDataProvider;
 /**
  * TenantSearch represents the model behind the search form about `app\models\Tenant`.
  */
-class TenantSearch extends Tenant {
+class TenantSearch extends Tenant
+{
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['enabled'], 'integer'],
             [['key', 'name', 'domain_name'], 'safe'],
@@ -24,7 +26,8 @@ class TenantSearch extends Tenant {
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -36,7 +39,8 @@ class TenantSearch extends Tenant {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = Tenant::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -52,8 +56,8 @@ class TenantSearch extends Tenant {
         ]);
 
         $query->andFilterWhere(['like', 'key', $this->key])
-                ->andFilterWhere(['like', 'name', $this->name])
-                ->andFilterWhere(['like', 'domain_name', $this->domain_name]);
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'domain_name', $this->domain_name]);
 
         return $dataProvider;
     }
