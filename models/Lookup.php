@@ -21,8 +21,10 @@ use Yii;
  * @property integer $deleted_by
  * @property integer $deleted_at
  */
-class Lookup extends BaseActiveRecord
+class Lookup extends \yii\db\ActiveRecord
 {
+
+    use UserTrait;
 
     /**
      * Return types
