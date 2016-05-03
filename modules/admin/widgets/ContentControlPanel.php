@@ -25,6 +25,16 @@ class ContentControlPanel extends \yii\base\Widget
 
         $items = [
             [
+                'label' => Yii::t('app', 'Ad Spaces'),
+                'url' => ['ad-spaces/index'],
+                'active' => $controllerId == 'ad-spaces',
+            ],
+            [
+                'label' => Yii::t('app', 'Ads'),
+                'url' => ['ads/index'],
+                'active' => $controllerId == 'ads',
+            ],
+            [
                 'label' => Yii::t('app', 'Friendly Links'),
                 'url' => ['friendly-links/index'],
                 'active' => $controllerId == 'friendly-links',
