@@ -66,7 +66,7 @@ class InitController extends \yii\console\Controller
                 'value' => '201601010001',
                 'return_type' => \app\models\Lookup::RETURN_TYPE_STRING,
             ],
-            'statistic_code' => [
+            'statistic.code' => [
                 'description' => '统计代码',
                 'value' => '',
                 'return_type' => \app\models\Lookup::RETURN_TYPE_STRING,
