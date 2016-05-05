@@ -26,8 +26,10 @@ use yii\db\Query;
  * @property integer $deleted_by
  * @property integer $deleted_at
  */
-class GroupOption extends BaseActiveRecord
+class GroupOption extends \yii\db\ActiveRecord
 {
+    
+    use UserTrait;
 
     /**
      * @inheritdoc
