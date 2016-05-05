@@ -41,9 +41,16 @@ class Archive extends \yii\db\ActiveRecord
 
     use UserTrait;
 
+    private $_fileUploadConfig;
     public $labels;
     private $_oldOwnerLabels = [];
     public $ownerLabels = [];
+
+    public function init()
+    {
+        $this->_fileUploadConfig = FileUploadConfig::getConfig(static::className2Id(), 'thumbnail');
+        parent::init();
+    }
 
     /**
      * @inheritdoc
@@ -60,7 +67,8 @@ class Archive extends \yii\db\ActiveRecord
     {
         return [
             [['node_id', 'title', 'author', 'source', 'published_datetime'], 'required'],
-            [['node_id', 'has_thumbnail', 'status', 'published_datetime', 'clicks_count', 'comments_count', 'ordering', 'tenant_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'], 'integer'],
+            [['node_id', 'has_thumbnail', 'status', 'clicks_count', 'comments_count', 'ordering', 'tenant_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'], 'integer'],
+            [['published_datetime'], 'date', 'format' => Yii::$app->getFormatter()->datetimeFormat],
             [['enabled', 'enabled_comment'], 'boolean'],
             [['enabled'], 'default', 'value' => Constant::BOOLEAN_TRUE],
             [['enabled_comment'], 'default', 'value' => Constant::BOOLEAN_FALSE],
@@ -69,9 +77,19 @@ class Archive extends \yii\db\ActiveRecord
             [['model_name', 'source'], 'string', 'max' => 30],
             [['title', 'keyword'], 'string', 'max' => 255],
             [['tags'], 'string', 'max' => 200],
-            [['thumbnail'], 'string', 'max' => 100],
             [['author'], 'string', 'max' => 20],
             [['ownerLabels'], 'safe'],
+            ['thumbnail', 'image',
+                'extensions' => $this->_fileUploadConfig['extensions'],
+                'minSize' => $this->_fileUploadConfig['size']['min'],
+                'maxSize' => $this->_fileUploadConfig['size']['max'],
+                'tooSmall' => Yii::t('app', 'The file "{file}" is too small. Its size cannot be smaller than {limit}.', [
+                    'limit' => \app\modules\admin\extensions\ApplicationHelper::friendlyFileSize($this->_fileUploadConfig['size']['min']),
+                ]),
+                'tooBig' => Yii::t('app', 'The file "{file}" is too big. Its size cannot exceed {limit}.', [
+                    'limit' => \app\modules\admin\extensions\ApplicationHelper::friendlyFileSize($this->_fileUploadConfig['size']['max']),
+                ]),
+            ],
         ];
     }
 
@@ -85,7 +103,12 @@ class Archive extends \yii\db\ActiveRecord
             ],
             [
                 'class' => \yii\behaviors\BlameableBehavior::className()
-            ]
+            ],
+            [
+                'class' => \yadjet\behaviors\ImageUploadBehavior::className(),
+                'attribute' => 'thumbnail',
+                'thumb' => $this->_fileUploadConfig['thumb']
+            ],
         ];
     }
 
@@ -112,7 +135,7 @@ class Archive extends \yii\db\ActiveRecord
             'clicks_count' => Yii::t('archive', 'Clicks Count'),
             'enabled_comment' => Yii::t('archive', 'Enabled Comment'),
             'comments_count' => Yii::t('archive', 'Comments Count'),
-            'ordering' => Yii::t('archive', 'Ordering'),
+            'ordering' => Yii::t('app', 'Ordering'),
             'tenant_id' => Yii::t('archive', 'Tenant ID'),
             'created_at' => Yii::t('archive', 'Created At'),
             'created_by' => Yii::t('archive', 'Created By'),
@@ -180,6 +203,10 @@ class Archive extends \yii\db\ActiveRecord
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 $this->tenant_id = MTS::getTenantId();
+            }
+            
+            if ($this->published_datetime) {
+                $this->published_datetime = Yii::$app->getFormatter()->asTimestamp($this->published_datetime);
             }
 
             $this->has_thumbnail = !empty($this->thumbnail) ? Constant::BOOLEAN_TRUE : Constant::BOOLEAN_FALSE;

@@ -35,7 +35,7 @@ class ArchivesController extends ContentController
      * Lists all Archive models.
      * @return mixed
      */
-    public function actionIndex($modelName)
+    public function actionIndex($modelName = null)
     {
         $searchModel = new ArchiveSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -67,6 +67,9 @@ class ArchivesController extends ContentController
     public function actionCreate($modelName)
     {
         $model = new Archive();
+        $model->loadDefaultValues();
+        $model->author = Yii::$app->getUser()->getIdentity()->nickname;
+        $model->source = \app\models\Lookup::getValue('site.name');
         $contentModel = new ArchiveContent();
 
         $post = Yii::$app->getRequest()->post();
@@ -77,6 +80,8 @@ class ArchivesController extends ContentController
                 $model->save();
                 $model->saveContent($contentModel); // 保存正文内容
                 $transaction->commit();
+                
+                $this->redirect(['view', 'id' => $model->id]);
             } catch (Exception $e) {
                 $transaction->rollback();
                 throw new HttpException(500, $e->getMessage());

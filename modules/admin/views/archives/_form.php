@@ -55,7 +55,7 @@ use yii\widgets\ActiveForm;
         ])
         ?>
 
-        <?= $form->field($model, 'thumbnail')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'thumbnail')->fileInput() ?>
 
         <div class="entry">
             <?= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
@@ -64,7 +64,14 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="entry">
-            <?= $form->field($model, 'published_datetime')->textInput() ?>
+            <?=
+            \yadjet\datePicker\my97\DatePicker::widget([
+                'form' => $form,
+                'model' => $model,
+                'attribute' => 'published_datetime',
+                'pickerType' => 'datetime',
+            ]);
+            ?>
 
             <?= $form->field($model, 'ordering')->textInput(['value' => 0]) ?>
         </div>
@@ -75,7 +82,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'enabled_comment')->checkbox(false, null) ?>
         </div>
 
-        <?= $form->field($model, 'status')->textInput() ?>
+        <?= $form->field($model, 'status')->dropDownList(app\models\Option::statusOptions()) ?>
 
         <div class="form-group buttons">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
