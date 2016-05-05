@@ -40,6 +40,11 @@ class ContentControlPanel extends \yii\base\Widget
                 'active' => $controllerId == 'friendly-links',
             ],
             [
+                'label' => Yii::t('app', 'Slides'),
+                'url' => ['slides/index'],
+                'active' => $controllerId == 'slides',
+            ],
+            [
                 'label' => Yii::t('app', 'News'),
                 'url' => ['archives/index', 'modelName' => 'app-models-News'],
                 'active' => $controllerId == 'archives' && $modelName = 'news',
