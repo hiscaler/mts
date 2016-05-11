@@ -56,15 +56,32 @@ $config = [
                 ],
             ],
         ],
+        'view' => [
+            'defaultExtension' => 'twig',
+            'renderers' => [
+                'twig' => [
+                    'class' => '\yii\twig\ViewRenderer',
+                    'cachePath' => '@runtime/Twig/cache',
+                    'options' => YII_DEBUG ? ['debug' => true, 'auto_reload' => true] : ['auto_reload' => true],
+                    'extensions' => YII_DEBUG ? ['\Twig_Extension_Debug'] : [],
+                    'globals' => [
+                        'applicationHelper' => 'ApplicationHelperYii2',
+                        'html' => '\yii\helpers\Html',
+                        'stringHelper' => '\yii\helpers\StringHelper',
+                        'formatter' => '\yii\i18n\Formatter',
+                        'dumper' => '\yii\helpers\VarDumper',
+                        'yii' => 'Yii',
+                        'archiveGetter' => '\yadjet\mts\sdk\ArchiveGetter',
+                    ],
+                ],
+            ],
+        ],
         'db' => require(__DIR__ . '/db.php'),
-    /*
-      'urlManager' => [
-      'enablePrettyUrl' => true,
-      'showScriptName' => false,
-      'rules' => [
-      ],
-      ],
-     */
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => true,
+            'rules' => [],
+        ],
     ],
     'params' => $params,
 ];
