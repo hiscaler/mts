@@ -24,12 +24,7 @@ class ArchivesController extends Controller
 
     public function actionView($id)
     {
-        $data = \yadjet\mts\sdk\ArchiveGetter::one([
-                'condition' => [
-                    'id' => (int) $id,
-                ],
-                'expand' => 'content',
-        ]);
+        $data = \yadjet\mts\sdk\ArchiveGetter::one($id);
 
         if ($data === false) {
             throw new \yii\web\NotFoundHttpException('数据不存在。');
