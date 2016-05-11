@@ -1,0 +1,29 @@
+{% set staticUrl = app.request.baseUrl %}
+{% set formatter = app.formatter %}
+<!DOCTYPE html>
+<html lang="{{ app.language }}">
+    <head>
+        <meta charset="{{ app.charset }}"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {{ html.csrfMetaTags|raw }}
+        {% block stylesheets %}
+            <link rel="Stylesheet" type="text/css" href="{{ staticUrl }}/css/application.css" />
+        {% endblock %}
+        <title>{% if pageTitle is defined %}{{ pageTitle }}_{% endif %}{{ app.name }}</title>
+        <meta name="description" content="{% if pageDescription is defined %}{{ pageDescription }}{% endif %}" />
+        <meta name="keywords"  content="{% if pageKeywords is defined %}{{ pageKeywords }}{% endif %}" />
+    </head>
+    <body>
+        {% include '@app/views/blocks/header.twig' %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% include '@app/views/blocks/footer.twig' %}
+
+        <script type="text/javascript" src="{{ staticUrl }}/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="{{ staticUrl }}/js/application.js"></script>
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+</html>

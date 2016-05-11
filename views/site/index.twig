@@ -1,0 +1,27 @@
+{% extends "@app/views/layouts/main.twig" %}
+
+{% set pageTitle = '图片' %}
+{% set pageKeywords = '发生，凝视，亚太风物志，图片精选，摄影界' %}
+{% set pageDescription = '图片频道以发生，凝视，亚太风物志，摄影界等图片精选展示图片世界的故事。' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ staticUrl }}/css/common.css"/>
+    <link rel="stylesheet" href="{{ staticUrl }}/css/albums.index.css"/>
+{% endblock %}
+
+{% block content %}
+    {%
+    set items = archiveGetter.rows({
+        'condition': {
+           
+        },
+        'fields': 'id,node_id,title,thumbnail',
+        'limit': 4,
+        'orderBy': 'id.desc'
+    })
+    %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

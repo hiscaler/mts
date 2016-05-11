@@ -1,0 +1,32 @@
+{% extends "@app/views/layouts/main.twig" %}
+
+{% set pageTitle = 'Archives' %}
+{% set pageKeywords = 'Archive keywords' %}
+{% set pageDescription = 'Archive Description' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ staticUrl }}/css/common.css"/>
+    <link rel="stylesheet" href="{{ staticUrl }}/css/albums.index.css"/>
+{% endblock %}
+
+{% block content %}
+    {%
+    set items = archiveGetter.rows({
+        'condition': {
+           
+        },
+        'fields': 'id,node_id,title,thumbnail',
+        'limit': 4,
+        'orderBy': 'id.desc'
+    })
+    %}
+    <ul>
+        {% for item in items %}
+            <li><a href="{{ url('archives/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank">{{ item.title }}</a></li>
+            {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
