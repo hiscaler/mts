@@ -27,7 +27,8 @@ class ArchivesController extends Controller
         $data = \yadjet\mts\sdk\ArchiveGetter::one([
                 'condition' => [
                     'id' => (int) $id,
-                ]
+                ],
+                'expand' => 'content',
         ]);
 
         if ($data === false) {
