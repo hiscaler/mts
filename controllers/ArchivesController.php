@@ -29,11 +29,14 @@ class ArchivesController extends Controller
                     'id' => (int) $id,
                 ]
         ]);
+
         if ($data === false) {
-            
+            throw new \yii\web\NotFoundHttpException('数据不存在。');
         }
 
-        return $data;
+        return $this->render('view', [
+                'data' => $data,
+        ]);
     }
 
 }
