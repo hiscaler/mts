@@ -8,10 +8,8 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 use yii\web\HttpException;
 
-class BaseTree extends \yii\db\ActiveRecord
+class BaseTree extends BaseActiveRecord
 {
-
-    use UserTrait;
 
     const SEPARATOR = '~!@';
 

@@ -51,7 +51,7 @@ class Node extends BaseTree
     public function rules()
     {
         return [
-            [['alias', 'name', 'model_name', 'parent_id', 'ordering', 'entity_status'], 'required'],
+            [['name', 'model_name', 'parent_id', 'ordering', 'entity_status'], 'required'],
             [['alias', 'name', 'parameters'], 'trim'],
             ['parameters', 'default', 'value' => function() {
                     $modelName = explode('-', $this->model_name);
@@ -293,6 +293,9 @@ v:{$controllerId}/view~<id:\d+>~/{$controllerId}/view.twig~.html";
                 }
             }
 
+            if (empty($this->alias)) {
+                $this->alias = Inflector::slug(Inflector::transliterate($this->name));
+            }
             if ($this->parent_id != 0 && strpos($this->alias, '/') === false) {
                 // 别名处理
                 $parentAlias = Yii::$app->getDb()->createCommand('SELECT [[alias]] FROM {{%node}} WHERE [[id]] = :id')->bindValue(':id', $this->parent_id, PDO::PARAM_INT)->queryScalar();
