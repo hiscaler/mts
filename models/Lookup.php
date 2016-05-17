@@ -21,10 +21,8 @@ use Yii;
  * @property integer $deleted_by
  * @property integer $deleted_at
  */
-class Lookup extends \yii\db\ActiveRecord
+class Lookup extends BaseActiveRecord
 {
-
-    use UserTrait;
 
     /**
      * Return types
@@ -45,7 +43,7 @@ class Lookup extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['label', 'value', 'return_type', 'enabled'], 'required'],
             [['label', 'value', 'description'], 'trim'],
             ['label', 'match', 'pattern' => '/^[a-z][a-z.]+$/'],
@@ -53,9 +51,9 @@ class Lookup extends \yii\db\ActiveRecord
             [['value'], 'string'],
             ['enabled', 'default', 'value' => 0],
             ['enabled', 'boolean'],
-            [['return_type', 'enabled', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_by', 'deleted_at'], 'integer'],
+            [['return_type', 'enabled', 'deleted_by', 'deleted_at'], 'integer'],
             [['label', 'description'], 'string', 'max' => 255]
-        ];
+        ]);
     }
 
     /**
