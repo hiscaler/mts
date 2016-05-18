@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
-    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'common-models-Ad'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-ads']],
+    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'app-models-Ad'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-ad']],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
@@ -30,7 +30,7 @@ $this->params['menus'] = [
         'linkSelector' => '#grid-view-ads a',
     ]);
     echo GridView::widget([
-        'id' => 'grid-view-ads',
+        'id' => 'grid-view-ad',
         'dataProvider' => $dataProvider,
         'columns' => [
             [

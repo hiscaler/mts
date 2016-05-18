@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Articles');
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
-    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'common-models-Article'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-article']],
+    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'app-models-Article'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-article']],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>

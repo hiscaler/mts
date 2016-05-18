@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
-    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'common-models-AdSpace'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-ad-spaces']],
+    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'app-models-AdSpace'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-ad-space']],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
@@ -33,7 +33,7 @@ $this->params['menus'] = [
         'linkSelector' => '#grid-view-ad-spaces a',
     ]);
     echo GridView::widget([
-        'id' => 'grid-view-ad-spaces',
+        'id' => 'grid-view-ad-space',
         'dataProvider' => $dataProvider,
         'columns' => [
             [
