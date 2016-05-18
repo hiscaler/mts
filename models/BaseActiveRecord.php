@@ -2,14 +2,9 @@
 
 namespace app\models;
 
-use yadjet\helpers\StringHelper;
-use yadjet\helpers\UtilHelper;
 use Yii;
 use yii\db\ActiveQueryInterface;
 use yii\db\ActiveRecord;
-use yii\db\Exception;
-use yii\helpers\ArrayHelper;
-use yii\web\HttpException;
 
 /**
  * @property string $keywords
@@ -53,7 +48,8 @@ class BaseActiveRecord extends ActiveRecord
     public function rules()
     {
         return [
-            [['tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],];
+            [['tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer']
+        ];
     }
 
     public function behaviors()
@@ -136,9 +132,6 @@ class BaseActiveRecord extends ActiveRecord
     }
 
     // Events
-
-
-
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
