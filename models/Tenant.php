@@ -26,10 +26,8 @@ use yii\web\HttpException;
  * @property integer $updated_by
  * @property integer $updated_at
  */
-class Tenant extends \yii\db\ActiveRecord
+class Tenant extends BaseActiveRecord
 {
-
-    use UserTrait;
 
     private $_modules;
     public $modules;
@@ -47,33 +45,18 @@ class Tenant extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['name', 'language', 'timezone', 'domain_name'], 'required'],
             [['key', 'name', 'domain_name', 'description', 'date_format', 'time_format', 'datetime_format'], 'trim'],
             ['key', 'match', 'pattern' => '/^[1-9]{1}[0-9]{11}$/'],
             ['domain_name', 'match', 'pattern' => '/[a-zA-Z0-9][-a-zA-Z0-9]{1,62}(.[a-zA-Z0-9][-a-zA-Z0-9]{1,62})+.?/'],
-            [['created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
             ['enabled', 'boolean'],
             [['key', 'name', 'domain_name', 'description'], 'string', 'max' => 255],
             [['language'], 'string', 'max' => 10],
             [['timezone', 'date_format', 'time_format', 'datetime_format', 'timezone', 'domain_name', 'description'], 'string', 'max' => 20],
             ['key', 'unique'],
             ['modules', 'safe'],
-        ];
-    }
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-            ],
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className()
-            ]
-        ];
+        ]);
     }
 
     /**

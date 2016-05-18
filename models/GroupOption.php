@@ -26,10 +26,8 @@ use yii\db\Query;
  * @property integer $deleted_by
  * @property integer $deleted_at
  */
-class GroupOption extends \yii\db\ActiveRecord
+class GroupOption extends BaseActiveRecord
 {
-    
-    use UserTrait;
 
     /**
      * @inheritdoc
@@ -44,16 +42,16 @@ class GroupOption extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['group_name', 'text', 'value', 'ordering'], 'required'],
             ['group_name', 'match', 'pattern' => '/^[a-z][a-z.]+$/'],
             ['alias', 'match', 'pattern' => '/^[a-z-]+$/'],
             [['group_name', 'value'], 'unique', 'targetAttribute' => ['group_name', 'value', 'tenant_id']],
             [['alias'], 'unique', 'targetAttribute' => ['alias', 'tenant_id']],
-            [['enabled', 'defaulted', 'ordering', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_by', 'deleted_at'], 'integer'],
+            [['enabled', 'defaulted', 'ordering', 'deleted_by', 'deleted_at'], 'integer'],
             [['enabled', 'defaulted'], 'boolean'],
             [['group_name', 'text', 'value', 'alias', 'description'], 'string', 'max' => 255]
-        ];
+        ]);
     }
 
     /**

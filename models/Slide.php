@@ -26,10 +26,8 @@ use Yii;
  * @property integer $deleted_at
  * @property integer $deleted_by
  */
-class Slide extends \yii\db\ActiveRecord
+class Slide extends BaseActiveRecord
 {
-
-    use UserTrait;
 
     /**
      * 链接打开窗口
@@ -58,14 +56,14 @@ class Slide extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['title', 'enabled', 'status', 'ordering'], 'required'],
             [['title', 'url'], 'trim'],
             ['picture', 'required', 'on' => 'insert'],
             ['group_id', 'default', 'value' => 0],
             ['url', 'url'],
             ['enabled', 'default', 'value' => 0],
-            [['group_id', 'status', 'ordering', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_at', 'deleted_by'], 'integer'],
+            [['group_id', 'status', 'ordering', 'deleted_at', 'deleted_by'], 'integer'],
             [['title', 'url', 'url_open_target'], 'string', 'max' => 255],
             ['picture', 'image',
                 'extensions' => $this->_fileUploadConfig['extensions'],
@@ -78,26 +76,18 @@ class Slide extends \yii\db\ActiveRecord
                     'limit' => ApplicationHelper::friendlyFileSize($this->_fileUploadConfig['size']['max']),
                 ]),
             ],
-        ];
+        ]);
     }
 
     public function behaviors()
     {
-        return [
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-            ],
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className()
-            ],
+        return array_merge(parent::behaviors(), [
             [
                 'class' => ImageUploadBehavior::className(),
                 'attribute' => 'picture',
                 'thumb' => $this->_fileUploadConfig['thumb']
             ],
-        ];
+        ]);
     }
 
     /**
@@ -142,9 +132,6 @@ class Slide extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            if ($insert) {
-                $this->tenant_id = MTS::getTenantId();
-            }
             if (empty($this->url)) {
                 $this->url_open_target = null;
             } else {

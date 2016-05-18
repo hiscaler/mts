@@ -29,10 +29,8 @@ use yii\web\UploadedFile;
  * @property integer $deleted_by
  * @property integer $deleted_at
  */
-class FriendlyLink extends \yii\db\ActiveRecord
+class FriendlyLink extends BaseActiveRecord
 {
-
-    use UserTrait;
 
     /**
      * 友情链接类型
@@ -68,13 +66,13 @@ class FriendlyLink extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['type', 'title', 'url', 'url_open_target', 'ordering', 'status'], 'required'],
             [['title', 'url', 'description'], 'trim'],
             ['group_id', 'default', 'value' => 0],
             [['url'], 'url'],
             [['enabled'], 'boolean'],
-            [['group_id', 'type', 'ordering', 'status', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_by', 'deleted_at'], 'integer'],
+            [['group_id', 'type', 'ordering', 'status', 'deleted_by', 'deleted_at'], 'integer'],
             [['title', 'description', 'url', 'url_open_target'], 'string', 'max' => 255],
             ['logo_path', 'image',
                 'extensions' => $this->_fileUploadConfig['extensions'],
@@ -89,7 +87,7 @@ class FriendlyLink extends \yii\db\ActiveRecord
                     'limit' => ApplicationHelper::friendlyFileSize($this->_fileUploadConfig['size']['max']),
                 ]),
             ],
-        ];
+        ]);
     }
 
     /**
@@ -109,21 +107,13 @@ class FriendlyLink extends \yii\db\ActiveRecord
 
     public function behaviors()
     {
-        return [
+        return array_merge(parent::behaviors(), [
             [
                 'class' => ImageUploadBehavior::className(),
                 'attribute' => 'logo_path',
                 'thumb' => $this->_fileUploadConfig['thumb']
             ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-            ],
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className()
-            ]
-        ];
+        ]);
     }
 
     public static function typeOptions()
@@ -171,18 +161,6 @@ class FriendlyLink extends \yii\db\ActiveRecord
                 }
             }
 
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if ($insert) {
-                $this->tenant_id = MTS::getTenantId();
-            }
             return true;
         } else {
             return false;

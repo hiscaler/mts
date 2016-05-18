@@ -27,10 +27,8 @@ use yii\helpers\Inflector;
  * @property integer $deleted_by
  * @property integer $deleted_at
  */
-class FileUploadConfig extends \yii\db\ActiveRecord
+class FileUploadConfig extends BaseActiveRecord
 {
-
-    use UserTrait;
 
     public $model_attribute;
 
@@ -60,7 +58,7 @@ class FileUploadConfig extends \yii\db\ActiveRecord
             ['attribute', 'match', 'pattern' => '/^[a-zA-Z0-9_]+$/'],
 //            ['attribute', 'checkAttribute'],
             [['model_name', 'attribute'], 'unique', 'targetAttribute' => ['model_name', 'attribute', 'tenant_id']],
-            [['type', 'min_size', 'max_size', 'thumb_width', 'thumb_height', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_by', 'deleted_at'], 'integer'],
+            [['type', 'min_size', 'max_size', 'thumb_width', 'thumb_height', 'deleted_by', 'deleted_at'], 'integer'],
             ['min_size', 'default', 'value' => 100],
             ['max_size', 'default', 'value' => 200],
             ['max_size', 'checkMaxSize'],

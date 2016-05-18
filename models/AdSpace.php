@@ -42,14 +42,14 @@ class AdSpace extends BaseActiveRecord
      */
     public function rules()
     {
-        return [
-            [['group_id', 'width', 'height', 'status', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
+        return array_merge(parent::rules(), [
+            [['group_id', 'width', 'height', 'status'], 'integer'],
             [['group_id', 'status'], 'default', 'value' => 0],
             ['enabled', 'boolean'],
             [['alias', 'name', 'width', 'height', 'description'], 'required'],
             [['alias', 'name', 'description'], 'trim'],
             [['alias', 'name', 'description'], 'string', 'max' => 255]
-        ];
+        ]);
     }
 
     /**

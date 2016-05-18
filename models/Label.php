@@ -21,10 +21,8 @@ use yii\helpers\Inflector;
  * @property integer $updated_by
  * @property integer $updated_at 
  */
-class Label extends \yii\db\ActiveRecord
+class Label extends BaseActiveRecord
 {
-
-    use UserTrait;
 
     /**
      * @inheritdoc
@@ -39,28 +37,14 @@ class Label extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['name', 'ordering'], 'required'],
             ['alias', 'match', 'pattern' => '/^[a-z]+[.]?[a-z-]+[a-z]$/'],
             ['alias', 'unique', 'targetAttribute' => ['alias', 'tenant_id']],
             [['enabled'], 'boolean'],
-            [['frequency', 'ordering', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
+            [['frequency', 'ordering'], 'integer'],
             [['alias', 'name'], 'string', 'max' => 255]
-        ];
-    }
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-            ],
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className()
-            ]
-        ];
+        ]);
     }
 
     /**
@@ -169,7 +153,6 @@ class Label extends \yii\db\ActiveRecord
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 $this->frequency = 0;
-                $this->tenant_id = MTS::getTenantId();
             }
             if (empty($this->alias)) {
                 $this->alias = Inflector::slug($this->name);

@@ -66,7 +66,7 @@ class Ad extends BaseActiveRecord
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['space_id', 'name', 'type', 'begin_datetime', 'end_datetime'], 'required'],
             [['name', 'url', 'message'], 'trim'],
             ['url', 'url'],
@@ -74,7 +74,7 @@ class Ad extends BaseActiveRecord
             [['file_path'], 'required', 'on' => ['picture', 'flash']],
             ['enabled', 'boolean'],
             [['begin_datetime', 'end_datetime'], 'date', 'format' => Yii::$app->getFormatter()->datetimeFormat],
-            [['space_id', 'type', 'status', 'views_count', 'clicks_count', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_at', 'deleted_by'], 'integer'],
+            [['space_id', 'type', 'status', 'views_count', 'clicks_count', 'deleted_at', 'deleted_by'], 'integer'],
             [['text'], 'string'],
             [['name', 'url', 'message'], 'string', 'max' => 255],
             ['file_path', 'file',
@@ -101,7 +101,7 @@ class Ad extends BaseActiveRecord
                     'limit' => ApplicationHelper::friendlyFileSize($this->_fileUploadConfig['size']['max']),
                 ]),
             ],
-        ];
+        ]);
     }
 
     public function behaviors()
