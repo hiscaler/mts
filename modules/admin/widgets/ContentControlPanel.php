@@ -45,6 +45,11 @@ class ContentControlPanel extends \yii\base\Widget
                 'active' => $controllerId == 'slides',
             ],
             [
+                'label' => Yii::t('app', 'Articles'),
+                'url' => ['articles/index'],
+                'active' => $controllerId == 'articles',
+            ],
+            [
                 'label' => Yii::t('app', 'News'),
                 'url' => ['archives/index', 'modelName' => 'app-models-News'],
                 'active' => $controllerId == 'archives' && $modelName = 'news',

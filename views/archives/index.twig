@@ -12,19 +12,12 @@
 
 {% block content %}
     {%
-    set items = archiveGetter.rows({
-        'condition': {
-           
-        },
-        'fields': 'id,node_id,title,thumbnail',
-        'limit': 4,
-        'orderBy': 'id.desc'
-    })
+    set items = archiveGetter.rows('id,node_id,title,thumbnail', null, 'id.desc', 0, 10)
     %}
     <ul>
         {% for item in items %}
             <li><a href="{{ url('archives/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank">{{ item.title }}</a></li>
-            {% endfor %}
+        {% endfor %}
     </ul>
 {% endblock %}
 
