@@ -135,7 +135,7 @@ $baseUrl = Yii::$app->getRequest()->baseUrl;
                     },
                 ],
                 'headerOptions' => ['class' => 'last'],
-                'contentOptions' => ['class' => 'btn-4'],
+                'contentOptions' => ['class' => 'buttons-4'],
             ],
         ],
     ]);

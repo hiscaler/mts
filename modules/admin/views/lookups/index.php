@@ -99,7 +99,7 @@ $this->params['menus'] = [
             [
                 'class' => 'yii\grid\ActionColumn',
                 'headerOptions' => ['class' => 'last'],
-                'contentOptions' => ['class' => 'btn-3'],
+                'contentOptions' => ['class' => 'buttons-3'],
             ],
         ],
     ]);

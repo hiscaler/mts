@@ -389,16 +389,16 @@
 .grid-view table.table td a.float-update:hover {
     background: url(../images/update.png) no-repeat right center;
 }
-.grid-view table.table td.btn { width: 20px; _width: 30px; }
-.grid-view table.table td.btn-2 { width: 40px; _width: 40px; }
-.grid-view table.table td.btn-3 { width: 60px; _width: 70px; }
-.grid-view table.table td.btn-4 { width: 80px; _widht: 90px; }
-.grid-view table.table td.btn-5 { width: 100px; _widht: 110px; }
-.grid-view table.table td.btn-6 { width: 120px; _widht: 130px; }
-.grid-view table.table td.btn-7 { width: 140px; _widht: 150px; }
-.grid-view table.table td.btn-8 { width: 160px; _widht: 170px; }
-.grid-view table.table td.btn-9 { width: 180px; _widht: 190px; }
-.grid-view table.table td.btn-10 { width: 200px; _widht: 210px; }
+.grid-view table.table td.button { width: 20px; _width: 30px; }
+.grid-view table.table td.buttons-2 { width: 40px; _width: 40px; }
+.grid-view table.table td.buttons-3 { width: 60px; _width: 70px; }
+.grid-view table.table td.buttons-4 { width: 80px; _widht: 90px; }
+.grid-view table.table td.buttons-5 { width: 100px; _widht: 110px; }
+.grid-view table.table td.buttons-6 { width: 120px; _widht: 130px; }
+.grid-view table.table td.buttons-7 { width: 140px; _widht: 150px; }
+.grid-view table.table td.buttons-8 { width: 160px; _widht: 170px; }
+.grid-view table.table td.buttons-9 { width: 180px; _widht: 190px; }
+.grid-view table.table td.buttons-10 { width: 200px; _widht: 210px; }
 /*******************************************************************************
  * IP Access Rule
  ******************************************************************************/
