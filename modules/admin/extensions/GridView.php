@@ -60,8 +60,9 @@ class GridView extends \yii\grid\GridView
 
     private function getColumnConfigs()
     {
+        $name = str_replace('grid-view', '', $this->id);
         $configs = Yii::$app->getDb()->createCommand('SELECT [[name]], [[attribute]], [[css_class]], [[css_style]], [[visible]] FROM {{%grid_column_config}} WHERE [[name]] = :name AND [[user_id]] = :userId AND [[tenant_id]] = :tenantId')->bindValues([
-                ':name' => $this->id,
+                ':name' => 'app-models-' . \yii\helpers\Inflector::id2camel($name),
                 ':userId' => Yii::$app->getUser()->getId(),
                 ':tenantId' => MTS::getTenantId()
             ])->queryAll();
