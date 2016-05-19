@@ -1,6 +1,14 @@
-
-<footer>
-    <div id="footer">
-        Copyright {{ now | date('Y') }} By {{ app.name }}
-    </div>
-</footer>
+<div id="page-ft">
+    <footer>
+        <div id="footer">
+            <p>
+                <span>地址：{{ lookupGetter.one('address') }}</span>
+                <span>电话：{{ lookupGetter.one('tel') }}</span>
+            </p>
+            <p>
+                <span>Copyright &copy; {{ now | date('Y') }} 版权所有</span>
+                <span>ICP：{{ lookups.icp }}</span>
+            </p>
+        </div>
+    </footer>
+</div>

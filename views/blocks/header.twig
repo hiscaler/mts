@@ -1,4 +1,81 @@
-<ul>
-    <li><a href="{{ url(['site/index']) }}">Homepage</a></li>
-    <li><a href="{{ url(['archives/index']) }}">Archives</a></li>
-</ul>
+<div id="page-hd">
+    <div id="header"></div>
+    <div id="main-menu">
+        {% set controllerId = app.controller.id %}
+        {% set actionId = app.controller.action.id %}
+        {% set nodeValue = app.request.get('node') %}
+        {% set pageAlias = app.request.get('alias') %}
+        {% set mainMenus = [
+                {
+                    'url': app.homeUrl,
+                    'label': '首页',
+                    'active': controllerId == 'site' and actionId == 'index',
+                },
+                {
+                    'url': url('page/index', {'alias': 'about'}),
+                    'label': '公司介绍',
+                    'active': controllerId == 'page' and actionId == 'index' and pageAlias == 'about',
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '注册公司',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '工商代办',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '工商转让',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '会计服务',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '财务外包',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '社保代理',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '代理公积金',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '许可资质',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': '商标注册',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('news/index', {'node': 2}),
+                    'label': 'POS 机代理',
+                    'active': controllerId == 'news' and actionId == 'index' and nodeValue == 2,
+                },
+                {
+                    'url': url('page/index', {'alias': 'contact-us'}),
+                    'label': '联系我们',
+                    'active': controllerId == 'page' and actionId == 'index' and pageAlias == 'contact-us',
+                },
+            ] %}
+        <ul>
+            {% for item in mainMenus %}
+                <li{{ item.active ? ' class="active"' : '' }}><a href="{{ item.url }}">{{ item.label }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

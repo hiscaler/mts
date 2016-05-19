@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 /**
- * 资讯管理
+ * 资讯
  * 
  * @author hiscaler <hiscaler@gmail.com>
  */

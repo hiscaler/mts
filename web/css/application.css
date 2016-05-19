@@ -86,7 +86,7 @@ cite {
 }
 .container {
     width: 1000px;
-    margin: 0 auto 20px 0;
+    margin: 0 auto 20px auto;
 }
 /* 清除浮动 */
 .clearfix:after, .wrapper:after, .container:after {
@@ -254,6 +254,12 @@ ul.pagination .hidden a {
 }
 #main-menu li a {
     color: #FFF;
+}
+#main-menu li.active {
+    background-color: #FFF;
+}
+#main-menu li.active a {
+    color: #d30007;
 }
 /*******************************************************************************
  * 幻灯片
@@ -468,6 +474,24 @@ ul.pagination .hidden a {
 }
 .widget-company-register-flow .bd li {
     line-height: 24px;
+}
+/*******************************************************************************
+ * 内页
+ ******************************************************************************/
+#page-inner {
+    width: 1000px;
+    margin: 0 auto;
+}
+#page-inner #page-inner-left,
+#page-inner #page-inner-right {
+    float: left;
+    display: block;
+    width: 300px;
+    margin-right: 20px;
+}
+#page-inner #page-inner-right {
+    width: 680px;
+    margin-right: 0;
 }
 /*******************************************************************************
  * List item

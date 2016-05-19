@@ -24,27 +24,10 @@ set lookups = lookupGetter.rows({
     <body>
         <div id="page">
             {% include '@app/views/blocks/header.twig' %}
-            <div id="page-bd" class="clearfix">
+            <div id="page-bd">
                 <div id="slides"></div>
-                <div id="page-inner">
-                    <div id="page-inner-left">
-                        <div class="widget-common">
-                            <div class="hd">新闻资讯</div>
-                            <div class="bd">
-                                {% set items = archiveGetter.rows('id,node_id,title', {'node': 2}, 'id.desc', 0, 10) %}
-                                <ul class="data-list">
-                                    {% for item in items %}
-                                        <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
-                                        {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="page-inner-right">
-                        {% block content %}
-                        {% endblock %}
-                    </div>
-                </div>
+                {% block content %}
+                {% endblock %}
             </div>
             {% include '@app/views/blocks/footer.twig' %}
         </div>

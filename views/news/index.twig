@@ -1,0 +1,16 @@
+{% extends "@app/views/layouts/main.twig" %}
+
+{% set pageTitle = '首页' %}
+{% set pageKeywords = '' %}
+{% set pageDescription = '' %}
+
+{% block content %}
+
+    {% set items = archiveGetter.rows('id,node_id,title', {'node': 2}, 'id.desc', 0, 10) %}
+    <ul class="data-list">
+        {% for item in items %}
+            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
