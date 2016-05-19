@@ -1,0 +1,13 @@
+{% extends "@app/views/layouts/main.twig" %}
+
+{% block content %}
+    <div class="site-error">
+
+        <h1>{{ name }}</h1>
+
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+
+    </div>
+{% endblock %}
