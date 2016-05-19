@@ -1,27 +1,405 @@
 {% extends "@app/views/layouts/main.twig" %}
 
-{% set pageTitle = '图片' %}
-{% set pageKeywords = '发生，凝视，亚太风物志，图片精选，摄影界' %}
-{% set pageDescription = '图片频道以发生，凝视，亚太风物志，摄影界等图片精选展示图片世界的故事。' %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ staticUrl }}/css/common.css"/>
-    <link rel="stylesheet" href="{{ staticUrl }}/css/albums.index.css"/>
-{% endblock %}
+{% set pageTitle = '首页' %}
+{% set pageKeywords = '' %}
+{% set pageDescription = '' %}
 
 {% block content %}
-    {%
-    set items = archiveGetter.rows({
-        'condition': {
-           
-        },
-        'fields': 'id,node_id,title,thumbnail',
-        'limit': 4,
-        'orderBy': 'id.desc'
-    })
-    %}
-{% endblock %}
 
-{% block javascripts %}
+    <div class="container">
+        <div class="qq-list">
+            <ul>
+                <li class="item">
+                    <div class="name">工商代办</div>
+                    <div class="tel">
+                        陈经理：13017289259
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">代理记账</div>
+                    <div class="tel">
+                        陈经理：13017289259
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">资质代理　</div>
+                    <div class="tel">
+                        陈经理：13017289259
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="name">社保公积金代理</div>
+                    <div class="tel">
+                        陈经理：13017289259
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 服务项目 -->
+        <div class="widget-service-items">
+            <div class="hd">
+                <a href="">更多<em>+</em></a>
+            </div>
+            <div class="bd">
+                <img src="{{ baseUrl }}/images/service-items.jpg" alt="服务项目" />
+            </div>
+        </div>
+        <!-- // 服务项目 -->
+    </div>
+
+    <div class="container">
+        <div class="homepage-grid-3">
+            <div class="grid-3-l">
+                <div class="widget-news-slides">
+                    {% set items = archiveGetter.rows('id,node_id,title,thumbnail', {'hasThumbnail': 'y'}, 'id.desc', 0, 6) %}
+                    {% set pics = [] %}
+                    {% set texts = [] %}
+                    {% set links = [] %}
+                    <ul>
+                        {% for item in items %}
+                            {% set pics = pics | merge([item.thumbnail]) %}
+                            {% set texts = texts | merge([item.title]) %}
+                            {% set links = links | merge([url('news/view', {'node': item.node_id, 'id': item.id}) | raw]) %}
+                        {% endfor %}
+                        {% set pics = pics | join('|') %}
+                        {% set texts = texts | join('|') %}
+                        {% set links = links | join('|') %}
+                    </ul>
+                    <script type="text/javascript">
+                        var interval_time = 5, focus_width = 300, focus_height = 240, text_height = 1, text_mtop = 0, text_lm = 0, textmargin = text_mtop + "|" + text_lm, textcolor = "#ffffff|#ffffff", text_align = 'center', swf_height = focus_height, text_size = 12, borderStyle = "0|0xCCCCCC|100", pics = '{{ pics }}', links = '{{ links }}', texts = '{{ texts }}';
+                        var output = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="' + focus_width + '" height="' + swf_height + '">';
+                        output = output + '<param name="allowScriptAccess" value="sameDomain"><param name="movie" value="{{ baseUrl ~ '/flash/focus.swf' }}"> <param name="quality" value="high"><param name="Wmode" value="transparent">';
+                        output = output + '<param name="menu" value="false"><param name="wmode" value="opaque">';
+                        output = output + '<param name="FlashVars" value="pics=' + pics + '&links=' + links + '&texts=' + texts + '&borderwidth=' + focus_width + '&borderheight=' + focus_height + '&textheight=' + text_height + '&textmargin=' + textmargin + '&textcolor=' + textcolor + '&borderstyle=' + borderStyle + '&text_align=' + text_align + '&interval_time=' + interval_time + '&textsize=' + text_size + '">';
+                        output = output + '<embed src="{{ baseUrl ~ '/flash/focus.swf' }}" wmode="opaque" FlashVars="pics=' + pics + '&links=' + links + '&texts=' + texts + '&borderwidth=' + focus_width + '&borderheight=' + focus_height + '&textheight=' + text_height + '&textmargin=' + textmargin + '&textcolor=' + textcolor + '&borderstyle=' + borderStyle + '&text_align=' + text_align + '&interval_time=' + interval_time + '&textsize=' + text_size + '" menu="false" quality="high" width="' + focus_width + '" height="' + swf_height + '" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />';
+                        document.write(output + '</object>');
+                    </script>
+                </div>
+            </div>
+
+            <div class="grid-3-m">
+                <div class="widget-homepage-about">
+                    <div class="hd">
+                        公司简介
+                    </div>
+                    <div class="bd">
+                        {% set article = articleGetter.one('guan-yu-wo-men') %}
+                        {% if article.picture_path is not empty %}
+                            <img src="{{ baseUrl ~ article.picture_path }}" alt="公司简介" />
+                        {% endif %}
+                        {{ article.content | raw }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-3-r">
+                <div class="widget-homepage-news">
+                    <div class="hd">新闻资讯</div>
+                    <div class="bd">
+                        {% set items = archiveGetter.rows('id,node_id,title', {'node': 2}, 'id.desc', 0, 10) %}
+                        <ul class="data-list">
+                            {% for item in items %}
+                                <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 工商代办 -->
+    <div class="container">
+        <div class="widget-homepage-common gsdb">
+            <div class="hd">
+                <div class="l"></div>
+                <div class="title">工商代办</div>
+                <div class="r"></div>
+            </div>
+            <div class="bd">
+                <div class="l">
+                    <div class="tabs">
+                        <ul>
+                            <li class="active"><a href="{{ url('news/index', {'node': 1}) }}">公司注册</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">工商代办</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">外资公司</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">企业年检</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">个体工商</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">合作社</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">许可资质</a></li>
+                            <li class="last"><a href="{{ url('news/index', {'node': 1}) }}">更多</a></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="body-l">
+                            <div class="widget-common">
+                                <div class="hd">
+                                    <a href="">更多</a>
+                                    热门外资公司注册
+                                </div>
+                                <div class="bd">
+                                    <ul class="icons clearfix">
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="body-r">
+
+                            <div class="widget-simple">
+                                <div class="hd">推荐服务</div>
+                                <div class="bd">
+                                    <ul class="data-list clearfix">
+                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget-simple">
+                                <div class="hd">外资公司注册流程</div>
+                                <div class="bd">
+                                    <ul class="data-list clearfix">
+                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="r">
+                    <div class="widget-common">
+                        <div class="hd">最新案例</div>    
+                        <div class="bd">
+                            <ul class="data-list">
+                                {% for item in items %}
+                                    <li><a href="{{ url('cases/view', {'node': item.node_id, 'id': item.id}) }}" title="{{ item.title }}">{{ item.title }}</a></li>
+                                    {% endfor %}
+                            </ul>
+                        </div>    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- // 工商代办 -->
+
+    <!-- 会计服务 -->
+    <div class="container">
+        <div class="widget-homepage-common gsdb">
+            <div class="hd">
+                <div class="l"></div>
+                <div class="title">会计服务</div>
+                <div class="r"></div>
+            </div>
+            <div class="bd">
+                <div class="l">
+                    <div class="tabs">
+                        <ul>
+                            <li class="active"><a href="{{ url('news/index', {'node': 1}) }}">财务税务</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">记账报税</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">旧账整理</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">汇算清缴</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">实务操作</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">验资审核</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">会计顾问</a></li>
+                            <li class="last"><a href="{{ url('news/index', {'node': 1}) }}">更多</a></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="body-l">
+                            <div class="widget-common">
+                                <div class="hd">
+                                    <a href="">更多</a>
+                                    热门外资公司注册
+                                </div>
+                                <div class="bd">
+                                    <ul class="icons clearfix">
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="body-r">
+
+                            <div class="widget-simple">
+                                <div class="hd">推荐服务</div>
+                                <div class="bd">
+                                    <ul class="data-list clearfix">
+                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget-simple">
+                                <div class="hd">外资公司注册流程</div>
+                                <div class="bd">
+                                    <ul class="data-list clearfix">
+                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="r">
+                    <div class="widget-common">
+                        <div class="hd">最新案例</div>    
+                        <div class="bd">
+                            <ul class="data-list">
+                                {% for item in items %}
+                                    <li><a href="{{ url('cases/view', {'node': item.node_id, 'id': item.id}) }}" title="{{ item.title }}">{{ item.title }}</a></li>
+                                    {% endfor %}
+                            </ul>
+                        </div>    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- // 会计服务 -->
+
+    <!-- 社保、公积金代理 -->
+    <div class="container">
+        <div class="widget-homepage-common sbgjjdl">
+            <div class="hd">
+                <div class="l"></div>
+                <div class="title">社保、公积金代理</div>
+                <div class="r"></div>
+            </div>
+            <div class="bd">
+                <div class="l">
+                    <div class="tabs">
+                        <ul>
+                            <li class="active"><a href="{{ url('news/index', {'node': 1}) }}">长沙社保代理</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">社保代缴</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">个人社保挂靠</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">企业社保挂靠</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">社保外包</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">公积金代缴</a></li>
+                            <li><a href="{{ url('news/index', {'node': 1}) }}">公积金挂靠</a></li>
+                            <li class="last"><a href="{{ url('news/index', {'node': 1}) }}">更多</a></li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="body-l">
+                            <div class="widget-common">
+                                <div class="hd">
+                                    <a href="">更多</a>
+                                    热门外资公司注册
+                                </div>
+                                <div class="bd">
+                                    <ul class="icons clearfix">
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                        <li><a href=""><img src="{{ baseUrl }}/images/icon.jpg" /></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="body-r">
+
+                            <div class="widget-simple">
+                                <div class="hd">推荐服务</div>
+                                <div class="bd">
+                                    <ul class="data-list clearfix">
+                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget-simple">
+                                <div class="hd">外资公司注册流程</div>
+                                <div class="bd">
+                                    <ul class="data-list clearfix">
+                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="r">
+                    <div class="widget-common">
+                        <div class="hd">最新案例</div>    
+                        <div class="bd">
+                            <ul class="data-list">
+                                {% for item in items %}
+                                    <li><a href="{{ url('cases/view', {'node': item.node_id, 'id': item.id}) }}" title="{{ item.title }}">{{ item.title }}</a></li>
+                                    {% endfor %}
+                            </ul>
+                        </div>    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- // 社保、公积金代理 -->
+
+    <div class="container">
+        <div class="widget-company-register-flow">
+            <div class="hd"><img src="{{ baseUrl }}/images/flow.jpg" alt=""></div>
+            <div class="bd">
+                <div class="l">
+                    <div class="title">公司注册流程</div>
+                    <ol>
+                        <li>1、电话咨询、QQ资询，与大慧堂客服预约一对一面谈；</li>
+                        <li>2、签约、准备资料：章程、经营范围等工商注册资料；</li>
+                        <li>3、名称查重：根据提供的公司名进行查询，是否重名；</li>
+                        <li>4、名称核准：到工商登记口核准，领取核准通知书；</li>
+                        <li>5、工商注册登记：带上所有的资料到工商登记窗口受理；</li>
+                        <li>6、领取执照：3到5个工作晶后领取三证合一营业执照。</li>
+                    </ol>
+                </div>
+                <div class="r">
+
+                    <div class="title">公司注册所需资料</div>
+                    <ol>
+                        <li>1、电话咨询、QQ资询，与大慧堂客服预约一对一面谈；</li>
+                        <li>2、签约、准备资料：章程、经营范围等工商注册资料；</li>
+                        <li>3、名称查重：根据提供的公司名进行查询，是否重名；</li>
+                        <li>4、名称核准：到工商登记口核准，领取核准通知书；</li>
+                        <li>5、工商注册登记：带上所有的资料到工商登记窗口受理；</li>
+                        <li>6、领取执照：3到5个工作晶后领取三证合一营业执照。</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="free-consult-tel">免费咨询电话：186-7311-6524（蒋经理）</div>
+    </div>
+
 {% endblock %}

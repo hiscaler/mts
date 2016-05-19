@@ -72,6 +72,8 @@ $config = [
                         'dumper' => '\yii\helpers\VarDumper',
                         'yii' => 'Yii',
                         'archiveGetter' => '\yadjet\mts\sdk\ArchiveGetter',
+                        'articleGetter' => '\yadjet\mts\sdk\ArticleGetter',
+                        'lookupGetter' => '\yadjet\mts\sdk\LookupGetter',
                     ],
                 ],
             ],
