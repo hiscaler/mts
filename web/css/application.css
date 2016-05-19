@@ -493,6 +493,18 @@ ul.pagination .hidden a {
     width: 680px;
     margin-right: 0;
 }
+#page-inner #page-inner-right #page-inner-title {
+    height: 32px;
+    line-height: 32px;
+    border-left: #d30007 solid 3px;
+    padding-left: 10px;
+    font-size: 14px;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+#page-inner #page-inner-right #page-inner-body {
+    padding: 10px 0;
+}
 /*******************************************************************************
  * List item
  ******************************************************************************/
@@ -525,26 +537,28 @@ ul.pagination .hidden a {
 /*******************************************************************************
  * 资讯详情
  ******************************************************************************/
-.news-detail {
+.news-view {
     background-color: #fff;
     padding: 10px;
     border-radius: 5px;
 }
-.news-detail .title {
+.news-view .title {
     margin: .3em;
     font-size: 20px;
+    text-align: center;
 }
-.news-detail .misc {
+.news-view .misc {
     line-height: 30px;
     color: #888;
     font-size: 14px;
     margin-bottom: 10px;
+    text-align: center;
 }
-.news-detail .misc span {
+.news-view .misc span {
     margin: 0 10px;
 }
-.news-detail .detail-content {}
-.news-detail .detail-content p {
+.news-view .detail-content {}
+.news-view .detail-content p {
     margin-bottom: 20px;
 }
 /*******************************************************************************

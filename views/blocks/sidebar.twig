@@ -1,0 +1,23 @@
+<div class="widget-site-navigation">
+    <div class="hd">站点导航</div>
+    <div class="bd">
+        {% set items = archiveGetter.rows('id,node_id,title', {}, 'clicks_count.desc', 0, 10) %}
+        <ul class="data-list">
+            {% for item in items %}
+                <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+        
+<div class="widget-common">
+    <div class="hd">热门内容</div>
+    <div class="bd">
+        {% set items = archiveGetter.rows('id,node_id,title', {}, 'clicks_count.desc', 0, 10) %}
+        <ul class="data-list">
+            {% for item in items %}
+                <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

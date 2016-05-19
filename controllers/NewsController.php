@@ -24,7 +24,7 @@ class NewsController extends Controller
 
     public function actionView($id)
     {
-        $data = false;
+        $data = \yadjet\mts\sdk\ArchiveGetter::one($id);
 
         return $this->render('view', [
                 'data' => $data

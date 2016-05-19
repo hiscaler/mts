@@ -28,21 +28,16 @@ set lookups = lookupGetter.rows({
                 <div id="slides"></div>
                 <div id="page-inner">
                     <div id="page-inner-left">
-                        <div class="widget-common">
-                            <div class="hd">新闻资讯</div>
-                            <div class="bd">
-                                {% set items = archiveGetter.rows('id,node_id,title', {'node': 2}, 'id.desc', 0, 10) %}
-                                <ul class="data-list">
-                                    {% for item in items %}
-                                        <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
-                                        {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
+                        {% include '@app/views/blocks/sidebar.twig' %}
                     </div>
                     <div id="page-inner-right">
-                        {% block content %}
-                        {% endblock %}
+                        <div id="page-inner-title">
+                            {{ currentNodeName }}
+                        </div>
+                        <div id="page-inner-body">
+                            {% block content %}
+                            {% endblock %}
+                        </div>
                     </div>
                 </div>
             </div>

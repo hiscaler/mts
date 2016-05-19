@@ -74,6 +74,7 @@ $config = [
                         'archiveGetter' => '\yadjet\mts\sdk\ArchiveGetter',
                         'articleGetter' => '\yadjet\mts\sdk\ArticleGetter',
                         'lookupGetter' => '\yadjet\mts\sdk\LookupGetter',
+                        'nodeGetter' => '\yadjet\mts\sdk\NodeGetter',
                     ],
                 ],
             ],

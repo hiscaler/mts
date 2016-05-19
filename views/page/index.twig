@@ -1,8 +1,9 @@
 {% extends "@app/views/layouts/main.twig" %}
 
-{% set pageTitle = '首页' %}
-{% set pageKeywords = '' %}
-{% set pageDescription = '' %}
+{% set pageTitle = data.title %}
+{% set pageKeywords = data.keywords %}
+{% set pageDescription = data.description %}
+{% set currentNodeName = data.title %}
 
 {% block content %}
 
