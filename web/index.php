@@ -10,4 +10,22 @@ require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 
 $config = require(__DIR__ . '/../config/web.php');
 
-(new yii\web\Application($config))->run();
+$application = (new yii\web\Application($config));
+
+$urlRulesCacheKey = 'url-rules-cache-key';
+$cache = Yii::$app->getCache();
+$urlRules = $cache->get($urlRulesCacheKey);
+if ($urlRules === false) {
+    // URL 规则处理
+    $urlRules = \yadjet\mts\sdk\ApplicationGetter::urlRules();
+    $urlRules = array_merge($urlRules, [
+        '<controller:\w+>/' => '<controller>/index',
+        '<controller>/<id:\d+>' => 'controller/view',
+        '<controller:\w+>/<id:\w+>.html' => '<controller>/view'
+    ]);
+
+    $cache->set($urlRulesCacheKey, $urlRules, 86400);
+}
+
+Yii::$app->getUrlManager()->addRules($urlRules);
+$application->run();
