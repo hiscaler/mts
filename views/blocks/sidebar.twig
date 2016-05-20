@@ -15,7 +15,6 @@
                             {% set cssClass = 'active' %}
                         {% endif %}
                     {% endif %}
-                    
                     <li{{ cssClass is not empty ? (' class="' ~ cssClass ~ '"') | raw : '' }}><a href="{{ url('news/index', {'node': item.id}) }}" title="{{ item.name }}">{{ item.name }}</a></li>
                 {% endfor %}
             </ul>
@@ -25,7 +24,15 @@
             {% set items = nodeGetter.children(3) %}
             <ul class="clearfix">
                 {% for item in items %}
-                    <li{{ loop.index % 3 == 0 ? ' class="last"' : '' }}><a href="{{ url('news/index', {'node': item.id}) }}" title="{{ item.name }}">{{ item.name }}</a></li>
+                    {% set cssClass = loop.index % 3 == 0 ? 'last' : '' %}
+                    {% if nodeValue == item.id %}
+                        {% if cssClass is not empty %}
+                            {% set cssClass = cssClass ~ ' active' %}
+                        {% else %}
+                            {% set cssClass = 'active' %}
+                        {% endif %}
+                    {% endif %}
+                    <li{{ cssClass is not empty ? (' class="' ~ cssClass ~ '"') | raw : '' }}><a href="{{ url('news/index', {'node': item.id}) }}" title="{{ item.name }}">{{ item.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -34,7 +41,15 @@
             {% set items = nodeGetter.children(4) %}
             <ul class="clearfix">
                 {% for item in items %}
-                    <li{{ loop.index % 3 == 0 ? ' class="last"' : '' }}><a href="{{ url('news/index', {'node': item.id}) }}" title="{{ item.name }}">{{ item.name }}</a></li>
+                    {% set cssClass = loop.index % 3 == 0 ? 'last' : '' %}
+                    {% if nodeValue == item.id %}
+                        {% if cssClass is not empty %}
+                            {% set cssClass = cssClass ~ ' active' %}
+                        {% else %}
+                            {% set cssClass = 'active' %}
+                        {% endif %}
+                    {% endif %}
+                    <li{{ cssClass is not empty ? (' class="' ~ cssClass ~ '"') | raw : '' }}><a href="{{ url('news/index', {'node': item.id}) }}" title="{{ item.name }}">{{ item.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>        
