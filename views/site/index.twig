@@ -18,19 +18,19 @@
                 <li class="item">
                     <div class="name">代理记账</div>
                     <div class="tel">
-                        陈经理：13017289259
+                        陈经理：15874198688
                     </div>
                 </li>
                 <li class="item">
-                    <div class="name">资质代理　</div>
+                    <div class="name">资质代理</div>
                     <div class="tel">
-                        陈经理：13017289259
+                        万经理：15364038233
                     </div>
                 </li>
                 <li class="item">
                     <div class="name">社保公积金代理</div>
                     <div class="tel">
-                        陈经理：13017289259
+                        万经理：15364038233
                     </div>
                 </li>
             </ul>
@@ -86,7 +86,7 @@
                         公司简介
                     </div>
                     <div class="bd">
-                        {% set article = articleGetter.one('guan-yu-wo-men') %}
+                        {% set article = articleGetter.one('about') %}
                         {% if article.picture_path is not empty %}
                             <img src="{{ baseUrl ~ article.picture_path }}" alt="公司简介" />
                         {% endif %}
@@ -103,7 +103,7 @@
                         <ul class="data-list">
                             {% for item in items %}
                                 <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
-                                {% endfor %}
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -156,19 +156,25 @@
                         <div class="body-r">
 
                             <div class="widget-simple">
-                                <div class="hd">推荐服务</div>
+                                <div class="hd">公司注册</div>
                                 <div class="bd">
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 5}, 'id.desc', 0, 6) %}
                                     <ul class="data-list clearfix">
-                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                        {% for item in items %}
+                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
 
                             <div class="widget-simple">
-                                <div class="hd">外资公司注册流程</div>
+                                <div class="hd">工商代办</div>
                                 <div class="bd">
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 6}, 'id.desc', 0, 6) %}
                                     <ul class="data-list clearfix">
-                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                        {% for item in items %}
+                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
@@ -182,10 +188,10 @@
                     <div class="widget-common">
                         <div class="hd">最新案例</div>    
                         <div class="bd">
-                            <ul class="data-list">
+                            <ul class="data-list clearfix">
                                 {% for item in items %}
                                     <li><a href="{{ url('cases/view', {'node': item.node_id, 'id': item.id}) }}" title="{{ item.title }}">{{ item.title }}</a></li>
-                                    {% endfor %}
+                                {% endfor %}
                             </ul>
                         </div>    
                     </div>
@@ -240,19 +246,25 @@
                         <div class="body-r">
 
                             <div class="widget-simple">
-                                <div class="hd">推荐服务</div>
+                                <div class="hd">财务税务</div>
                                 <div class="bd">
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 12}, 'id.desc', 0, 6) %}
                                     <ul class="data-list clearfix">
-                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                        {% for item in items %}
+                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
 
                             <div class="widget-simple">
-                                <div class="hd">外资公司注册流程</div>
+                                <div class="hd">记账报税</div>
                                 <div class="bd">
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 13}, 'id.desc', 0, 6) %}
                                     <ul class="data-list clearfix">
-                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                        {% for item in items %}
+                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
@@ -264,12 +276,13 @@
 
                 <div class="r">
                     <div class="widget-common">
-                        <div class="hd">最新案例</div>    
+                        <div class="hd">最新消息</div>    
                         <div class="bd">
-                            <ul class="data-list">
+                            {% set items = archiveGetter.rows('id,node_id,title', {'node': 3, 'children': 'y'}, 'id.desc', 0, 6) %}
+                            <ul class="data-list clearfix">
                                 {% for item in items %}
-                                    <li><a href="{{ url('cases/view', {'node': item.node_id, 'id': item.id}) }}" title="{{ item.title }}">{{ item.title }}</a></li>
-                                    {% endfor %}
+                                    <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                {% endfor %}
                             </ul>
                         </div>    
                     </div>
@@ -324,19 +337,25 @@
                         <div class="body-r">
 
                             <div class="widget-simple">
-                                <div class="hd">推荐服务</div>
+                                <div class="hd">长沙社保代理</div>
                                 <div class="bd">
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 19}, 'id.desc', 0, 6) %}
                                     <ul class="data-list clearfix">
-                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                        {% for item in items %}
+                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
 
                             <div class="widget-simple">
-                                <div class="hd">外资公司注册流程</div>
+                                <div class="hd">社保代缴</div>
                                 <div class="bd">
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 20}, 'id.desc', 0, 6) %}
                                     <ul class="data-list clearfix">
-                                        <li><a href="">斯蒂芬斯蒂芬斯蒂芬森的方式的方式的</a></li>
+                                        {% for item in items %}
+                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
@@ -348,12 +367,13 @@
 
                 <div class="r">
                     <div class="widget-common">
-                        <div class="hd">最新案例</div>    
+                        <div class="hd">最新消息</div>    
                         <div class="bd">
-                            <ul class="data-list">
+                            {% set items = archiveGetter.rows('id,node_id,title', {'node': 4, 'children': 'y'}, 'id.desc', 0, 6) %}
+                            <ul class="data-list clearfix">
                                 {% for item in items %}
-                                    <li><a href="{{ url('cases/view', {'node': item.node_id, 'id': item.id}) }}" title="{{ item.title }}">{{ item.title }}</a></li>
-                                    {% endfor %}
+                                    <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
+                                {% endfor %}
                             </ul>
                         </div>    
                     </div>
