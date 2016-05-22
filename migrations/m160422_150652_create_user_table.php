@@ -24,6 +24,7 @@ class m160422_150652_create_user_table extends Migration
             'login_count' => $this->integer(11)->notNull()->defaultValue(0),
             'last_login_ip' => $this->integer(11),
             'last_login_datetime' => $this->integer(11),
+            'last_change_password_time' => $this->integer(11),
             'created_by' => $this->integer(11)->notNull()->defaultValue(0),
             'created_at' => $this->integer(11)->notNull(),
             'updated_by' => $this->integer(11)->notNull()->defaultValue(0),

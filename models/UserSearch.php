@@ -18,7 +18,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['role', 'status'], 'integer'],
+            [['status'], 'integer'],
             [['username', 'nickname'], 'safe'],
         ];
     }
@@ -57,7 +57,6 @@ class UserSearch extends User
         }
 
         $query->andFilterWhere([
-            'role' => $this->role,
             'status' => $this->status,
         ]);
 

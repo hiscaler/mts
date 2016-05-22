@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\base\Security;
 use yii\web\IdentityInterface;
 
-class BaseUser extends \yii\db\ActiveRecord implements IdentityInterface
+class BaseUser extends BaseActiveRecord implements IdentityInterface
 {
 
     /**

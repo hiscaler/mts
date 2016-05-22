@@ -70,7 +70,7 @@ class User extends BaseUser
             ['status', 'in', 'range' => array_keys(self::statusOptions())],
 //            ['role', 'default', 'value' => self::ROLE_USER],
 //            ['role', 'in', 'range' => array_keys(self::roleOptions())],
-            [['register_ip', 'last_login_ip', 'last_login_datetime', 'login_count'], 'safe'],
+            [['register_ip', 'last_login_ip', 'last_login_datetime', 'last_change_password_time', 'login_count'], 'safe'],
         ];
     }
 
@@ -114,6 +114,7 @@ class User extends BaseUser
             'login_count' => Yii::t('user', 'Login Count'),
             'last_login_datetime' => Yii::t('user', 'Last Login Time'),
             'last_login_ip' => Yii::t('user', 'Last Login IP'),
+            'last_change_password_time' => Yii::t('user', 'Last Change Password Time'),
         ]);
     }
 
