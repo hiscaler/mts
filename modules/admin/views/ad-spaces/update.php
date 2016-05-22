@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\AdSpace */
+/* @var $model app\models\AdSpace */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
         'modelClass' => Yii::t('model', 'Ad Space'),

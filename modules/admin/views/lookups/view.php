@@ -3,7 +3,7 @@
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Lookup */
+/* @var $model app\models\Lookup */
 
 $this->params['breadcrumbs'] = [
     ['label' => Yii::t('app', 'Lookups'), 'url' => ['index']],

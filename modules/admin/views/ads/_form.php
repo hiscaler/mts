@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Ad */
+/* @var $model app\models\Ad */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

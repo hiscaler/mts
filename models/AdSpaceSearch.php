@@ -6,7 +6,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * AdSpaceSearch represents the model behind the search form about `common\models\AdSpace`.
+ * AdSpaceSearch represents the model behind the search form about `app\models\AdSpace`.
  */
 class AdSpaceSearch extends AdSpace
 {

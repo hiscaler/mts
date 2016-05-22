@@ -6,7 +6,7 @@ use app\models\Slide;
 use yii\data\ActiveDataProvider;
 
 /**
- * SlideSearch represents the model behind the search form about `common\models\Slide`.
+ * SlideSearch represents the model behind the search form about `app\models\Slide`.
  */
 class SlideSearch extends Slide
 {

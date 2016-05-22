@@ -7,7 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * WorkflowRuleSearch represents the model behind the search form about `common\models\WorkflowRule`.
+ * WorkflowRuleSearch represents the model behind the search form about `app\models\WorkflowRule`.
  */
 class WorkflowRuleSearch extends WorkflowRule
 {

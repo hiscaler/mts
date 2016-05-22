@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\Lookup */
+/* @var $model app\models\Lookup */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
             'modelClass' => Yii::t('model', 'Lookup'),

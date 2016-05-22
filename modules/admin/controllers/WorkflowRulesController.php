@@ -3,10 +3,10 @@
 namespace app\modules\admin\controllers;
 
 use backend\components\Controller;
-use common\models\Option;
-use common\models\WorkflowRule;
-use common\models\WorkflowRuleSearch;
-use common\models\Yad;
+use app\models\Option;
+use app\models\WorkflowRule;
+use app\models\WorkflowRuleSearch;
+use app\models\Yad;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

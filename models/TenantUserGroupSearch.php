@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\TenantUserGroup;
 
 /**
- * TenantUserGroupSearch represents the model behind the search form about `common\models\TenantUserGroup`.
+ * TenantUserGroupSearch represents the model behind the search form about `app\models\TenantUserGroup`.
  */
 class TenantUserGroupSearch extends TenantUserGroup
 {

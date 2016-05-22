@@ -1,6 +1,6 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model common\models\Slide */
+/* @var $model app\models\Slide */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
             'modelClass' => Yii::t('model', 'Slide'),

@@ -5,7 +5,7 @@ namespace app\models;
 use yii\data\ActiveDataProvider;
 
 /**
- * AdSearch represents the model behind the search form about `common\models\Ad`.
+ * AdSearch represents the model behind the search form about `app\models\Ad`.
  */
 class AdSearch extends Ad
 {
