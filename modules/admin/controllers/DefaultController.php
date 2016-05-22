@@ -2,7 +2,6 @@
 
 namespace app\modules\admin\controllers;
 
-use app\forms\ChangeMyPasswordForm;
 use app\forms\LoginForm;
 use app\models\Option;
 use app\models\User;
@@ -135,7 +134,7 @@ class DefaultController extends Controller
     {
         $this->layout = 'my';
         $user = $this->findCurrentUserModel();
-        $model = new ChangeMyPasswordForm();
+        $model = new \app\modules\admin\forms\ChangeMyPasswordForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user->setPassword($model->password);
