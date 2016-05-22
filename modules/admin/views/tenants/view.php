@@ -1,6 +1,6 @@
 <?php
 
-use backend\widgets\TenantTabs;
+use app\modules\admin\widgets\TenantTabs;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tenant */
@@ -17,6 +17,6 @@ $this->params['menus'] = [
     ['label' => Yii::t('tenant', 'Create Tenant Access Token'), 'url' => ['tenant-access-tokens/create']],
 ];
 
-//echo TenantTabs::widget([
-//    'model' => $model
-//]);
+echo TenantTabs::widget([
+    'model' => $model
+]);
