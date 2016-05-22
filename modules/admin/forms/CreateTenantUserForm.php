@@ -2,14 +2,16 @@
 
 namespace app\modules\admin\forms;
 
+use app\models\MTS;
 use app\models\User;
-use app\models\Yad;
 use Yii;
 use yii\base\Model;
 
 class CreateTenantUserForm extends Model
 {
 
+    public $tenant_id;
+    public $tenant_name;
     public $user_id;
     public $username;
     public $user_group_id;
@@ -40,11 +42,11 @@ class CreateTenantUserForm extends Model
         } else {
             $this->user_id = $userId;
             $exists = Yii::$app->getDb()->createCommand('SELECT COUNT(*) FROM {{%tenant_user}} WHERE [[tenant_id]] = :tenantId AND [[user_id]] = :userId')->bindValues([
-                    ':tenantId' => Yad::getTenantId(),
+                    ':tenantId' => MTS::getTenantId(),
                     ':userId' => $userId
                 ])->queryScalar();
             if ($exists) {
-                $this->addError($attribute, $this->username . ' 已经绑定「' . Yad::getTenantName() . '」站点，禁止重复绑定。');
+                $this->addError($attribute, $this->username . ' 已经绑定「' . MTS::getTenantName() . '」站点，禁止重复绑定。');
             }
         }
     }

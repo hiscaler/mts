@@ -2,10 +2,10 @@
 
 namespace app\modules\admin\controllers;
 
-use backend\modules\admin\forms\CreateTenantUserForm;
 use app\models\Option;
 use app\models\Tenant;
 use app\models\TenantSearch;
+use app\modules\admin\forms\CreateTenantUserForm;
 use PDO;
 use Yii;
 use yii\filters\AccessControl;

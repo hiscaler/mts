@@ -109,7 +109,7 @@ class Tenant extends BaseActiveRecord
             ->from('{{%tenant_user_group}}')
             ->where([
                 'tenant_id' => $tenantId === null ? MTS::getTenantId() : $tenantId,
-                'enabled' => Option::BOOLEAN_TRUE
+                'enabled' => Constant::BOOLEAN_TRUE
             ])
             ->orderBy(['alias' => SORT_ASC])
             ->indexBy('id')
