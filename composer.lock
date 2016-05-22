@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "317ea27a47188bd6e82670173f0234a5",
-    "content-hash": "a734bb67d3bf02edd650062284d9094e",
+    "hash": "d535a4f30eff375a1950e645490b5b23",
+    "content-hash": "4b74fbcd06a9675f7cb6d0bc83d26376",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -470,6 +470,48 @@
                 "yii2"
             ],
             "time": "2015-09-10 00:41:32"
+        },
+        {
+            "name": "yadjet/yii2-ztree",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hiscaler/yii2-ztree.git",
+                "reference": "24cd2f834dce546da3fb68ed20b4fabdda835018"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hiscaler/yii2-ztree/zipball/24cd2f834dce546da3fb68ed20b4fabdda835018",
+                "reference": "24cd2f834dce546da3fb68ed20b4fabdda835018",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "yiisoft/yii2": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "yadjet\\ztree\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "hiscaler",
+                    "email": "hiscaler@gmail.com"
+                }
+            ],
+            "description": "JQuery ZTree Yii2",
+            "keywords": [
+                "tree",
+                "yii2",
+                "ztree"
+            ],
+            "time": "2016-02-19 06:45:02"
         },
         {
             "name": "yiisoft/yii2",
