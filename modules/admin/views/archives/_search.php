@@ -8,68 +8,81 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="archive-search">
+<div class="form-outside search-form form-layout-column" style="display: none">
+    <div class="archive-search form">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+        <?php
+        $form = ActiveForm::begin([
+                'action' => ['index'],
+                'method' => 'get',
+        ]);
+        ?>
 
-    <?= $form->field($model, 'id') ?>
+        <div class="entry">
+            <div class="column">
+                <?= $form->field($model, 'id') ?>
+            </div>
 
-    <?= $form->field($model, 'node_id') ?>
+            <div class="column">
+                <?= $form->field($model, 'node_id')->dropDownList(\app\models\Node::parentOptions(), ['prompt' => '']) ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'model_name') ?>
+        <div class="entry">
+            <div class="column">
+                <?= $form->field($model, 'model_name') ?>
+            </div>
+            <div class="column">
+                <?= $form->field($model, 'title') ?>
+            </div>
+        </div>
 
-    <?= $form->field($model, 'title') ?>
+        <?php // echo $form->field($model, 'description') ?>
 
-    <?= $form->field($model, 'keyword') ?>
+        <?php // echo $form->field($model, 'tags') ?>
 
-    <?php // echo $form->field($model, 'description') ?>
+        <?php // echo $form->field($model, 'has_thumbnail') ?>
 
-    <?php // echo $form->field($model, 'tags') ?>
+        <?php // echo $form->field($model, 'thumbnail') ?>
 
-    <?php // echo $form->field($model, 'has_thumbnail') ?>
+        <?php // echo $form->field($model, 'author') ?>
 
-    <?php // echo $form->field($model, 'thumbnail') ?>
+        <?php // echo $form->field($model, 'source') ?>
 
-    <?php // echo $form->field($model, 'author') ?>
+        <?php // echo $form->field($model, 'status') ?>
 
-    <?php // echo $form->field($model, 'source') ?>
+        <?php // echo $form->field($model, 'enabled') ?>
 
-    <?php // echo $form->field($model, 'status') ?>
+        <?php // echo $form->field($model, 'published_datetime') ?>
 
-    <?php // echo $form->field($model, 'enabled') ?>
+        <?php // echo $form->field($model, 'clicks_count') ?>
 
-    <?php // echo $form->field($model, 'published_datetime') ?>
+        <?php // echo $form->field($model, 'enabled_comment') ?>
 
-    <?php // echo $form->field($model, 'clicks_count') ?>
+        <?php // echo $form->field($model, 'comments_count') ?>
 
-    <?php // echo $form->field($model, 'enabled_comment') ?>
+        <?php // echo $form->field($model, 'ordering') ?>
 
-    <?php // echo $form->field($model, 'comments_count') ?>
+        <?php // echo $form->field($model, 'tenant_id') ?>
 
-    <?php // echo $form->field($model, 'ordering') ?>
+        <?php // echo $form->field($model, 'created_at') ?>
 
-    <?php // echo $form->field($model, 'tenant_id') ?>
+        <?php // echo $form->field($model, 'created_by') ?>
 
-    <?php // echo $form->field($model, 'created_at') ?>
+        <?php // echo $form->field($model, 'updated_at') ?>
 
-    <?php // echo $form->field($model, 'created_by') ?>
+        <?php // echo $form->field($model, 'updated_by') ?>
 
-    <?php // echo $form->field($model, 'updated_at') ?>
+        <?php // echo $form->field($model, 'deleted_at') ?>
 
-    <?php // echo $form->field($model, 'updated_by') ?>
+        <?php // echo $form->field($model, 'deleted_by')  ?>
 
-    <?php // echo $form->field($model, 'deleted_at') ?>
+        <div class="form-group buttons">
+            <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+            <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+        </div>
 
-    <?php // echo $form->field($model, 'deleted_by') ?>
+        <?php ActiveForm::end(); ?>
 
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

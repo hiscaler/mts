@@ -14,7 +14,7 @@ use yii\web\HttpException;
  * @property integer $node_id
  * @property string $model_name
  * @property string $title
- * @property string $keyword
+ * @property string $keywords
  * @property string $description
  * @property string $tags
  * @property integer $has_thumbnail
@@ -75,7 +75,7 @@ class Archive extends \yii\db\ActiveRecord
             [['status'], 'default', 'value' => Constant::STATUS_PUBLISHED],
             [['description'], 'string'],
             [['model_name', 'source'], 'string', 'max' => 30],
-            [['title', 'keyword'], 'string', 'max' => 255],
+            [['title', 'keywords'], 'string', 'max' => 255],
             [['tags'], 'string', 'max' => 200],
             [['author'], 'string', 'max' => 20],
             [['ownerLabels'], 'safe'],
@@ -122,7 +122,7 @@ class Archive extends \yii\db\ActiveRecord
             'node_id' => Yii::t('archive', 'Node'),
             'model_name' => Yii::t('archive', 'Model Name'),
             'title' => Yii::t('archive', 'Title'),
-            'keyword' => Yii::t('archive', 'Keyword'),
+            'keywords' => Yii::t('archive', 'Keyword'),
             'description' => Yii::t('archive', 'Description'),
             'tags' => Yii::t('archive', 'Tags'),
             'has_thumbnail' => Yii::t('archive', 'Has Thumbnail'),

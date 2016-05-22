@@ -20,7 +20,7 @@ class ArchiveSearch extends Archive
     {
         return [
             [['id', 'node_id', 'has_thumbnail', 'status', 'enabled', 'published_datetime', 'clicks_count', 'enabled_comment', 'comments_count', 'ordering', 'tenant_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'], 'integer'],
-            [['model_name', 'title', 'keyword', 'description', 'tags', 'thumbnail', 'author', 'source'], 'safe'],
+            [['model_name', 'title', 'keywords', 'description', 'tags', 'thumbnail', 'author', 'source'], 'safe'],
         ];
     }
 
@@ -81,7 +81,7 @@ class ArchiveSearch extends Archive
 
         $query->andFilterWhere(['like', 'model_name', $this->model_name])
             ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'keyword', $this->keyword])
+            ->andFilterWhere(['like', 'keywords', $this->keywords])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'tags', $this->tags])
             ->andFilterWhere(['like', 'thumbnail', $this->thumbnail])

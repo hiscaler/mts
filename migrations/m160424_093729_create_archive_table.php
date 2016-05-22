@@ -12,7 +12,7 @@ class m160424_093729_create_archive_table extends Migration
             'node_id' => $this->integer()->notNull(),
             'model_name' => $this->string(30)->notNull(),
             'title' => $this->string(255)->notNull(),
-            'keyword' => $this->string(255),
+            'keywords' => $this->string(255),
             'description' => $this->text(),
             'tags' => $this->string(200),
             'has_thumbnail' => $this->boolean()->notNull()->defaultValue(0),

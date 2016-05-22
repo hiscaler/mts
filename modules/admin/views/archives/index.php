@@ -1,6 +1,5 @@
 <?php
 
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\widgets\Pjax;
@@ -12,17 +11,23 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Archives');
 $this->params['breadcrumbs'][] = $this->title;
 
+$gridViewId = 'grid-view-' . lcfirst(str_replace('app-models-', '', $modelName));
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index', 'modelName' => $modelName]],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create', 'modelName' => $modelName]],
+    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => $modelName], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => $gridViewId]],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
 <div class="archive-index">
 
-    <?php Pjax::begin(); ?>  
+    <?= $this->render('_search', ['model' => $searchModel]); ?>
+    
+    <?php Pjax::begin(); ?>
+    
     <?=
-    GridView::widget([
+    \app\modules\admin\extensions\GridView::widget([
+        'id' => $gridViewId,
         'dataProvider' => $dataProvider,
         'columns' => [
             [
@@ -55,16 +60,34 @@ $this->params['menus'] = [
                     return $sentence . $output;
                 },
             ],
-            'keyword',
+            'keywords',
             // 'has_thumbnail',
             // 'author',
             // 'source',
-            'status',
-            'enabled',
+            [
+                'attribute' => 'status',
+                'format' => 'dataStatus',
+                'contentOptions' => ['class' => 'data-status'],
+            ],
+            [
+                'attribute' => 'enabled',
+                'format' => 'boolean',
+                'contentOptions' => ['class' => 'boolean'],
+            ],
             'published_datetime:datetime',
-            'clicks_count',
-            'enabled_comment',
-            'comments_count',
+            [
+                'attribute' => 'clicks_count',
+                'contentOptions' => ['class' => 'number'],
+            ],
+            [
+                'attribute' => 'enabled_comment',
+                'format' => 'boolean',
+                'contentOptions' => ['class' => 'boolean'],
+            ],
+            [
+                'attribute' => 'comments_count',
+                'contentOptions' => ['class' => 'number'],
+            ],
             [
                 'attribute' => 'created_at',
                 'format' => 'date',

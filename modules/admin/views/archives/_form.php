@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
         <div class="entry">
-            <?= $form->field($model, 'keyword')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>
         </div>

@@ -26,7 +26,7 @@ $this->params['menus'] = [
             'node.name',
             'model_name',
             'title',
-            'keyword',
+            'keywords',
             'description:ntext',
             'tags',
             'thumbnail:image',
