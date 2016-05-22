@@ -16,6 +16,8 @@ return array(
     'Keyword' => '页面关键词',
     'Description' => '页面描述',
     'Clicks Count' => '点击次数',
+    'Author' => '作者',
+    'Source' => '来源',
     'Thumbnail' => '缩略图',
     'Status' => '状态',
     'Enabled' => '激活',

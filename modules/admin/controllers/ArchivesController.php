@@ -70,6 +70,8 @@ class ArchivesController extends ContentController
         $model->loadDefaultValues();
         $model->author = Yii::$app->getUser()->getIdentity()->nickname;
         $model->source = \app\models\Lookup::getValue('site.name');
+        $model->status = \app\models\Constant::STATUS_PUBLISHED;
+        $model->published_datetime = Yii::$app->getFormatter()->asDatetime(time());
         $contentModel = new ArchiveContent();
 
         $post = Yii::$app->getRequest()->post();
@@ -80,7 +82,7 @@ class ArchivesController extends ContentController
                 $model->save();
                 $model->saveContent($contentModel); // 保存正文内容
                 $transaction->commit();
-                
+
                 $this->redirect(['view', 'id' => $model->id]);
             } catch (Exception $e) {
                 $transaction->rollback();

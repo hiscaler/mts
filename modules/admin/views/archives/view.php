@@ -22,30 +22,37 @@ $this->params['menus'] = [
         'model' => $model,
         'attributes' => [
             'id',
-            'node_id',
+            'ordering',
+            'node.name',
             'model_name',
             'title',
             'keyword',
             'description:ntext',
             'tags',
-            'has_thumbnail',
-            'thumbnail',
+            'thumbnail:image',
             'author',
             'source',
-            'status',
-            'enabled',
+            'status:dataStatus',
+            'enabled:boolean',
             'published_datetime:datetime',
             'clicks_count',
-            'enabled_comment',
+            'enabled_comment:boolean',
             'comments_count',
-            'ordering',
-            'tenant_id',
-            'created_at',
-            'created_by',
-            'updated_at',
-            'updated_by',
-            'deleted_at',
-            'deleted_by',
+            'created_at:datetime',
+            [
+                'attribute' => 'created_by',
+                'value' => $model['creater']['username']
+            ],
+            'updated_at:datetime',
+            [
+                'attribute' => 'updated_by',
+                'value' => $model['updater']['username']
+            ],
+            'deleted_at:datetime',
+            [
+                'attribute' => 'deleted_by',
+                'value' => $model['deleter']['username']
+            ],
         ],
     ])
     ?>
