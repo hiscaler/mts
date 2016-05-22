@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
             </fieldset>
         <?php endif; ?>
 
-        <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'class' => 'g-text-large']) ?>
 
         <div class="entry">
             <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
