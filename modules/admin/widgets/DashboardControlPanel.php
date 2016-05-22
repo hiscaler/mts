@@ -82,7 +82,7 @@ class DashboardControlPanel extends Widget
             $userManageItems = [
                 'label' => Yii::t('app', 'Users'),
                 'url' => ['users/index'],
-                'active' => in_array($controllerId, ['users', 'user-groups']),
+                'active' => in_array($controllerId, ['users', 'user-groups', 'tenant-users']),
                 'items' => [
                     [
                         'label' => Yii::t('app', 'User Groups'),
@@ -93,7 +93,12 @@ class DashboardControlPanel extends Widget
                         'label' => Yii::t('app', 'Users'),
                         'url' => ['users/index'],
                         'active' => $controllerId == 'users',
-                    ]
+                    ],
+                    [
+                        'label' => Yii::t('app', 'Tenant Users'),
+                        'url' => ['tenant-users/index'],
+                        'active' => $controllerId == 'tenant-users',
+                    ],
                 ],
             ];
             if (isset(Yii::$app->params['enableFrontendUser']) && Yii::$app->params['enableFrontendUser']) {
