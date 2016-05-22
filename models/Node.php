@@ -287,8 +287,8 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
                 if ($this->parent_id != 0) {
                     $modelName = explode('-', $this->model_name);
                     $controllerId = strtolower(Inflector::pluralize(end($modelName)));
-                    $this->parameters = "i:{$controllerId}/index~~/{$controllerId}/list.twig\r
-l:{$controllerId}/list~~/{$controllerId}/list.twig\r
+                    $this->parameters = "i:{$controllerId}/index~~/{$controllerId}/list.twig
+l:{$controllerId}/list~~/{$controllerId}/list.twig
 v:{$controllerId}/view~<id:\d+>~/{$controllerId}/view.twig~.html";
                 }
             }
@@ -311,7 +311,7 @@ v:{$controllerId}/view~<id:\d+>~/{$controllerId}/view.twig~.html";
     public function afterDelete()
     {
         parent::afterDelete();
-        Yii::$app->getDb()->createCommand()->delete('{{%auth_node}}', ['node_id' => $this->id])->execute();
+        Yii::$app->getDb()->createCommand()->delete('{{%user_auth_node}}', ['node_id' => $this->id])->execute();
     }
 
 }
