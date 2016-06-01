@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
         <meta name="robots" content="none" />
         <meta HTTP-EQUIV="pragma" CONTENT="no-cache" />
         <meta name="language" content="en" />
-        <link rel="stylesheet" type="text/css" href="<?= Yii::$app->getRequest()->baseUrl . '/css/login.css' ?>" />
+        <link rel="stylesheet" type="text/css" href="<?= Yii::$app->getRequest()->baseUrl . '/admin//css/login.css' ?>" />
         <title><?php echo Html::encode($this->title); ?></title>
     </head>
     <body>

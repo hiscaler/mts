@@ -32,7 +32,7 @@ class LoginForm extends Model
             // password is validated by validatePassword()
             ['username', 'validateUser'],
             ['password', 'validatePassword'],
-            ['verifyCode', 'captcha', 'captchaAction' => 'default/captcha'],
+            ['verifyCode', 'captcha', 'captchaAction' => '/admin/default/captcha'],
         ];
     }
 

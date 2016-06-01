@@ -2,10 +2,12 @@
 
 namespace app\modules\admin\controllers;
 
-use app\forms\LoginForm;
+use app\models\Constant;
+use app\models\MTS;
 use app\models\Option;
 use app\models\User;
-use app\models\MTS;
+use app\modules\admin\forms\ChangeMyPasswordForm;
+use app\modules\admin\forms\LoginForm;
 use PDO;
 use Yii;
 use yii\filters\AccessControl;
@@ -49,6 +51,7 @@ class DefaultController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+                'errorAction' => 'admin/default/error',
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
@@ -73,7 +76,7 @@ class DefaultController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->getUser()->isGuest) {
-            return $this->goHome();
+            $this->redirect('index');
         }
         $this->layout = false;
 
@@ -81,7 +84,7 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $tenantIds = Yii::$app->getDb()->createCommand('SELECT [[tenant_id]] FROM {{%tenant_user}} WHERE [[user_id]] = :userId AND [[enabled]] = :enabled')->bindValues([
                     ':userId' => Yii::$app->getUser()->getId(),
-                    ':enabled' => Option::BOOLEAN_TRUE
+                    ':enabled' => Constant::BOOLEAN_TRUE
                 ])->queryColumn();
             if (count($tenantIds) == 1) {
                 MTS::setTenantData($tenantIds[0]);
@@ -134,7 +137,7 @@ class DefaultController extends Controller
     {
         $this->layout = 'my';
         $user = $this->findCurrentUserModel();
-        $model = new \app\modules\admin\forms\ChangeMyPasswordForm();
+        $model = new ChangeMyPasswordForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user->setPassword($model->password);
@@ -191,7 +194,7 @@ class DefaultController extends Controller
     {
         $this->layout = 'base';
         $tenants = Yii::$app->getDb()->createCommand('SELECT [[id]], [[name]], [[domain_name]], [[description]] FROM {{%tenant}} WHERE [[enabled]] = :enabled AND [[id]] IN (SELECT [[tenant_id]] FROM {{%tenant_user}} WHERE [[user_id]] = :userId)')->bindValues([
-                ':enabled' => \app\models\Constant::BOOLEAN_TRUE,
+                ':enabled' => Constant::BOOLEAN_TRUE,
                 ':userId' => Yii::$app->getUser()->getId()
             ])->queryAll();
 

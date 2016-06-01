@@ -67,8 +67,8 @@ class UserLoginLog extends ActiveRecord
     {
         Yii::$app->getDb()->createCommand()->insert('{{%user_login_log}}', [
             'user_id' => Yii::$app->getUser()->getId(),
-            'login_ip' => Yii::$app->getRequest()->getUserIP(),
-            'status' => Option::BOOLEAN_TRUE,
+            'login_ip' => ip2long(Yii::$app->getRequest()->getUserIP()),
+            'status' => Constant::BOOLEAN_TRUE,
             'client_informations' => UtilHelper::getBrowserName(),
             'login_at' => time(),
         ])->execute();
