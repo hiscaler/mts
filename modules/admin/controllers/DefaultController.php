@@ -145,7 +145,7 @@ class DefaultController extends Controller
                 Yii::$app->getDb()->createCommand('UPDATE {{%user}} SET [[last_change_password_time]] = :now WHERE [[id]] = :id', [':now' => time(), ':id' => $user->id])->execute();
 
                 Yii::$app->getSession()->setFlash('notice', "您的密码修改成功，请下次登录使用新的密码。");
-                return $this->redirect(Url::previous());
+                return $this->refresh();
             }
         }
 

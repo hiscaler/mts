@@ -90,9 +90,9 @@ class LoginForm extends Model
             $logined = Yii::$app->getUser()->login($user, $this->rememberMe ? 3600 * 24 * 30 : 0);
             if ($logined) {
                 // Add login information
-                Yii::$app->getDb()->createCommand('UPDATE {{%user}} SET [[login_count]] = [[login_count]] + 1, [[last_login_ip]] = :loginIp, [[last_login_time]] = :loginTime WHERE [[id]] = :id')->bindValues([
-                    ':loginIp' => Yii::$app->getRequest()->userIP,
-                    ':loginTime' => time(),
+                Yii::$app->getDb()->createCommand('UPDATE {{%user}} SET [[login_count]] = [[login_count]] + 1, [[last_login_ip]] = :loginIp, [[last_login_datetime]] = :loginDateTime WHERE [[id]] = :id')->bindValues([
+                    ':loginIp' => ip2long(Yii::$app->getRequest()->getUserIP()),
+                    ':loginDateTime' => time(),
                     ':id' => Yii::$app->getUser()->getId()
                 ])->execute();
                 // Write user login log
