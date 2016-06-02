@@ -218,14 +218,14 @@ class DashboardControlPanel extends Widget
                         'visible' => in_array('app-models-Meta', $tenantModules)
                     ],
                     $userManageItems,
-                    [
-                        'label' => Yii::t('app', 'Members'),
-                        'url' => ['/members/index'],
-                        'active' => $controllerId == 'members',
-                    ],
+//                    [
+//                        'label' => Yii::t('app', 'Members'),
+//                        'url' => ['/members/index'],
+//                        'active' => $controllerId == 'members',
+//                    ],
                     [
                         'label' => Yii::t('app', 'User Login Logs'),
-                        'url' => ['/user-login-logs/index'],
+                        'url' => ['user-login-logs/index'],
                         'active' => $controllerId == 'user-login-logs',
                     ],
                     [
