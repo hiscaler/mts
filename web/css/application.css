@@ -323,6 +323,25 @@ ul.pagination .hidden a {
 }
 .widget-service-items .bd {
     padding: 10px 9px;
+    background: url(../images/service-items.jpg) no-repeat center center;
+    height: 100px;
+}
+.widget-service-items .bd li {
+    display: block;
+    width: 74px;
+    height: 120px;
+    margin: 0 24px 0 12px;
+    float: left;
+}
+.widget-service-items .bd li.item-1 { margin-left: 10px; }
+.widget-service-items .bd li.item-4 { margin-left: 14px; }
+.widget-service-items .bd li.item-7 { margin-left: 14px; }
+.widget-service-items .bd li.item-9 { margin: 0 10px 0 14px; }
+.widget-service-items .bd li a {
+    display: block;
+    line-height: 186px;
+    text-align: center;
+    font-weight: bold;
 }
 /*******************************************************************************
  * 首页关于我们、新闻资讯
