@@ -112,7 +112,7 @@ class User extends BaseUser
             'role' => Yii::t('user', 'Role'),
             'register_ip' => Yii::t('user', 'Register IP'),
             'login_count' => Yii::t('user', 'Login Count'),
-            'last_login_datetime' => Yii::t('user', 'Last Login Time'),
+            'last_login_datetime' => Yii::t('user', 'Last Login Datetime'),
             'last_login_ip' => Yii::t('user', 'Last Login IP'),
             'last_change_password_time' => Yii::t('user', 'Last Change Password Time'),
         ]);

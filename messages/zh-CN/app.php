@@ -108,6 +108,7 @@ return array(
     'Users' => '用户管理',
     'User Groups' => '用户分组管理',
     'Users' => '用户管理',
+    'Tenant Users' => '站点用户管理',
     'User Login Logs' => '用户登录日志',
     'Meta' => '自定义表单管理',
     'Meta Tables' => '自定义表单数据表管理',

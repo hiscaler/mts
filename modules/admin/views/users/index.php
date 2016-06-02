@@ -77,7 +77,7 @@ $baseUrl = Yii::$app->getRequest()->baseUrl;
                 'contentOptions' => ['class' => 'number'],
             ],
             [
-                'attribute' => 'last_login_time',
+                'attribute' => 'last_login_datetime',
                 'format' => 'datetime',
                 'contentOptions' => ['class' => 'datetime'],
             ],
