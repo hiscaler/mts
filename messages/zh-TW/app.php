@@ -85,7 +85,7 @@ return array(
     // Cotrol Panels
     'Basic Settings' => '基本設置',
     // Controllers
-    'Attributes' => '推送位管理',
+    'Labels' => '推送位管理',
     'Articles' => '單文章管理',
     'Albums' => '相冊管理',
     'Album Photos' => '相冊照片管理',
@@ -108,6 +108,7 @@ return array(
     'Users' => '用戶管理',
     'User Groups' => '用戶分組管理',
     'Users' => '用戶管理',
+    'Tenant Users' => '站點用戶管理',
     'User Login Logs' => '用戶登錄日誌',
     'Meta' => '自定義表單管理',
     'Meta Tables' => '自定義表單數據表管理',
@@ -137,7 +138,9 @@ return array(
     // Other
     'Please choice this user can manager nodes' => '請選擇該用戶可管理的節點',
     'Are you sure you want to undo this item?' => '您確定要還原此項嗎？',
-    'Incorrect username or password.' => '錯誤的用戶名或密碼。',
+    'Incorrect username.' => '無效的登錄用戶名。',
+    'Incorrect username or password.' => '無效的登錄用戶名或密碼。',
+    "{username} deny login, because this user didn't change the password in time." => '{username} 禁止登陸，因為該用戶未及時修改密碼。',
     'User profile save successed.' => '用戶資料保存成功。',
     'Prompt Message' => '提示信息',
 );
