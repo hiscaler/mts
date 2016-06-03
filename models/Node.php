@@ -110,7 +110,7 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
     {
         $tenantId = MTS::getTenantId();
         $items = [];
-        $sql = 'SELECT [[id]], [[name]], [[alias]], [[parent_id]], [[level]], [[ordering]] FROM {{%node}} WHERE ';
+        $sql = 'SELECT [[id]], [[name]], [[parent_id]], [[level]], [[ordering]] FROM {{%node}} WHERE ';
         $bindValues = [
             ':tenantId' => $tenantId
         ];
@@ -126,7 +126,7 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
         if ($rawData) {
             $rawData = TreeFormatHelper::dumpArrayTree(ArrayHelper::toTree($rawData, 'id'));
             foreach ($rawData as $data) {
-                $items[$data['id']] = $data['levelstr'] . '┄' . $data['name'] . " [ {$data['alias']} ]" . '（' . $data['ordering'] . '）';
+                $items[$data['id']] = $data['levelstr'] . '┄' . $data['name'] . '（' . $data['ordering'] . '）';
             }
         }
 
@@ -148,7 +148,6 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
         foreach ($rawData as $data) {
             $tree[] = [
                 'id' => $data['id'],
-                'alias' => $data['alias'],
                 'name' => $data['name'],
                 'level' => $data['level'],
                 'parent_id' => $data['parent_id'],
@@ -159,7 +158,7 @@ v:{$controller}/view~<id:\d+>~/{$controller}/view.twig~.html";
             $fixedData = ArrayHelper::toTree($tree, 'id');
             $fixedData = TreeFormatHelper::dumpArrayTree($fixedData);
             foreach ($fixedData as $data) {
-                $items[$data['id']] = $data['levelstr'] . '┄' . strip_tags($data['name']) . " [ {$data['alias']} ]" . '（' . (string) $data['ordering'] . '）';
+                $items[$data['id']] = $data['levelstr'] . '┄' . strip_tags($data['name']) . " [ {$data['id']} ]" . '（' . (string) $data['ordering'] . '）';
             }
         }
 
