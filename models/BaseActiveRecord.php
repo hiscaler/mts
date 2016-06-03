@@ -47,8 +47,12 @@ class BaseActiveRecord extends ActiveRecord
 
     public function rules()
     {
+        $rules = [ 'created_by', 'created_at', 'updated_by', 'updated_at'];
+        if ($this->hasAttribute('tenant_id')) {
+            array_unshift($rules, 'tenant_id');
+        }
         return [
-            [['tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer']
+            [$rules, 'integer']
         ];
     }
 
