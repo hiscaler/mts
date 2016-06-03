@@ -23,7 +23,11 @@ $this->params['menus'] = [
 
     <?= $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php Pjax::begin(); ?>
+    <?php
+    Pjax::begin([
+        'formSelector' => '#form-archives',
+    ]);
+    ?>
 
     <?=
     \app\modules\admin\extensions\GridView::widget([
@@ -115,5 +119,5 @@ $this->params['menus'] = [
             ],
         ]);
         ?>
-        <?php Pjax::end(); ?>
+    <?php Pjax::end(); ?>
 </div>

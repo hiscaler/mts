@@ -13,6 +13,7 @@ use yii\widgets\ActiveForm;
 
         <?php
         $form = ActiveForm::begin([
+                'id' => 'form-archives',
                 'action' => ['index'],
                 'method' => 'get',
         ]);
