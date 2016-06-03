@@ -63,10 +63,16 @@ class ArchiveSearch extends Archive
             return $dataProvider;
         }
 
+        $nodeId = (int) $this->node_id;
+        if ($nodeId) {
+            $nodeIds = Node::getChildrenIds($nodeId);
+            array_unshift($nodeIds, $nodeId);
+            $query->andWhere(['node_id' => $nodeIds]);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'node_id' => $this->node_id,
             'has_thumbnail' => $this->has_thumbnail,
             'status' => $this->status,
             'enabled' => $this->enabled,
