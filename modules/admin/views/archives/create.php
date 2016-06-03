@@ -2,7 +2,7 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Archive */
 
-$this->title = Yii::t('app', 'Create Archive');
+$this->title = Yii::t('app', 'Create');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Archives'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 

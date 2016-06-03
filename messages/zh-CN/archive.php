@@ -5,6 +5,7 @@
  */
 return array(
     'ID' => '编号',
+    'Model Name' => '所属模型',
     'Title' => '标题',
     'Short Title' => '副标题',
     'Content' => '正文',

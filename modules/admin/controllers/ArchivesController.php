@@ -5,13 +5,18 @@ namespace app\modules\admin\controllers;
 use app\models\Archive;
 use app\models\ArchiveContent;
 use app\models\ArchiveSearch;
+use app\models\Constant;
+use app\models\Lookup;
 use Yii;
 use yii\base\Model;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
 /**
- * ArchivesController implements the CRUD actions for Archive model.
+ * 文档管理
+ * 
+ * @author hiscaler <hiscaler@gmail.com>
  */
 class ArchivesController extends ContentController
 {
@@ -22,6 +27,16 @@ class ArchivesController extends ContentController
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -69,8 +84,8 @@ class ArchivesController extends ContentController
         $model = new Archive();
         $model->loadDefaultValues();
         $model->author = Yii::$app->getUser()->getIdentity()->nickname;
-        $model->source = \app\models\Lookup::getValue('site.name');
-        $model->status = \app\models\Constant::STATUS_PUBLISHED;
+        $model->source = Lookup::getValue('site.name');
+        $model->status = Constant::STATUS_PUBLISHED;
         $model->published_datetime = Yii::$app->getFormatter()->asDatetime(time());
         $contentModel = new ArchiveContent();
 

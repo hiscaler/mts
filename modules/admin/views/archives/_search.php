@@ -24,16 +24,17 @@ use yii\widgets\ActiveForm;
             </div>
 
             <div class="column">
-                <?= $form->field($model, 'node_id')->dropDownList(\app\models\Node::parentOptions(), ['prompt' => '']) ?>
+                <?= $form->field($model, 'title') ?>
             </div>
         </div>
 
         <div class="entry">
+            <?= $form->field($model, 'node_id')->dropDownList(\app\models\Node::parentOptions(), ['prompt' => '']) ?>
+        </div>
+
+        <div class="entry">
             <div class="column">
-                <?= $form->field($model, 'model_name') ?>
-            </div>
-            <div class="column">
-                <?= $form->field($model, 'title') ?>
+                <?= $form->field($model, 'model_name')->dropDownList(app\models\Option::modelNameOptions(), ['prompt' => '']) ?>
             </div>
         </div>
 

@@ -86,6 +86,7 @@ return array(
     'Basic Settings' => '基本设置',
     // Controllers
     'Labels' => '推送位管理',
+    'Archives' => '文档管理',
     'Articles' => '单文章管理',
     'Albums' => '相册管理',
     'Album Photos' => '相册照片管理',

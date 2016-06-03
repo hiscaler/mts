@@ -25,6 +25,18 @@ class ContentControlPanel extends \yii\base\Widget
 
         $items = [
             [
+                'label' => Yii::t('app', 'Archives'),
+                'url' => ['archives/index'],
+                'active' => $controllerId == 'archives',
+                'items' => [
+                    [
+                        'label' => Yii::t('app', 'News'),
+                        'url' => ['archives/index', 'modelName' => 'app-models-News'],
+                        'active' => $controllerId == 'archives' && $modelName = 'news',
+                    ]
+                ]
+            ],
+            [
                 'label' => Yii::t('app', 'Ad Spaces'),
                 'url' => ['ad-spaces/index'],
                 'active' => $controllerId == 'ad-spaces',
@@ -48,11 +60,6 @@ class ContentControlPanel extends \yii\base\Widget
                 'label' => Yii::t('app', 'Articles'),
                 'url' => ['articles/index'],
                 'active' => $controllerId == 'articles',
-            ],
-            [
-                'label' => Yii::t('app', 'News'),
-                'url' => ['archives/index', 'modelName' => 'app-models-News'],
-                'active' => $controllerId == 'archives' && $modelName = 'news',
             ],
         ];
 
