@@ -51,9 +51,10 @@ class Tenant extends BaseActiveRecord
             ['key', 'match', 'pattern' => '/^[1-9]{1}[0-9]{11}$/'],
             ['domain_name', 'match', 'pattern' => '/[a-zA-Z0-9][-a-zA-Z0-9]{1,62}(.[a-zA-Z0-9][-a-zA-Z0-9]{1,62})+.?/'],
             ['enabled', 'boolean'],
-            [['key', 'name', 'domain_name', 'description'], 'string', 'max' => 255],
+            [['key', 'name', 'description'], 'string', 'max' => 255],
+            [['domain_name'], 'string', 'max' => 100],
             [['language'], 'string', 'max' => 10],
-            [['timezone', 'date_format', 'time_format', 'datetime_format', 'timezone', 'domain_name', 'description'], 'string', 'max' => 20],
+            [['timezone', 'date_format', 'time_format', 'datetime_format', 'timezone', 'description'], 'string', 'max' => 20],
             ['key', 'unique'],
             ['modules', 'safe'],
         ]);
