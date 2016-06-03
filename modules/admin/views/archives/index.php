@@ -101,19 +101,37 @@ $this->params['menus'] = [
                     'format' => 'date',
                     'contentOptions' => ['class' => 'date'],
                 ],
-                'created_by',
+                [
+                    'attribute' => 'created_by',
+                    'value' => function ($model) {
+                        return $model['creater']['nickname'];
+                    },
+                    'contentOptions' => ['class' => 'username'],
+                ],
                 [
                     'attribute' => 'updated_at',
                     'format' => 'date',
                     'contentOptions' => ['class' => 'date'],
                 ],
-                'updated_by',
+                [
+                    'attribute' => 'updated_by',
+                    'value' => function ($model) {
+                        return $model['updater']['nickname'];
+                    },
+                    'contentOptions' => ['class' => 'username'],
+                ],
                 [
                     'attribute' => 'deleted_at',
                     'format' => 'date',
                     'contentOptions' => ['class' => 'date'],
                 ],
-                'deleted_by',
+                [
+                    'attribute' => 'deleted_by',
+                    'value' => function ($model) {
+                        return $model['deleter']['nickname'];
+                    },
+                    'contentOptions' => ['class' => 'username'],
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',
