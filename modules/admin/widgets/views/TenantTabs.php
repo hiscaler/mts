@@ -52,11 +52,6 @@ $tab = Yii::$app->getRequest()->get('tab', 'detail');
                     'value' => $model['updater']['nickname']
                 ],
                 'updated_at:datetime',
-//                [
-//                    'attribute' => 'deleted_by',
-//                    'value' => $model['deleter']['nickname']
-//                ],
-//                'deleted_at:datetime',
             ],
         ])
         ?>
