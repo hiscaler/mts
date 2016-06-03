@@ -70,8 +70,8 @@ $this->params['menus'] = [
                     'format' => 'boolean',
                     'contentOptions' => ['class' => 'boolean'],
                 ],
-                // 'author',
-                // 'source',
+                'author',
+                'source',
                 [
                     'attribute' => 'status',
                     'format' => 'dataStatus',
@@ -82,7 +82,11 @@ $this->params['menus'] = [
                     'format' => 'boolean',
                     'contentOptions' => ['class' => 'boolean'],
                 ],
-                'published_datetime:datetime',
+                [
+                    'attribute' => 'published_datetime',
+                    'format' => 'datetime',
+                    'contentOptions' => ['class' => 'datetime'],
+                ],
                 [
                     'attribute' => 'clicks_count',
                     'contentOptions' => ['class' => 'number'],
