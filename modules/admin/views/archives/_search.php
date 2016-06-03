@@ -29,10 +29,10 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="entry">
-            <?= $form->field($model, 'node_id')->dropDownList(\app\models\Node::parentOptions(), ['prompt' => '']) ?>
-        </div>
+            <div class="column">
+                <?= $form->field($model, 'node_id')->dropDownList(\app\models\Node::parentOptions(false), ['prompt' => '']) ?>
+            </div>
 
-        <div class="entry">
             <div class="column">
                 <?= $form->field($model, 'model_name')->dropDownList(app\models\Option::modelNameOptions(), ['prompt' => '']) ?>
             </div>
