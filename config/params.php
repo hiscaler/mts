@@ -403,6 +403,22 @@ return [
             'deleted_by',
             'deleted_at'
         ],
+        'app-models-Node' => [
+            'name',
+            'model_name',
+            'ordering',
+            'direct_data_count',
+            'relation_data_count',
+            'enabled',
+            'entity_status',
+            'entity_enabled',
+            'created_by',
+            'created_at',
+            'updated_by',
+            'updated_at',
+            'deleted_by',
+            'deleted_at'
+        ],
         'app-models-News' => [
             'ordering',
             'node_id',

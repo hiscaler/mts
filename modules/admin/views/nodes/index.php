@@ -1,6 +1,5 @@
 <?php
 
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\helpers\Url;
@@ -16,18 +15,17 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
-    ['label' => Yii::t('app', 'Search'), 'url' => '#'],
+     ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'app-models-Node'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-node']],
 ];
 ?>
 <div class="node-index">
-
-    <?= $this->render('_search', ['model' => $searchModel]); ?>
 
     <?php
     Pjax::begin([
         'formSelector' => '#form-nodes-search',
     ]);
-    echo GridView::widget([
+    echo \app\modules\admin\extensions\GridView::widget([
+        'id' => 'grid-view-node',
         'dataProvider' => $dataProvider,
         'rowOptions' => function($model, $key, $index, $grid) {
             return [
