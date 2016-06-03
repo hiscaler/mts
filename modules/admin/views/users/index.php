@@ -18,7 +18,7 @@ $this->params['menus'] = [
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 
-$baseUrl = Yii::$app->getRequest()->baseUrl;
+$baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
 ?>
 
 <div class="user-index">
