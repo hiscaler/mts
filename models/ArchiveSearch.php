@@ -19,8 +19,8 @@ class ArchiveSearch extends Archive
     public function rules()
     {
         return [
-            [['id', 'node_id', 'has_thumbnail', 'status', 'enabled', 'published_datetime', 'clicks_count', 'enabled_comment', 'comments_count', 'ordering', 'tenant_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'], 'integer'],
-            [['model_name', 'title', 'keywords', 'description', 'tags', 'thumbnail', 'author', 'source'], 'safe'],
+            [['id', 'node_id', 'has_thumbnail', 'status', 'enabled', 'published_datetime', 'enabled_comment', 'tenant_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'], 'integer'],
+            [['model_name', 'title', 'keywords', 'description', 'tags', 'author', 'source'], 'safe'],
         ];
     }
 
@@ -42,12 +42,17 @@ class ArchiveSearch extends Archive
      */
     public function search($params)
     {
-        $query = Archive::find();
+        $query = Archive::find()->where(['tenant_id' => MTS::getTenantId()]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         $this->load($params);
@@ -66,11 +71,8 @@ class ArchiveSearch extends Archive
             'status' => $this->status,
             'enabled' => $this->enabled,
             'published_datetime' => $this->published_datetime,
-            'clicks_count' => $this->clicks_count,
             'enabled_comment' => $this->enabled_comment,
-            'comments_count' => $this->comments_count,
             'ordering' => $this->ordering,
-            'tenant_id' => $this->tenant_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
@@ -84,7 +86,6 @@ class ArchiveSearch extends Archive
             ->andFilterWhere(['like', 'keywords', $this->keywords])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'tags', $this->tags])
-            ->andFilterWhere(['like', 'thumbnail', $this->thumbnail])
             ->andFilterWhere(['like', 'author', $this->author])
             ->andFilterWhere(['like', 'source', $this->source]);
 
