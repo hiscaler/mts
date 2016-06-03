@@ -11,11 +11,11 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Archives');
 $this->params['breadcrumbs'][] = $this->title;
 
-$gridViewId = 'grid-view-' . lcfirst(str_replace('app-models-', '', $modelName));
+$gridViewId = 'grid-view-' . lcfirst(str_replace('app-models-', '', $modelName ? : 'Archive'));
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index', 'modelName' => $modelName]],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create', 'modelName' => $modelName], 'visible' => !empty($modelName)],
-    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => $modelName], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => $gridViewId]],
+    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => $modelName ? : 'app-models-Archive'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => $gridViewId]],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
@@ -65,7 +65,11 @@ $this->params['menus'] = [
                 },
                 ],
                 'keywords',
-                // 'has_thumbnail',
+                [
+                    'attribute' => 'has_thumbnail',
+                    'format' => 'boolean',
+                    'contentOptions' => ['class' => 'boolean'],
+                ],
                 // 'author',
                 // 'source',
                 [

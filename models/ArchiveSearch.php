@@ -2,10 +2,9 @@
 
 namespace app\models;
 
-use Yii;
+use app\models\Archive;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Archive;
 
 /**
  * ArchiveSearch represents the model behind the search form about `app\models\Archive`.

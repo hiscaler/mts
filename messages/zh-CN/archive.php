@@ -19,6 +19,7 @@ return array(
     'Clicks Count' => '点击次数',
     'Author' => '作者',
     'Source' => '来源',
+    'Has Thumbnail' => '图片资讯',
     'Thumbnail' => '缩略图',
     'Status' => '状态',
     'Enabled' => '激活',
