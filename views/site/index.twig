@@ -200,7 +200,7 @@
                         <div class="bd">
                             <ul class="data-list clearfix">
                                 {% for item in items %}
-                                    <li><a href="{{ url('cases/view', {'node': item.node_id, 'id': item.id}) }}" title="{{ item.title }}">{{ item.title }}</a></li>
+                                    <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" title="{{ item.title }}">{{ item.title }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>    
