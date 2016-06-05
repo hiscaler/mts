@@ -575,18 +575,23 @@ ul.pagination .hidden a {
  * List item
  ******************************************************************************/
 .list-item {
-    margin-bottom: 17px;
-    padding-bottom: 17px;
-    border-bottom: #d0d0d0 solid 1px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: #d0d0d0 dashed 1px;
 }
 .list-item .title {
-    margin: 17px 0;
+    margin: 10px 0;
 }
 .list-item .title a {
     font-size: 18px;
     font-weight: bold;
 }
-.list-item .summary {
+.list-item .post-date {
+    color: #999999;
+    float: right;
+    font-size: 12px;
+}
+.list-item .description {
     text-indent: 24px;
     line-height: 26px;
     text-align: left;
@@ -594,11 +599,6 @@ ul.pagination .hidden a {
     word-break: break-all;
     font-size: 12px;
     margin-bottom: 10px;
-}
-.list-item .post-date {
-    color: #999999;
-    text-align: right;
-    font-size: 12px;
 }
 /*******************************************************************************
  * 资讯详情
