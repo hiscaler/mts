@@ -120,7 +120,7 @@ cite {
  ******************************************************************************/
 ul.pagination {
     border: 0;
-    font-size: 11px;
+    font-size: 14px;
     height: 30px;
     line-height: 30px;
     padding: 0;
@@ -129,7 +129,7 @@ ul.pagination {
 ul.pagination li {
     display: inline;
     font-size: 14px;
-    margin: 0 1px 0 0;
+    margin: 0 0 0 0;
 }
 ul.pagination a:link, ul.pagination a:visited {
     border: solid 1px #EEE;
@@ -140,6 +140,10 @@ ul.pagination a:link, ul.pagination a:visited {
 }
 ul.pagination .page a {
     font-weight: normal;
+}
+ul.pagination li.active a {
+  background: #1c486d;
+  color: #FFF;
 }
 ul.pagination a:hover {
     background: #1c486d;
