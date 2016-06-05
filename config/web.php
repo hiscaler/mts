@@ -4,6 +4,7 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
+    'name' => 'MTS',
     'basePath' => dirname(__DIR__),
     'language' => 'zh-CN',
     'bootstrap' => ['log'],
@@ -75,6 +76,7 @@ $config = [
                         'articleGetter' => '\yadjet\mts\sdk\ArticleGetter',
                         'lookupGetter' => '\yadjet\mts\sdk\LookupGetter',
                         'nodeGetter' => '\yadjet\mts\sdk\NodeGetter',
+                        'applicationHelper' => '\yadjet\mts\sdk\ApplicationHelper',
                     ],
                 ],
             ],
