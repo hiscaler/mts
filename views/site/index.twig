@@ -12,25 +12,25 @@
                 <li class="item">
                     <div class="name">工商代办</div>
                     <div class="tel">
-                        陈经理：13017289259
+                        蒋经理：17784995120
                     </div>
                 </li>
                 <li class="item">
                     <div class="name">代理记账</div>
                     <div class="tel">
-                        陈经理：15874198688
+                        蒋经理：17784995120
                     </div>
                 </li>
                 <li class="item">
                     <div class="name">资质代理</div>
                     <div class="tel">
-                        万经理：15364038233
+                        陈经理：18900796555
                     </div>
                 </li>
                 <li class="item">
                     <div class="name">社保公积金代理</div>
                     <div class="tel">
-                        万经理：15364038233
+                        陈经理：18900796555
                     </div>
                 </li>
             </ul>
@@ -47,9 +47,9 @@
                 <ul>
                     <li class="item-1"><a href="{{ url('news/index', {'node': 2, 'children': 'y'}) }}">工商代办</a></li>
                     <li class="item-2"><a href="{{ url('news/index', {'node': 6}) }}">工商变更</a></li>
-                    <li class="item-3"><a href="{{ url('news/index', {'node': 13}) }}">代理记账</a></li>
-                    <li class="item-4"><a href="{{ url('news/index', {'node': 3, 'children': 'y'}) }}">会计培训</a></li>
-                    <li class="item-5"><a href="{{ url('news/index', {'node': 19}) }}">社保代理</a></li>
+                    <li class="item-3"><a href="{{ url('news/index', {'node': 7}) }}">外资注册</a></li>
+                    <li class="item-4"><a href="{{ url('news/index', {'node': 13, 'children': 'y'}) }}">代理记账</a></li>
+                    <li class="item-5"><a href="{{ url('news/index', {'node': 21}) }}">社保代理</a></li>
                     <li class="item-6"><a href="{{ url('news/index', {'node': 24}) }}">公积金代理</a></li>
                     <li class="item-7"><a href="{{ url('news/index', {'node': 11}) }}">资质代理</a></li>
                     <li class="item-8"><a href="{{ url('news/index', {'node': 26}) }}">商标注册</a></li>
@@ -100,7 +100,7 @@
                         {% if article.picture_path is not empty %}
                             <img src="{{ baseUrl ~ article.picture_path }}" alt="公司简介" />
                         {% endif %}
-                        {{ article.content | raw }}
+                        {{ stringHelper.truncate(article.content, 185, '', null, true) | raw }}
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                 <div class="widget-homepage-news">
                     <div class="hd">新闻资讯</div>
                     <div class="bd">
-                        {% set items = archiveGetter.rows('id,node_id,title', {'node': 2}, 'id.desc', 0, 10) %}
+                        {% set items = archiveGetter.rows('id,node_id,title', {'node': 1}, 'id.desc', 0, 10) %}
                         <ul class="data-list">
                             {% for item in items %}
                                 <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>

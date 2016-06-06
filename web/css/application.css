@@ -172,8 +172,8 @@ ul.pagination .hidden a {
  * data list
  ******************************************************************************/
 .data-list li {
-    height: 24px;
-    line-height: 24px;
+    height: 28px;
+    line-height: 28px;
     padding-left: 10px;
     overflow: hidden;
     background: url(../images/data-list-item-bg.jpg) no-repeat left center;
