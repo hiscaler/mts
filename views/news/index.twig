@@ -7,25 +7,15 @@
 {% set pageKeywords = data.keywords %}
 {% set pageDescription = data.description %}
 
-
-
 {% block content %}
 
     {% set rawData = archiveGetter.all('id,node_id,title,description,published_datetime', {'node': app.request.get('node')}, 'id.desc', app.request.get('page', 1), 10) %}
     {% if (rawData.items | length) %}
-        <div class="list-box">
+        <ul class="data-list clearfix">
             {% for item in rawData.items %}
-                <div class="list-item">
-                    <div class="title">
-                        <em class="post-date">{{ item.published_datetime | date('Y-m-d') }}</em>
-                        <a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a>
-                    </div>
-                    <div class="description">
-                        {{ item.description }}
-                    </div>
-                </div>
+                <li><span>{{ item.published_datetime | date('Y-m-d') }}</span><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
             {% endfor %}
-        </div>
+        </ul>
         <div class="pagination-toolbar">
             {{ applicationHelper.pagination(rawData._meta) | raw }}
         </div>
