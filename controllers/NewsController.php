@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use Yii;
+
 /**
  * 资讯
  * 
@@ -12,7 +14,25 @@ class NewsController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $request = Yii::$app->getRequest();
+        if ($request->isAjax) {
+            $items = [];
+            $rawData = \yadjet\mts\sdk\ArchiveGetter::rows('id,node_id,title', ['node' => (int) $request->get('node'), ['orderBy' => 'id.desc'], 0, 10]);
+            foreach ($rawData as $data) {
+                $items[] = [
+                    'url' => \yii\helpers\Url::toRoute(['news/view', 'node' => $data['node_id'], 'id' => $data['id']]),
+                    'title' => $data['title'],
+                ];
+            }
+
+
+            return new \yii\web\Response([
+                'format' => \yii\web\Response::FORMAT_JSON,
+                'data' => $items,
+            ]);
+        } else {
+            return $this->render('index');
+        }
     }
 
     public function actionList($node = null)

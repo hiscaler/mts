@@ -101,6 +101,10 @@ cite {
     margin-right: 0;
     padding-right: 0;
 }
+.loading {
+    display: block;
+    background: url(../images/loading.gif) no-repeat center center;
+}
 /*******************************************************************************
  * 错误信息
  ******************************************************************************/

@@ -168,19 +168,7 @@
                             <div class="widget-simple">
                                 <div class="hd">公司注册</div>
                                 <div class="bd">
-                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 5}, 'id.desc', 0, 6) %}
-                                    <ul class="data-list clearfix">
-                                        {% for item in items %}
-                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="widget-simple">
-                                <div class="hd">工商代办</div>
-                                <div class="bd">
-                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 6}, 'id.desc', 0, 6) %}
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 5}, 'id.desc', 0, 10) %}
                                     <ul class="data-list clearfix">
                                         {% for item in items %}
                                             <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
@@ -258,19 +246,7 @@
                             <div class="widget-simple">
                                 <div class="hd">财务税务</div>
                                 <div class="bd">
-                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 12}, 'id.desc', 0, 6) %}
-                                    <ul class="data-list clearfix">
-                                        {% for item in items %}
-                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="widget-simple">
-                                <div class="hd">记账报税</div>
-                                <div class="bd">
-                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 13}, 'id.desc', 0, 6) %}
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 12}, 'id.desc', 0, 10) %}
                                     <ul class="data-list clearfix">
                                         {% for item in items %}
                                             <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
@@ -349,19 +325,7 @@
                             <div class="widget-simple">
                                 <div class="hd">长沙社保代理</div>
                                 <div class="bd">
-                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 19}, 'id.desc', 0, 6) %}
-                                    <ul class="data-list clearfix">
-                                        {% for item in items %}
-                                            <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="widget-simple">
-                                <div class="hd">社保代缴</div>
-                                <div class="bd">
-                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 20}, 'id.desc', 0, 6) %}
+                                    {% set items = archiveGetter.rows('id,node_id,title', {'node': 19}, 'id.desc', 0, 10) %}
                                     <ul class="data-list clearfix">
                                         {% for item in items %}
                                             <li><a href="{{ url('news/view', {'node': item.node_id, 'id': item.id}) }}" target="_blank" title="{{ item.title }}">{{ item.title }}</a></li>
@@ -429,4 +393,17 @@
         <div class="free-consult-tel">免费咨询电话：186-7311-6524（蒋经理）</div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script id="tmpl-homepage-news-widget" type="text/tmpl">
+        <%
+        if (it.length > 0){
+            for (var i = 0; i < it.length; i++) { %>
+                <li><a href="<%= it[i].url %>" target="_blank" title="<%= it[i].title %>"><%= it[i].title %></a></li>
+        <%
+            }
+        }
+        %>
+    </script>
 {% endblock %}
