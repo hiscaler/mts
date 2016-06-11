@@ -4,6 +4,8 @@ $('.widget-homepage-common .tabs li a').live('click', function () {
         $changeWidget = $container.find('div.widget-simple'),
         $changeWidgetBody = $changeWidget.find('.bd');
 
+
+    $t.parent().addClass('active').siblings().removeClass('active');
     $changeWidget.find('.hd').text($t.text());
     $.ajax({
         type: 'GET',
@@ -23,5 +25,6 @@ $('.widget-homepage-common .tabs li a').live('click', function () {
             $changeWidgetBody.removeClass('loading');
         }
     });
+    
     return false;
 });
