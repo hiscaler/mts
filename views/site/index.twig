@@ -1,8 +1,8 @@
 {% extends "@app/views/layouts/base.twig" %}
 
 {% set pageTitle = '首页' %}
-{% set pageKeywords = '' %}
-{% set pageDescription = '' %}
+{% set pageKeywords = lookups['meta.keywords'] %}
+{% set pageDescription = lookups['meta.description'] %}
 
 {% block content %}
 

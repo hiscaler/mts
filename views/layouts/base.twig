@@ -4,9 +4,13 @@ set lookups = lookupGetter.rows({
     'address': null,
     'tel': null,
     'icp': null,
-    'site.name': null
+    'site.name': null,
+    'meta.keywords': null,
+    'meta.description': null,
 })
 %}
+{% set pageKeywords = lookups['meta.keywords'] %}
+{% set pageDescription = lookups['meta.description'] %}
 <!DOCTYPE html>
 <html lang="{{ app.language }}">
     <head>
