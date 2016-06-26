@@ -63,10 +63,9 @@ $config = [
                 'twig' => [
                     'class' => '\yii\twig\ViewRenderer',
                     'cachePath' => '@runtime/Twig/cache',
-                    'options' => YII_DEBUG ? ['debug' => true, 'auto_reload' => true] : ['auto_reload' => true],
+                    'options' => YII_DEBUG ? ['debug' => true, 'auto_reload' => true] : ['auto_reload' => false],
                     'extensions' => YII_DEBUG ? ['\Twig_Extension_Debug'] : [],
                     'globals' => [
-                        'applicationHelper' => 'ApplicationHelperYii2',
                         'html' => '\yii\helpers\Html',
                         'stringHelper' => '\yii\helpers\StringHelper',
                         'formatter' => '\yii\i18n\Formatter',
