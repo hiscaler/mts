@@ -1,6 +1,7 @@
 {% extends "@app/views/layouts/main.twig" %}
 
-{% set node = app.request.get('node') | abs %}
+{% set request = app.request %}
+{% set node = request.get('node') | abs %}
 {% set currentNodeName = nodeGetter.name(node) %}
 
 {% set pageTitle = currentNodeName %}
@@ -8,8 +9,7 @@
 {% set pageDescription = data.description %}
 
 {% block content %}
-
-    {% set rawData = archiveGetter.all('id,node_id,title,description,published_datetime', {'node': app.request.get('node')}, 'id.desc', app.request.get('page', 1), 10) %}
+    {% set rawData = archiveGetter.all('id,node_id,title,description,published_datetime', {'node': node}, 'id.desc', request.get('page', 1), 29) %}
     {% if (rawData.items | length) %}
         <ul class="data-list clearfix">
             {% for item in rawData.items %}

@@ -1,4 +1,5 @@
-{% set baseUrl = app.request.baseUrl %}
+{% set request = app.request %}
+{% set baseUrl = request.baseUrl %}
 {%
 set lookups = lookupGetter.rows({
     'address': null,
@@ -9,8 +10,6 @@ set lookups = lookupGetter.rows({
     'meta.description': null,
 })
 %}
-{% set pageKeywords = lookups['meta.keywords'] %}
-{% set pageDescription = lookups['meta.description'] %}
 <!DOCTYPE html>
 <html lang="{{ app.language }}">
     <head>
@@ -22,8 +21,8 @@ set lookups = lookupGetter.rows({
             <!--[if lt IE 8]><link rel="stylesheet" href="{{ baseUrl }}/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
         {% endblock %}
         <title>{% if pageTitle is defined %}{{ pageTitle }}_{% endif %}{{ lookups['site.name'] }}</title>
-        <meta name="description" content="{% if pageDescription is defined %}{{ pageDescription }}{% endif %}" />
-        <meta name="keywords"  content="{% if pageKeywords is defined %}{{ pageKeywords }}{% endif %}" />
+        <meta name="description" content="{% if pageDescription is defined and pageDescription is not empty %}{{ pageDescription }}{% else %}{{ lookups['meta.description'] }}{% endif %}" />
+        <meta name="keywords" content="{% if pageKeywords is defined and pageKeywords is not empty %}{{ pageKeywords }}{% else %}{{ lookups['meta.keywords'] }}{% endif %}" />
     </head>
     <body>
         <div id="page">
@@ -35,9 +34,9 @@ set lookups = lookupGetter.rows({
             </div>
             {% include '@app/views/blocks/footer.twig' %}
         </div>
-        <script type="text/javascript" src="{{ staticUrl }}/js/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="{{ staticUrl }}/js/doT.min.js"></script>
-        <script type="text/javascript" src="{{ staticUrl }}/js/application.js"></script>
+        <script type="text/javascript" src="{{ baseUrl }}/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="{{ baseUrl }}/js/doT.min.js"></script>
+        <script type="text/javascript" src="{{ baseUrl }}/js/application.js"></script>
         {% block javascripts %}
         {% endblock %}
     </body>
