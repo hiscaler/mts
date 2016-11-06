@@ -9,7 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\db\Query;
 
 /**
- * TenantUserSearch represents the model behind the search form about `common\models\TenantUser`.
+ * TenantUserSearch represents the model behind the search form about `app\models\TenantUser`.
  */
 class TenantUserSearch extends TenantUser
 {

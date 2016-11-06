@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
     </head>
     <body>
         <div id="logo">
-            <?= Lookup::getValue('SITE.NAME', Yii::$app->name); ?>
+            <?= Lookup::getValue('site.name', Yii::$app->name); ?>
         </div>
         <div id="in">
             <div id="left"></div>

@@ -51,7 +51,6 @@ class DefaultController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-                'errorAction' => 'admin/default/error',
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
@@ -116,7 +115,6 @@ class DefaultController extends Controller
      */
     public function actionProfile()
     {
-        $this->layout = 'my';
         $model = $this->findCurrentUserModel();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

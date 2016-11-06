@@ -94,30 +94,16 @@ $this->params['menus'] = [
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {users} {update} {delete} {undo}',
+                'template' => '{view} {users} {access-tokens} {update}',
                 'buttons' => [
                     'users' => function ($url, $model, $key) use ($baseUrl) {
                         return Html::a(Html::img($baseUrl . '/images/users.png'), ['view', 'id' => $model['id'], 'tab' => 'users'], ['data-pjax' => 0, 'class' => 'user-auth']);
                     },
-                    'delete' => function ($url, $model, $key) {
-                        return $model['enabled'] != app\models\Constant::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                            'title' => Yii::t('yii', 'Delete'),
-                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                            'data-method' => 'post',
-                            'data-pjax' => '0',
-                        ]) : '';
+                    'access-tokens' => function ($url, $model, $key) use ($baseUrl) {
+                        return Html::a(Html::img($baseUrl . '/images/access-token.png'), ['view', 'id' => $model['id'], 'tab' => 'access-tokens'], ['data-pjax' => 0, 'title' => Yii::t('app', 'Tenant Access Tokens')]);
                     },
-                    'undo' => function ($url, $model, $key) {
-                        return $model['enabled'] == app\models\Constant::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-undo"></span>', $url, [
-                            'title' => Yii::t('app', 'Undo'),
-                            'data-confirm' => Yii::t('app', 'Are you sure you want to undo this item?'),
-                            'data-method' => 'post',
-                            'data-pjax' => '0',
-                        ]) : '';
-                    }
                 ],
-                'headerOptions' => ['class' => 'last'],
-                'contentOptions' => ['class' => 'buttons-4'],
+                'headerOptions' => ['class' => 'buttons-4 last'],
             ],
         ],
     ]);

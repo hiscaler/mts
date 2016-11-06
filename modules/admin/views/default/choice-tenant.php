@@ -12,7 +12,7 @@ $this->title = Yii::$app->name;
 $isAdministrator = MTS::getUserRole() == User::ROLE_ADMINISTRATOR;
 ?>
 
-<div id='tenants-list' class="message-box">
+<div id="tenants-list" class="message-box">
     <div class="hd">
         <?= $tenants ? '请选择您要管理的站点' : '提示信息' ?>
         <?php
@@ -32,7 +32,9 @@ $isAdministrator = MTS::getUserRole() == User::ROLE_ADMINISTRATOR;
                                     <em><?= $tenant['domain_name'] ?></em>
                                     <?= $tenant['name'] ?>
                                 </span>
-                                <span class="description"><?= $tenant['description'] ?></span>
+                                <?php if ($tenant['description']): ?>
+                                    <span class="description"><?= $tenant['description'] ?></span>
+                                <?php endif; ?>
                             </a>
                         </div>
                         <?php

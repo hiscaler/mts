@@ -74,12 +74,14 @@ class Option
         if ($all === true) {
             $tenantModules = Tenant::modules();
         }
-        $contentModels = ArrayHelper::getValue(Yii::$app->params, 'contentModules', []);
-        foreach ($contentModels as $modelName => $item) {
-            if ($all === false && in_array($modelName, $tenantModules)) {
-                continue;
+        $contentModels = ArrayHelper::getValue(Yii::$app->params, 'modules', []);
+        foreach ($contentModels as $group => $item) {
+            foreach ($item as $key => $value) {
+                if ((isset($value['forceEmbed']) && $value['forceEmbed']) || ($all === false && in_array($group, $tenantModules))) {
+                    continue;
+                }
+                $options[$key] = Yii::t('app', $value['label']);
             }
-            $options[$modelName] = Yii::t('app', $item['label']);
         }
 
         return $options;

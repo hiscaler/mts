@@ -4,10 +4,10 @@ namespace app\modules\admin\controllers;
 
 use app\models\Constant;
 use app\models\Option;
-use app\models\Tenant;
-use app\models\TenantSearch;
-use app\modules\admin\forms\CreateTenantUserForm;
+use app\models\TenantAccessToken;
+use app\models\TenantAccessTokenSearch;
 use PDO;
+use yadjet\helpers\StringHelper;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -15,11 +15,9 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * 站点管理
- * 
- * @author hiscaler <hiscaler@gmail.com>
+ * TenantAccessTokensController implements the CRUD actions for TenantAccessToken model.
  */
-class TenantsController extends GlobalController
+class TenantAccessTokensController extends GlobalController
 {
 
     public function behaviors()
@@ -29,7 +27,7 @@ class TenantsController extends GlobalController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'undo', 'toggle', 'create-user'],
+                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'undo', 'toggle'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -47,12 +45,12 @@ class TenantsController extends GlobalController
     }
 
     /**
-     * Lists all Tenant models.
+     * Lists all TenantAccessToken models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TenantSearch();
+        $searchModel = new TenantAccessTokenSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -62,7 +60,7 @@ class TenantsController extends GlobalController
     }
 
     /**
-     * Displays a single Tenant model.
+     * Displays a single TenantAccessToken model.
      * @param integer $id
      * @return mixed
      */
@@ -74,17 +72,16 @@ class TenantsController extends GlobalController
     }
 
     /**
-     * Creates a new Tenant model.
+     * Creates a new TenantAccessToken model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Tenant();
+        $model = new TenantAccessToken();
+        $model->access_token = StringHelper::uuid();
+        $model->enabled = Constant::BOOLEAN_TRUE;
         $model->loadDefaultValues();
-        $model->date_format = 'php:Y-m-d';
-        $model->time_format = 'php:H:i:s';
-        $model->datetime_format = 'php:Y-m-d H:i:s';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -96,7 +93,7 @@ class TenantsController extends GlobalController
     }
 
     /**
-     * Updates an existing Tenant model.
+     * Updates an existing TenantAccessToken model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -115,7 +112,7 @@ class TenantsController extends GlobalController
     }
 
     /**
-     * Deletes an existing Tenant model.
+     * Deletes an existing TenantAccessToken model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -123,9 +120,10 @@ class TenantsController extends GlobalController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $userId = Yii::$app->user->id;
+        $userId = Yii::$app->getUser()->getId();
         $now = time();
-        Yii::$app->getDb()->createCommand()->update('{{%tenant}}', [
+        Yii::$app->getDb()->createCommand()->update('{{%tenant_access_token}}', [
+            'status' => Option::STATUS_DELETED,
             'updated_by' => $userId,
             'updated_at' => $now,
             'deleted_by' => $userId,
@@ -144,8 +142,9 @@ class TenantsController extends GlobalController
     public function actionUndo($id)
     {
         $model = $this->findModel($id);
-        Yii::$app->getDb()->createCommand()->update('{{%tenant}}', [
-            'updated_by' => Yii::$app->user->id,
+        Yii::$app->getDb()->createCommand()->update('{{%tenant_access_token}}', [
+            'status' => Option::STATUS_PUBLISHED,
+            'updated_by' => Yii::$app->getUser()->getId(),
             'updated_at' => time(),
             'deleted_by' => null,
             'deleted_at' => null,
@@ -155,21 +154,24 @@ class TenantsController extends GlobalController
     }
 
     /**
-     * 切换记录禁止、激活状态
+     * 切换是否激活开关
      * @return Response
      */
     public function actionToggle()
     {
-        $id = Yii::$app->getRequest()->post('id');
+        $id = Yii::$app->request->post('id');
         $db = Yii::$app->getDb();
-        $value = $db->createCommand('SELECT [[enabled]] FROM {{%tenant}} WHERE [[id]] = :id')->bindValue(':id', (int) $id, PDO::PARAM_INT)->queryScalar();
+        $value = $db->createCommand('SELECT [[enabled]] FROM {{%tenant_access_token}} WHERE [[id]] = :id')->bindValue(':id', (int) $id, PDO::PARAM_INT)->queryScalar();
         if ($value !== null) {
             $value = !$value;
-            $db->createCommand()->update('{{%tenant}}', ['enabled' => $value, 'updated_at' => time()], '[[id]] = :id', [':id' => (int) $id], PDO::PARAM_INT)->execute();
+            $now = time();
+            $db->createCommand()->update('{{%tenant_access_token}}', ['enabled' => $value, 'updated_at' => $now, 'updated_by' => Yii::$app->getUser()->getId()], '[[id]] = :id', [':id' => (int) $id])->execute();
             $responseData = [
                 'success' => true,
                 'data' => [
                     'value' => $value,
+                    'updatedAt' => Yii::$app->formatter->asDate($now),
+                    'updatedBy' => Yii::$app->getUser()->getIdentity()->nickname,
                 ],
             ];
         } else {
@@ -188,51 +190,15 @@ class TenantsController extends GlobalController
     }
 
     /**
-     * 添加站点管理用户
-     * @return mixed
-     */
-    public function actionCreateUser($id)
-    {
-        $tenant = $this->findModel($id);
-        $model = new CreateTenantUserForm();
-        $model->tenant_id = $tenant['id'];
-        $model->tenant_name = $tenant['name'];
-
-        if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
-            $userId = Yii::$app->getUser()->getId();
-            $now = time();
-            Yii::$app->getDb()->createCommand()->insert('{{%tenant_user}}', [
-                'tenant_id' => $tenant->id,
-                'user_id' => $model->user_id,
-                'user_group_id' => $model->user_group_id,
-                'role' => $model->role,
-                'rule_id' => $model->rule_id,
-                'enabled' => Constant::BOOLEAN_TRUE,
-                'created_at' => $now,
-                'created_by' => $userId,
-                'updated_at' => $now,
-                'updated_by' => $userId
-            ])->execute();
-            Yii::$app->getSession()->setFlash('notice', "用户 {$model->username} 已经成功绑定「{$tenant->name}」站点。");
-            return $this->redirect(['view', 'id' => $tenant->id, 'tab' => 'users']);
-        }
-
-        return $this->render('createUser', [
-                'tenant' => $tenant,
-                'model' => $model,
-        ]);
-    }
-
-    /**
-     * Finds the Tenant model based on its primary key value.
+     * Finds the TenantAccessToken model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Tenant the loaded model
+     * @return TenantAccessToken the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tenant::findOne($id)) !== null) {
+        if (($model = TenantAccessToken::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use app\models\MTS;
+use app\models\Yad;
 use Yii;
 use yii\db\ActiveRecord;
 

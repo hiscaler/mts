@@ -45,7 +45,7 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'domain_name')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'class' => 'g-text g-text-large']) ?>
+        <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'class' => 'form-control g-text-large']) ?>
 
         <?= $form->field($model, 'enabled')->checkbox([], false) ?>
 

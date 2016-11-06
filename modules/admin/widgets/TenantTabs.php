@@ -32,6 +32,11 @@ class TenantTabs extends Widget
                 'url' => ['tenants/view', 'id' => $tenantId],
                 'id' => 'panel-tenant-users',
             ],
+            [
+                'label' => Yii::t('tenant', 'Manage Access Tokens'),
+                'url' => ['tenants/view', 'id' => $tenantId],
+                'id' => 'panel-tenant-access-tokens',
+            ],
         ];
 
         return $items;

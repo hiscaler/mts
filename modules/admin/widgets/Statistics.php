@@ -26,7 +26,7 @@ class Statistics extends Widget
         $db = Yii::$app->getDb();
         $tablePrefix = $db->tablePrefix;
         $tables = [];
-        $rejectStatisticsTables = isset(Yii::$app->params['rejectStatisticsTables']) ? Yii::$app->params['rejectStatisticsTables'] : [];
+        $rejectStatisticsTables = isset(Yii::$app->params['rejectStatisticsTables']) ? Yii::$app->params['rejectStatisticsTables'] : ['ad', 'album', 'article', 'classic_case', 'download', 'faq', 'ip_access_rule', 'meta', 'news', 'product', 'quick_url_shortcut', 'search_keyword', 'slide'];
         foreach (Tenant::modules() as $module) {
             $tableName = str_replace($tablePrefix, '', MTS::modelName2TableName($module));
             if (!in_array($tableName, $rejectStatisticsTables)) {

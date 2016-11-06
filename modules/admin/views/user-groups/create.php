@@ -1,18 +1,18 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model app\models\TenantUserGroup */
+/* @var $model app\models\UserGroup */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-        'modelClass' => Yii::t('model', 'Tenant User Group'),
+        'modelClass' => Yii::t('model', 'User Group'),
     ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User Groups'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Create');
+$this->params['breadcrumbs'][] = $this->title;
 
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
 ];
 ?>
-<div class="tenant-user-group-create">
+<div class="user-group-create">
 
     <?=
     $this->render('_form', [

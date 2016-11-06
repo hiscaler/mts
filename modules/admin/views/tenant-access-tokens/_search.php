@@ -1,16 +1,15 @@
 <?php
 
-use app\models\Option;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\TenantUserGroupSearch */
+/* @var $model app\models\TenantAccessTokenSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="form-outside search-form form-layout-column" style="display: none">
-    <div class="tenant-user-group-search form">
+    <div class="tenant-access-token-search form">
 
         <?php
         $form = ActiveForm::begin([
@@ -19,13 +18,11 @@ use yii\widgets\ActiveForm;
         ]);
         ?>
 
-        <div class="entry">
-            <?= $form->field($model, 'alias') ?>
+        <?= $form->field($model, 'title') ?>
 
-            <?= $form->field($model, 'name') ?>
-        </div>
+        <?= $form->field($model, 'access_token') ?>
 
-        <?= $form->field($model, 'enabled')->dropDownList(Option::booleanOptions(), ['prompt' => '']) ?>
+        <?= $form->field($model, 'enabled') ?>
 
         <div class="form-group buttons">
             <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
@@ -35,4 +32,3 @@ use yii\widgets\ActiveForm;
         <?php ActiveForm::end(); ?>
 
     </div>
-</div>

@@ -83,7 +83,7 @@ class MTS
      */
     public static function setTenantData($tenantId)
     {
-        $db = Yii::$app->db;
+        $db = Yii::$app->getDb();
         $tenantUser = $db->createCommand('SELECT [[t.role]], [[t.rule_id]] FROM {{%tenant_user}} t LEFT JOIN {{%user}} u ON [[t.user_id]] = [[u.id]] WHERE [[t.tenant_id]] = :tenantId AND [[t.user_id]] = :userId AND [[t.enabled]] = :enabled')->bindValues([
                 ':tenantId' => (int) $tenantId,
                 ':userId' => Yii::$app->getUser()->getId(),
@@ -144,7 +144,7 @@ class MTS
      */
     public static function getLanguage()
     {
-        return self::getTenantValue('language', Yii::$app->language);
+        return self::getTenantValue('language', Yii::$app->getRequest()->getPreferredLanguage(array_keys(self::getLanguages())));
     }
 
     public static function getTimezone()

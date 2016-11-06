@@ -3,21 +3,17 @@
 use yii\db\Migration;
 
 /**
- * 站点用户
- *
- * @author hiscaler <hiscaler@gmail.com>
+ * Handles the creation for table `tenant_access_token_table`.
  */
-class m160422_163417_create_tenant_user_table extends Migration
+class m161106_093613_create_tenant_access_token_table extends Migration
 {
 
     public function up()
     {
-        $this->createTable('{{%tenant_user}}', [
+        $this->createTable('{{%tenant_access_token}}', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull()->comment('用户 id'),
-            'role' => $this->integer()->notNull()->defaultValue(0)->comment('角色'),
-            'rule_id' => $this->integer()->notNull()->defaultValue(0)->comment('规则'),
-            'user_group_id' => $this->integer()->notNull()->defaultValue(0)->comment('用户分组'),
+            'name' => $this->string(30)->notNull()->comment('名称'),
+            'access_token' => $this->string(32)->notNull()->comment('Access Token'),
             'enabled' => $this->boolean()->notNull()->defaultValue(1)->comment('激活'),
             'tenant_id' => $this->integer()->notNull()->comment('站点 id'),
             'created_at' => $this->integer()->notNull()->comment('添加时间'),
@@ -29,7 +25,7 @@ class m160422_163417_create_tenant_user_table extends Migration
 
     public function down()
     {
-        $this->dropTable('{{%tenant_user}}');
+        $this->dropTable('{{%tenant_access_token}}');
     }
 
 }
