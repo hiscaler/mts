@@ -23,15 +23,16 @@ $config = [
             ],
         ],
         'db' => $db,
-    ],
-    'params' => $params,
-    /*
-    'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => '\yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                ],
+            ],
         ],
     ],
-    */
+    'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
