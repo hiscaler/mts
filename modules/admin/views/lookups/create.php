@@ -3,8 +3,8 @@
 /* @var $model app\models\Lookup */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-            'modelClass' => Yii::t('model', 'Lookup'),
-        ]);
+    'modelClass' => 'Lookup',
+]);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Lookups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create');

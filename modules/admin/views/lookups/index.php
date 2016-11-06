@@ -1,112 +1,110 @@
 <?php
 
-use yii\helpers\StringHelper;
-use yii\helpers\Url;
-use yii\widgets\Pjax;
+use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\LookupSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+$this->title = '常规设定';
+$this->params['breadcrumbs'][] = ['label' => '基本设置', 'url' => ['lookups/index']];
+$this->params['breadcrumbs'][] = '常规设定';
 
-$this->title = Yii::t('app', 'Lookups');
-$this->params['breadcrumbs'][] = $this->title;
+
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
-    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'common-models-Lookup'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-lookups']],
-    ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
-<div class="lookup-index">
 
-    <?= $this->render('_search', ['model' => $searchModel]); ?>
+<div class="clearfix">
+    <ul class="tabs-common">
+        <?php
+        $i = 0;
+        foreach (app\models\Lookup::getGroupOptions() as $group => $name):
+            if (!isset($items[$group])) {
+                continue;
+            }
+            $i++;
+            if ($i == 1) {
+                $activeGroup = $group;
+            }
+            ?>
+            <li <?= $i == 1 ? ' class="active"' : '' ?>><a href="javascript:;" data-toggle="tab-group-<?= $group ?>"><?= $name ?></a></li>
+        <?php endforeach; ?>
+    </ul>
 
-    <?php
-    Pjax::begin([
-        'formSelector' => '#form-lookups',
-        'linkSelector' => '#grid-view-lookups a',
-    ]);
-    echo yii\grid\GridView::widget([
-        'id' => 'grid-view-lookups',
-//        'name' => 'common-models-Lookup',
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            [
-                'class' => 'yii\grid\SerialColumn',
-                'contentOptions' => ['class' => 'serial-number']
-            ],
-            [
-                'attribute' => 'label',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return \yii\helpers\Html::a($model['label'], ['update', 'id' => $model['id']]);
-                },
-                'contentOptions' => ['class' => 'lookup-label'],
-            ],
-            'description',
-            [
-                'attribute' => 'value',
-                'value' => function($model) {
-                    return StringHelper::truncate($model['value'], 20);
-                }
-            ],
-            [
-                'attribute' => 'return_type',
-                'format' => 'lookupReturnType',
-                'contentOptions' => ['class' => 'lookup-return-type center'],
-            ],
-            [
-                'attribute' => 'enabled',
-                'format' => 'boolean',
-                'contentOptions' => ['class' => 'boolean pointer lookup-enabled-handler'],
-            ],
-            [
-                'attribute' => 'created_by',
-                'value' => function($model) {
-                    return $model['creater']['nickname'];
-                },
-                'contentOptions' => ['class' => 'username']
-            ],
-            [
-                'attribute' => 'created_at',
-                'format' => 'date',
-                'contentOptions' => ['class' => 'date']
-            ],
-            [
-                'attribute' => 'updated_by',
-                'value' => function($model) {
-                    return $model['updater']['nickname'];
-                },
-                'contentOptions' => ['class' => 'username']
-            ],
-            [
-                'attribute' => 'updated_at',
-                'format' => 'date',
-                'contentOptions' => ['class' => 'date']
-            ],
-            [
-                'attribute' => 'deleted_by',
-                'value' => function($model) {
-                    return $model['deleter']['nickname'];
-                },
-                'contentOptions' => ['class' => 'username']
-            ],
-            [
-                'attribute' => 'deleted_at',
-                'format' => 'date',
-                'contentOptions' => ['class' => 'date']
-            ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'headerOptions' => ['class' => 'last'],
-                'contentOptions' => ['class' => 'buttons-3'],
-            ],
-        ],
-    ]);
-    Pjax::end();
-    ?>
+    <?php if ($items): ?>
+        <?php echo Html::beginForm(['index']); ?>
+        <div class="panels">
+            <div class="form">
 
+                <?php
+                foreach ($items as $group => $data):
+                    ?>
+                    <div class="tab-pane" id="tab-group-<?= $group ?>"<?= $activeGroup == $group ? '' : ' style="display: none"' ?>>
+                        <?php if ($data) : ?>
+                            <?php foreach ($data as $d) : ?>
+                                <div class="form-group">
+                                    <label>
+                                        <?php
+                                        $dotIndex = strpos($d['label'], '.');
+                                        if ($dotIndex === false) {
+                                            $label = $d['description'];
+                                        } else {
+                                            $label = \yii\helpers\Inflector::camel2words(substr($d['label'], $dotIndex + 1));
+                                        }
+                                        echo Yii::t('lookup', $label);
+                                        ?>
+                                    </label>
+                                    <?php
+                                    switch ($d['input_method']) {
+                                        case \app\models\Lookup::INPUT_METHOD_TEXTAREA:
+                                            if ($d['return_type'] == app\models\Lookup::RETURN_TYPE_STRING) {
+                                                $input = Html::textarea($d['label'], unserialize($d['value']), ['class' => 'form-control']);
+                                            } elseif ($d['return_type'] == app\models\Lookup::RETURN_TYPE_ARRAY) {
+                                                echo Html::hiddenInput('inputValues[' . \yii\helpers\Inflector::camel2id($d['label']) . ']', 1);
+                                                $input = Html::textarea($d['label'], $d['input_value'], ['class' => 'form-control']);
+                                            } else {
+                                                $input = null;
+                                            }
+
+                                            break;
+
+                                        case \app\models\Lookup::INPUT_METHOD_CHECKBOX:
+                                            $input = Html::checkbox($d['label'], unserialize($d['value']), ['uncheck' => 0]);
+                                            break;
+
+                                        case \app\models\Lookup::INPUT_METHOD_DROPDOWNLIST:
+                                            $items = [];
+                                            foreach (explode(PHP_EOL, $d['input_value']) as $key) {
+                                                $v = explode(':', $key);
+                                                if (count($v) == 2 && $v[0] != '' && $v[1] != '') {
+                                                    $items[$v[0]] = $v[1];
+                                                }
+                                            }
+                                            $input = Html::dropDownList($d['label'], unserialize($d['value']), $items, ['class' => 'form-control']);
+                                            break;
+
+                                        default:
+                                            $input = Html::textInput(Yii::t('app', $d['label']), unserialize($d['value']), ['class' => 'form-control']);
+                                            break;
+                                    }
+
+                                    echo $input;
+                                    ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="notice">暂无设置项目</div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+
+                <div class="form-group buttons">
+                    <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-success']) ?>
+                </div>
+
+                <?= Html::endForm(); ?>
+            </div>
+        </div>
+    <?php else : ?>
+        <div class="notice">暂无设置项目</div>
+    <?php endif; ?>
 </div>
-
-<?php
-$this->registerJs('yadjet.actions.toggle("table td.lookup-enabled-handler img", "' . Url::toRoute('toggle') . '");');

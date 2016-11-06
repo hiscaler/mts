@@ -19,7 +19,7 @@ use yii\helpers\Inflector;
  * @property integer $created_by
  * @property integer $created_at
  * @property integer $updated_by
- * @property integer $updated_at 
+ * @property integer $updated_at
  */
 class Label extends BaseActiveRecord
 {
@@ -37,14 +37,14 @@ class Label extends BaseActiveRecord
      */
     public function rules()
     {
-        return array_merge(parent::rules(), [
+        return [
             [['name', 'ordering'], 'required'],
             ['alias', 'match', 'pattern' => '/^[a-z]+[.]?[a-z-]+[a-z]$/'],
             ['alias', 'unique', 'targetAttribute' => ['alias', 'tenant_id']],
             [['enabled'], 'boolean'],
-            [['frequency', 'ordering'], 'integer'],
+            [['frequency', 'ordering', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
             [['alias', 'name'], 'string', 'max' => 255]
-        ]);
+        ];
     }
 
     /**
@@ -53,13 +53,13 @@ class Label extends BaseActiveRecord
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'name' => Yii::t('attribute', 'Name'),
-            'frequency' => Yii::t('attribute', 'Frequency'),
+            'name' => Yii::t('label', 'Name'),
+            'frequency' => Yii::t('label', 'Frequency'),
         ]);
     }
 
     /**
-     * 获取推送位列表
+     * 获取自定义属性列表
      * @param boolean $all // 是否查询出所有数据
      * @param boolean $group // 是否分组
      * @return array
@@ -119,7 +119,7 @@ class Label extends BaseActiveRecord
     {
         $sentence = Inflector::sentence(static::getEntityItems($entityId, $entityName), '、', null, '、');
         if (!empty($sentence)) {
-            $sentence = "<span class=\"attributes\">{$sentence}</span>";
+            $sentence = "<span class=\"lables\">{$sentence}</span>";
         }
 
         return $sentence;

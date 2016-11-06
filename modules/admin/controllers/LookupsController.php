@@ -27,7 +27,7 @@ class LookupsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'toggle'],
+                        'actions' => ['index', 'list', 'create', 'update', 'view', 'delete', 'toggle'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -49,24 +49,55 @@ class LookupsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LookupSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $db = Yii::$app->getDb();
+        if (Yii::$app->getRequest()->isPost) {
+            $postData = Yii::$app->getRequest()->post();
+            $inputValues = isset($postData['inputValues']) ? $postData['inputValues'] : [];
+            $updateCommand = $db->createCommand();
+            $now = time();
+            $userId = Yii::$app->getUser()->getId();
+            foreach ($postData as $key => $value) {
+                if (substr($key, 0, 1) != '_') {
+                    // label 值格式为 a.b-c
+                    $key = str_replace('_', '.', $key);
+                    $columns = [
+                        'updated_by' => $userId,
+                        'updated_at' => $now,
+                    ];
+                    if (isset($inputValues[$key])) {
+                        $columns['input_value'] = $value;
+                    } else {
+                        $columns['value'] = serialize($value);
+                    }
+                    $updateCommand->update('{{%lookup}}', $columns, ['label' => $key, 'type' => Lookup::TYPE_PUBLIC])->execute();
+                }
+            }
+            Lookup::refreshCache();
+        }
+
+        $items = [];
+        $rawItems = $db->createCommand('SELECT * FROM {{%lookup}} WHERE [[type]] = :type', [':type' => Lookup::TYPE_PUBLIC])->queryAll();
+        foreach ($rawItems as $item) {
+            $key = $item['group'];
+            if (!isset($items[$key])) {
+                $items[$key] = [];
+            }
+            $items[$key][] = $item;
+        }
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+                'items' => $items,
         ]);
     }
 
-    /**
-     * Displays a single Lookup model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
+    public function actionList()
     {
-        return $this->render('view', [
-                'model' => $this->findModel($id),
+        $searchModel = new LookupSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('list', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -126,9 +157,8 @@ class LookupsController extends Controller
     {
         $id = Yii::$app->request->post('id');
         $db = Yii::$app->getDb();
-        $value = $db->createCommand('SELECT [[enabled]] FROM {{%lookup}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
+        $value = $db->createCommand('SELECT [[enabled]] FROM {{%lookup}} WHERE [[id]] = :id')->bindValues([
                 ':id' => (int) $id,
-                ':tenantId' => MTS::getTenantId()
             ])->queryScalar();
         if ($value !== null) {
             $value = !$value;
@@ -165,7 +195,6 @@ class LookupsController extends Controller
     {
         $model = Lookup::find()->where([
                 'id' => (int) $id,
-                'tenant_id' => MTS::getTenantId(),
             ])->one();
 
         if ($model !== null) {

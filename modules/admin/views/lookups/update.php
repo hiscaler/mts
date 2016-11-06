@@ -3,8 +3,8 @@
 /* @var $model app\models\Lookup */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-            'modelClass' => Yii::t('model', 'Lookup'),
-        ]) . ' ' . $model->label;
+        'modelClass' => Yii::t('model', 'Lookup'),
+    ]) . ' ' . $model->label;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Lookups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->label, 'url' => ['view', 'id' => $model->id]];

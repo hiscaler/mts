@@ -13,11 +13,16 @@ use app\models\Lookup;
     <div class="form lookup-form">
 
         <?php $form = ActiveForm::begin(); ?>
+        <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'label')->textInput(['maxlength' => 255, 'class' => 'g-text-large']) ?>
+        <?= $form->field($model, 'label')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'description')->textInput(['maxlength' => 255, 'class' => 'g-text-large']) ?>
+        <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
+        <?= $form->field($model, 'input_method')->dropDownList(Lookup::inputMethodOptions()) ?>
+        
+        <?= $form->field($model, 'input_value')->textarea(['rows' => 6]) ?>
+        
         <?= $form->field($model, 'value')->textarea(['rows' => 6]) ?>
 
         <?= $form->field($model, 'return_type')->dropDownList(Lookup::returnTypeOptions()) ?>

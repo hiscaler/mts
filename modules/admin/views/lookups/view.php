@@ -27,7 +27,7 @@ $this->params['menus'] = [
             ],
             'description',
             'value:ntext',
-            'return_type:lookupReturnType',
+            'return_type_text',
             'enabled:boolean',
             [
                 'attribute' => 'created_by',
@@ -39,10 +39,10 @@ $this->params['menus'] = [
                 'value' => $model['updater']['nickname']
             ],
             'updated_at:datetime',
-            [
-                'attribute' => 'deleted_by',
-                'value' => $model['deleter']['nickname']
-            ],
+//            [
+//                'attribute' => 'deleted_by',
+//                'value' => $model['deleter']['nickname']
+//            ],
         ],
     ])
     ?>

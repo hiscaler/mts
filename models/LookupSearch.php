@@ -9,14 +9,12 @@ use yii\data\ActiveDataProvider;
 /**
  * LookupSearch represents the model behind the search form about `app\models\Lookup`.
  */
-class LookupSearch extends Lookup
-{
+class LookupSearch extends Lookup {
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['enabled'], 'integer'],
             [['label', 'description', 'return_type'], 'safe'],
@@ -26,8 +24,7 @@ class LookupSearch extends Lookup
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,12 +36,8 @@ class LookupSearch extends Lookup
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
-        $query = Lookup::find()->with(['creater', 'updater', 'deleter'])->asArray(true);
-        $query->where('[[tenant_id]] = :tenantId', [
-            ':tenantId' => MTS::getTenantId(),
-        ]);
+    public function search($params) {
+        $query = Lookup::find()->with(['creater', 'updater'])->asArray(true);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,12 +53,12 @@ class LookupSearch extends Lookup
         }
 
         $query->andFilterWhere([
+            'return_type' => $this->return_type,
             'enabled' => $this->enabled,
         ]);
 
         $query->andFilterWhere(['like', 'label', $this->label])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'return_type', $this->return_type]);
+                ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
