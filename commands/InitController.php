@@ -38,10 +38,11 @@ class InitController extends Controller
                 'password_hash' => $security->generatePasswordHash('admin'),
                 'password_reset_token' => null,
                 'email' => 'admin@example.com',
-                'register_ip' => ip2long('::1'),
+                'role' => 10,
+                'register_ip' => '::1',
                 'login_count' => 0,
                 'last_login_ip' => null,
-                'last_login_datetime' => null,
+                'last_login_time' => null,
                 'status' => User::STATUS_ACTIVE,
                 'created_by' => 0,
                 'created_at' => $now,
@@ -278,6 +279,7 @@ class InitController extends Controller
                 $cmd->insert('{{%lookup}}', $columns)->execute();
             }
         }
+        echo "Done..." . PHP_EOL;
 
         return 0;
     }

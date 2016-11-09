@@ -17,7 +17,7 @@ class FriendlyLinkSearch extends FriendlyLink
     public function rules()
     {
         return [
-            [['group_id', 'type', 'url_open_target', 'status'], 'integer'],
+            [['group_id', 'type', 'url_open_target'], 'integer'],
             [['title', 'url'], 'safe'],
         ];
     }
@@ -42,10 +42,7 @@ class FriendlyLinkSearch extends FriendlyLink
      */
     public function search($params)
     {
-        $query = FriendlyLink::find()->with([ 'creater', 'updater', 'deleter'])->asArray(true);
-        $query->where('[[tenant_id]] = :tenantId', [
-            ':tenantId' => MTS::getTenantId(),
-        ]);
+        $query = FriendlyLink::find()->with(['creater', 'updater'])->asArray(true);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,11 +61,10 @@ class FriendlyLinkSearch extends FriendlyLink
             'group_id' => $this->group_id,
             'type' => $this->type,
             'url_open_target' => $this->url_open_target,
-            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere([ 'like', 'title', $this->title])
-            ->andFilterWhere([ 'like', 'url', $this->url]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'url', $this->url]);
 
         return $dataProvider;
     }

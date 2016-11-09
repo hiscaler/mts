@@ -9,6 +9,15 @@ class Option
 {
 
     /**
+     * Status values
+     */
+    const STATUS_DRAFT = 0;
+    const STATUS_PENDING = 1;
+    const STATUS_PUBLISHED = 2;
+    const STATUS_DELETED = 3;
+    const STATUS_ARCHIVED = 4;
+
+    /**
      * Boolean options
      * @return array
      */
@@ -42,11 +51,11 @@ class Option
     public static function statusOptions()
     {
         return [
-            Constant::STATUS_DRAFT => Yii::t('app', 'Draft'),
-            Constant::STATUS_PENDING => Yii::t('app', 'Pending'),
-            Constant::STATUS_PUBLISHED => Yii::t('app', 'Published'),
-            Constant::STATUS_DELETED => Yii::t('app', 'Deleted'),
-            Constant::STATUS_ARCHIVED => Yii::t('app', 'Archived')
+            self::STATUS_DRAFT => Yii::t('app', 'Draft'),
+            self::STATUS_PENDING => Yii::t('app', 'Pending'),
+            self::STATUS_PUBLISHED => Yii::t('app', 'Published'),
+            self::STATUS_DELETED => Yii::t('app', 'Deleted'),
+            self::STATUS_ARCHIVED => Yii::t('app', 'Archived')
         ];
     }
 

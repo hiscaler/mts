@@ -42,7 +42,7 @@ class LabelSearch extends Label
     public function search($params)
     {
         $query = LabelSearch::find()->with(['creater', 'updater'])->asArray(true);
-        $query->where('tenant_id = :tenantId', [':tenantId' => MTS::getTenantId()]);
+        $query->where('tenant_id = :tenantId', [':tenantId' => Yad::getTenantId()]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

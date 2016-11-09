@@ -18,6 +18,7 @@ class ArticleSearch extends Article
     public function rules()
     {
         return [
+            [['enabled'], 'integer'],
             [['alias', 'title'], 'safe'],
         ];
     }
@@ -31,11 +32,6 @@ class ArticleSearch extends Article
         return Model::scenarios();
     }
 
-    public function behaviors()
-    {
-        return [];
-    }
-
     /**
      * Creates data provider instance with search query applied
      *
@@ -45,27 +41,32 @@ class ArticleSearch extends Article
      */
     public function search($params)
     {
-        $query = Article::find()->with([ 'creater', 'updater', 'deleter'])->asArray(true);
+        $query = Article::find();
         $query->where('tenant_id = :tenantId', [
-            ':tenantId' => MTS::getTenantId()
+            ':tenantId' => Yad::getTenantId()
         ]);
+
+        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => [
-                'defaultOrder' => [
-                    'alias' => SORT_ASC,
-                    'ordering' => SORT_ASC,
-                ]
-            ]
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
-        $query->andFilterWhere([ 'like', 'alias', $this->alias])
-            ->andFilterWhere([ 'like', 'title', $this->title]);
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'enabled' => $this->enabled,
+        ]);
+
+        $query->andFilterWhere(['like', 'alias', $this->alias])
+            ->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
     }

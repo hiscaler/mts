@@ -1,10 +1,10 @@
 <?php
 
-use app\models\Lookup;
-use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\captcha\Captcha;
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -13,12 +13,12 @@ use yii\widgets\ActiveForm;
         <meta name="robots" content="none" />
         <meta HTTP-EQUIV="pragma" CONTENT="no-cache" />
         <meta name="language" content="en" />
-        <link rel="stylesheet" type="text/css" href="<?= Yii::$app->getRequest()->baseUrl . '/admin//css/login.css' ?>" />
+        <link rel="stylesheet" type="text/css" href="<?= Yii::$app->getRequest()->baseUrl . '/admin/css/login.css' ?>" />
         <title><?php echo Html::encode($this->title); ?></title>
     </head>
     <body>
         <div id="logo">
-            <?= Lookup::getValue('site.name', Yii::$app->name); ?>
+            后台管理系统
         </div>
         <div id="in">
             <div id="left"></div>
@@ -55,7 +55,7 @@ use yii\widgets\ActiveForm;
 
         </div>
         <div id="footer">
-            Copyright &copy; <?= date('Y'); ?> by <?= Yii::$app->name; ?> All Rights Reserved
+            Copyright &copy; <?= date('Y'); ?> by <?= Yii::$app->name; ?> All Rights Reserved.
         </div>
     </body>
 </html>

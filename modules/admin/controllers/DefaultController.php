@@ -3,9 +3,8 @@
 namespace app\modules\admin\controllers;
 
 use app\models\Constant;
-use app\models\MTS;
-use app\models\Option;
 use app\models\User;
+use app\models\Yad;
 use app\modules\admin\forms\ChangeMyPasswordForm;
 use app\modules\admin\forms\LoginForm;
 use PDO;
@@ -65,8 +64,8 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
-        if (!MTS::getTenantId()) {
-            $this->layout = 'base';
+        if (!Yad::getTenantId()) {
+            
         }
 
         return $this->render('index');
@@ -75,7 +74,7 @@ class DefaultController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->getUser()->isGuest) {
-            $this->redirect('index');
+            return $this->redirect(['default/index']);
         }
         $this->layout = false;
 
@@ -86,10 +85,10 @@ class DefaultController extends Controller
                     ':enabled' => Constant::BOOLEAN_TRUE
                 ])->queryColumn();
             if (count($tenantIds) == 1) {
-                MTS::setTenantData($tenantIds[0]);
-                $url = ['default/index'];
+                Yad::setTenantData($tenantIds[0]);
+                $url = ['/admin/default/index'];
             } else {
-                $url = ['default/choice-tenant'];
+                $url = ['/admin/default/choice-tenant'];
             }
 
             return $this->redirect($url);
@@ -140,10 +139,8 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user->setPassword($model->password);
             if ($user->save(false)) {
-                Yii::$app->getDb()->createCommand('UPDATE {{%user}} SET [[last_change_password_time]] = :now WHERE [[id]] = :id', [':now' => time(), ':id' => $user->id])->execute();
-
                 Yii::$app->getSession()->setFlash('notice', "您的密码修改成功，请下次登录使用新的密码。");
-                return $this->refresh();
+                return $this->redirect(Url::previous());
             }
         }
 
@@ -161,7 +158,7 @@ class DefaultController extends Controller
     {
         $this->layout = 'my';
         $loginLogs = [];
-        $formatter = Yii::$app->getFormatter();
+        $formatter = Yii::$app->formatter;
         $rawData = Yii::$app->getDb()->createCommand('SELECT [[t.login_ip]], [[t.client_informations]], [[t.login_at]] FROM {{%user_login_log}} t WHERE [[t.user_id]] = :userId ORDER BY [[t.login_at]] DESC')->bindValue(':userId', Yii::$app->getUser()->getId(), PDO::PARAM_INT)->queryAll();
         foreach ($rawData as $data) {
             $loginLogs[$formatter->asDate($data['login_at'])][] = $data;
@@ -179,7 +176,7 @@ class DefaultController extends Controller
      */
     public function actionChangeTenant($tenantId)
     {
-        MTS::setTenantData($tenantId);
+        Yad::setTenantData($tenantId);
 
         return $this->redirect(['default/index']);
     }

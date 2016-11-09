@@ -16,7 +16,6 @@ use yii\db\Query;
  * @property integer $height
  * @property string $description
  * @property integer $ads_count
- * @property integer $status
  * @property integer $enabled
  * @property integer $tenant_id
  * @property integer $created_by
@@ -42,14 +41,14 @@ class AdSpace extends BaseActiveRecord
      */
     public function rules()
     {
-        return array_merge(parent::rules(), [
-            [['group_id', 'width', 'height', 'status'], 'integer'],
-            [['group_id', 'status'], 'default', 'value' => 0],
+        return [
+            [['group_id', 'width', 'height', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
+            [['group_id'], 'default', 'value' => 0],
             ['enabled', 'boolean'],
             [['alias', 'name', 'width', 'height', 'description'], 'required'],
             [['alias', 'name', 'description'], 'trim'],
             [['alias', 'name', 'description'], 'string', 'max' => 255]
-        ]);
+        ];
     }
 
     /**
@@ -58,16 +57,21 @@ class AdSpace extends BaseActiveRecord
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
+            'alias' => Yii::t('adSpace', 'Alias'),
             'name' => Yii::t('adSpace', 'Name'),
+            'size' => Yii::t('adSpace', 'Size'),
             'width' => Yii::t('adSpace', 'Width'),
             'height' => Yii::t('adSpace', 'Height'),
             'ads_count' => Yii::t('adSpace', 'Ads Count'),
+            'description' => Yii::t('adSpace', 'Description'),
+            'alias' => Yii::t('adSpace', 'Alias'),
         ]);
     }
 
     public static function groupOptions()
     {
-        return GroupOption::getItems('ad.space.group');
+        return [];
+//        return GroupOption::getItems('ad.space.group');
     }
 
     public static function spaceOptions()

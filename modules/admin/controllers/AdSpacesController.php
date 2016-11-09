@@ -5,7 +5,6 @@ namespace app\modules\admin\controllers;
 use app\models\AdSpace;
 use app\models\AdSpaceSearch;
 use app\models\Constant;
-use app\models\MTS;
 use app\models\Option;
 use Yii;
 use yii\filters\AccessControl;
@@ -16,7 +15,7 @@ use yii\web\Response;
 /**
  * AdSpacesController implements the CRUD actions for AdSpace model.
  */
-class AdSpacesController extends ContentController
+class AdSpacesController extends Controller
 {
 
     public function behaviors()
@@ -154,9 +153,8 @@ class AdSpacesController extends ContentController
     {
         $id = Yii::$app->request->post('id');
         $db = Yii::$app->getDb();
-        $value = $db->createCommand('SELECT [[enabled]] FROM {{%ad_space}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
-                ':id' => (int) $id,
-                ':tenantId' => MTS::getTenantId()
+        $value = $db->createCommand('SELECT [[enabled]] FROM {{%ad_space}} WHERE [[id]] = :id')->bindValues([
+                ':id' => (int) $id
             ])->queryScalar();
         if ($value !== null) {
             $value = !$value;
@@ -193,7 +191,6 @@ class AdSpacesController extends ContentController
     {
         $model = AdSpace::find()->where([
                 'id' => (int) $id,
-                'tenant_id' => MTS::getTenantId(),
             ])->one();
 
         if ($model !== null) {

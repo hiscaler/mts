@@ -21,8 +21,8 @@ $this->params['menus'] = [
     DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'type:fileUploadConfigType',
-            'model_name:modelName',
+            'type_text',
+//            'model_name:modelName',
             'attribute',
             'extensions',
             [

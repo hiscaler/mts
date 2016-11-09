@@ -14,9 +14,9 @@ use yii\widgets\ActiveForm;
 
         <?php
         $form = ActiveForm::begin([
-                'id' => 'form-search-ad-spaces',
-                'action' => ['index'],
-                'method' => 'get',
+            'id' => 'form-search-ad-spaces',
+            'action' => ['index'],
+            'method' => 'get',
         ]);
         ?>
 
@@ -27,8 +27,6 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="entry">
-            <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
-
             <?= $form->field($model, 'enabled')->dropDownList(Option::booleanOptions(), ['prompt' => '']) ?>
         </div>
 

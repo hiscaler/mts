@@ -2,10 +2,9 @@
 
 namespace app\models;
 
-use app\modules\admin\extensions\ApplicationHelper;
+use app\modules\admin\components\ApplicationHelper;
 use yadjet\behaviors\ImageUploadBehavior;
 use Yii;
-use yii\helpers\Inflector;
 
 /**
  * This is the model class for table "{{%article}}".
@@ -13,21 +12,18 @@ use yii\helpers\Inflector;
  * @property integer $id
  * @property string $alias
  * @property string $title
- * @property string $tags
  * @property string $keywords
  * @property string $description
  * @property string $content
  * @property string $picture_path
- * @property integer $ordering
- * @property integer $status
  * @property integer $enabled
  * @property integer $tenant_id
- * @property integer $created_by
  * @property integer $created_at
- * @property integer $updated_by
+ * @property integer $created_by
  * @property integer $updated_at
- * @property integer $deleted_by
+ * @property integer $updated_by
  * @property integer $deleted_at
+ * @property integer $deleted_by
  */
 class Article extends BaseActiveRecord
 {
@@ -53,16 +49,12 @@ class Article extends BaseActiveRecord
      */
     public function rules()
     {
-        return array_merge(parent::rules(), [
-            [['title', 'content'], 'required'],
-            [['alias', 'title', 'description'], 'trim'],
-            ['alias', 'match', 'pattern' => '/^[a-z]+[.]?[a-z-]+[a-z]$/'],
-            [['ordering', 'status', 'enabled', 'deleted_by', 'deleted_at'], 'integer'],
-            [['alias', 'title'], 'string', 'max' => 255],
+        return [
+            [['alias', 'title', 'content'], 'required'],
             [['description', 'content'], 'string'],
-            ['ordering', 'default', 'value' => 0],
-            [['picture_path'], 'safe'],
-            ['alias', 'unique', 'targetAttribute' => ['alias', 'tenant_id']],
+            [['enabled', 'tenant_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'deleted_at', 'deleted_by'], 'integer'],
+            [['alias'], 'string', 'max' => 30],
+            [['title', 'keywords'], 'string', 'max' => 100],
             ['picture_path', 'image',
                 'extensions' => $this->_fileUploadConfig['extensions'],
                 'minSize' => $this->_fileUploadConfig['size']['min'],
@@ -74,22 +66,18 @@ class Article extends BaseActiveRecord
                     'limit' => ApplicationHelper::friendlyFileSize($this->_fileUploadConfig['size']['max']),
                 ]),
             ],
-        ]);
+        ];
     }
 
     public function behaviors()
     {
-        return array_merge(parent::behaviors(), [
-//            [
-//                'class' => TaggedBehavior::className(),
-//                'attribute' => 'tags',
-//            ],
+        return [
             [
                 'class' => ImageUploadBehavior::className(),
                 'attribute' => 'picture_path',
                 'thumb' => $this->_fileUploadConfig['thumb']
             ],
-        ]);
+        ];
     }
 
     /**
@@ -98,22 +86,13 @@ class Article extends BaseActiveRecord
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'picture_path' => Yii::t('app', 'Picture')
+            'alias' => Yii::t('article', 'Alias'),
+            'title' => Yii::t('article', 'Title'),
+            'keywords' => Yii::t('app', 'Page Keywords'),
+            'description' => Yii::t('app', 'Page Description'),
+            'content' => Yii::t('article', 'Content'),
+            'picture_path' => Yii::t('article', 'Picture'),
         ]);
-    }
-
-    // Events
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            if (empty($this->alias)) {
-                $this->alias = Inflector::slug(Inflector::transliterate($this->title));
-            }
-
-            return true;
-        } else {
-            return false;
-        }
     }
 
 }

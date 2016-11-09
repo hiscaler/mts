@@ -16,7 +16,7 @@ use yii\web\Response;
 /**
  * AdsController implements the CRUD actions for Ad model.
  */
-class AdsController extends ContentController
+class AdsController extends Controller
 {
 
     public function behaviors()
@@ -50,7 +50,7 @@ class AdsController extends ContentController
     public function actionIndex($spaceId = null)
     {
         $searchModel = new AdSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $spaceId);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->getQueryParams(), $spaceId);
 
         return $this->render('index', [
                 'searchModel' => $searchModel,
@@ -78,9 +78,10 @@ class AdsController extends ContentController
     public function actionCreate()
     {
         $model = new Ad();
+        $model->loadDefaultValues();
         $model->enabled = Constant::BOOLEAN_TRUE;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -99,7 +100,7 @@ class AdsController extends ContentController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

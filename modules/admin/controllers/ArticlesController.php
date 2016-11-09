@@ -4,24 +4,25 @@ namespace app\modules\admin\controllers;
 
 use app\models\Article;
 use app\models\ArticleSearch;
-use app\models\MTS;
-use app\models\Option;
+use app\models\Yad;
+use PDO;
 use Yii;
-use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * 单文章管理
+ * 文章管理
  * 
  * @author hiscaler <hiscaler@gmail.com>
  */
-class ArticlesController extends ContentController
+class ArticlesController extends GlobalController
 {
 
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -29,7 +30,7 @@ class ArticlesController extends ContentController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'undo', 'toggle', 'remove-image'],
+                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'toggle', 'remove-picture'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -38,10 +39,8 @@ class ArticlesController extends ContentController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
-                    'undo' => ['post'],
+                    'delete' => ['POST'],
                     'toggle' => ['post'],
-                    'remove-image' => ['post'],
                 ],
             ],
         ];
@@ -70,7 +69,7 @@ class ArticlesController extends ContentController
     public function actionView($id)
     {
         return $this->render('view', [
-                'model' => $this->findModel($id, ['creater', 'updater', 'deleter']),
+                'model' => $this->findModel($id),
         ]);
     }
 
@@ -82,8 +81,7 @@ class ArticlesController extends ContentController
     public function actionCreate()
     {
         $model = new Article();
-        $model->status = \app\models\Constant::STATUS_PUBLISHED;
-        $model->ordering = Article::DEFAULT_ORDERING_VALUE;
+        $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -121,55 +119,36 @@ class ArticlesController extends ContentController
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $userId = Yii::$app->getUser()->getId();
-        $now = time();
-        Yii::$app->getDb()->createCommand()->update('{{%article}}', [
-            'status' => Option::STATUS_DELETED,
-            'updated_by' => $userId,
-            'updated_at' => $now,
-            'deleted_by' => $userId,
-            'deleted_at' => $now
-            ], ['id' => $model['id']])->execute();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Undo delete an existing Special model.
-     * If undo delete is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
+     * 激活禁止操作
+     * @return Response
      */
-    public function actionUndo($id)
-    {
-        $model = $this->findModel($id);
-        Yii::$app->getDb()->createCommand()->update('{{%article}}', [
-            'status' => Option::STATUS_PUBLISHED,
-            'updated_by' => Yii::$app->getUser()->getId(),
-            'updated_at' => time(),
-            'deleted_by' => null,
-            'deleted_at' => null,
-            ], ['id' => $model['id']])->execute();
-
-        return $this->redirect(['index']);
-    }
-
     public function actionToggle()
     {
         $id = Yii::$app->request->post('id');
         $db = Yii::$app->getDb();
-        $value = $db->createCommand('SELECT [[enabled]] FROM {{%article}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
-                ':id' => (int) $id,
-                ':tenantId' => MTS::getTenantId()
-            ])->queryScalar();
+        $command = $db->createCommand('SELECT [[enabled]] FROM {{%article}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId');
+        $command->bindValues([
+            ':id' => (int) $id,
+            ':tenantId' => Yad::getTenantId(),
+        ]);
+        $command->bindValue(':id', (int) $id, PDO::PARAM_INT);
+        $value = $command->queryScalar();
         if ($value !== null) {
             $value = !$value;
-            $db->createCommand()->update('{{%article}}', ['enabled' => $value, 'updated_at' => time()], '[[id]] = :id', [':id' => (int) $id])->execute();
+            $now = time();
+            $db->createCommand()->update('{{%article}}', ['enabled' => $value, 'updated_at' => $now, 'updated_by' => Yii::$app->getUser()->getId()], '[[id]] = :id', [':id' => (int) $id])->execute();
             $responseData = [
                 'success' => true,
                 'data' => [
                     'value' => $value,
+                    'updatedAt' => Yii::$app->getFormatter()->asDate($now),
+                    'updatedBy' => Yii::$app->getUser()->getIdentity()->username,
                 ],
             ];
         } else {
@@ -188,45 +167,24 @@ class ArticlesController extends ContentController
     }
 
     /**
-     * 删除文章附件中的图片地址
+     * 移除图片
      * @param integer $id
      * @return Response
      */
-    public function actionRemoveImage($id)
+    public function actionRemovePicture($id)
     {
-        $imageSavePath = (new Query)->select(['picture_path'])->from('{{%article}}')->where([
-                'id' => (int) $id,
-                'tenant_id' => MTS::getTenantId()
-            ])->scalar();
-        if (!empty($imageSavePath)) {
-            $now = time();
-            Yii::$app->getDb()->createCommand()->update('{{%article}}', [
-                'picture_path' => null,
-                'updated_by' => Yii::$app->getUser()->getId(),
-                'updated_at' => $now
-                ], '[[id]] = :id', [':id' => (int) $id])->execute();
+        $success = Yii::$app->getDb()->createCommand('UPDATE {{%article}} SET [[picture_path]] = null WHERE [[id]] = :id', [':id' => (int) $id])->execute() ? true : false;
 
-// Delete image and thumbnail files
-            $imageSavePath = Url::to('@app' . $imageSavePath);
-            $ext = pathinfo($imageSavePath, PATHINFO_EXTENSION);
-            @unlink($imageSavePath);
-            @unlink(str_replace(".{$ext}", "_thumb.{$ext}", $imageSavePath));
-
-            $responseData = [
-                'success' => true
-            ];
-        } else {
-            $responseData = [
-                'success' => false,
-                'error' => [
-                    'message' => '数据不存在。'
-                ],
-            ];
+        $responseBody = [
+            'success' => $success
+        ];
+        if (!$success) {
+            $responseBody['error']['message'] = 'Delete faild.';
         }
 
         return new Response([
             'format' => Response::FORMAT_JSON,
-            'data' => $responseData,
+            'data' => $responseBody
         ]);
     }
 
@@ -239,12 +197,7 @@ class ArticlesController extends ContentController
      */
     protected function findModel($id)
     {
-        $model = Article::find()->where([
-                'id' => (int) $id,
-                'tenant_id' => MTS::getTenantId(),
-            ])->one();
-
-        if ($model !== null) {
+        if (($model = Article::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

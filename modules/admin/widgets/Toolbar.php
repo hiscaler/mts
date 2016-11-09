@@ -4,7 +4,7 @@ namespace app\modules\admin\widgets;
 
 use app\models\Constant;
 use app\models\User;
-use app\models\MTS;
+use app\models\Yad;
 use Yii;
 use yii\base\Widget;
 
@@ -14,7 +14,7 @@ class Toolbar extends Widget
     public function getItems()
     {
         $items = [];
-        if (MTS::getTenantId()) {
+        if (Yad::getTenantId()) {
             // 租赁列表
             $tenantsRawData = Yii::$app->getDb()->createCommand('SELECT [[id]], [[name]], [[language]] FROM {{%tenant}} WHERE [[enabled]] = :enabled AND [[id]] IN (SELECT [[tenant_id]] FROM {{%tenant_user}} WHERE [[user_id]] = :userId AND [[enabled]] = :enabled)')->bindValues([
                     ':enabled' => Constant::BOOLEAN_TRUE,
@@ -33,7 +33,7 @@ class Toolbar extends Widget
 
                 $items = [
                     [
-                        'label' => '[ ' . Yii::t('language', MTS::getLanguage()) . ' ] ' . MTS::getTenantName(),
+                        'label' => '[ ' . Yii::t('language', Yad::getLanguage()) . ' ] ' . Yad::getTenantName(),
                         'url' => '###',
                         'options' => ['class' => 'change-tenant'],
                         'items' => $tenants,
@@ -45,7 +45,7 @@ class Toolbar extends Widget
         $user = Yii::$app->getUser();
         if (!$user->isGuest) {
             $items[] = [
-                'label' => $user->getIdentity()->username . ((MTS::getTenantUserRole() == User::ROLE_ADMINISTRATOR) ? ' [ M ]' : ''),
+                'label' => $user->getIdentity()->username . ((Yad::getTenantUserRole() == User::ROLE_ADMINISTRATOR) ? ' [ M ]' : ''),
                 'url' => ['default/profile'],
             ];
 
@@ -56,10 +56,10 @@ class Toolbar extends Widget
             ];
         }
 
-        if (MTS::getTenantId()) {
+        if (Yad::getTenantId()) {
             $items[] = [
                 'label' => Yii::t('app', 'Frontend Page'),
-                'url' => 'http://' . MTS::getTenantValue('domainName'),
+                'url' => 'http://' . Yad::getTenantValue('domainName'),
                 'template' => '<a href="{url}" target="_blank">{label}</a>'
             ];
         }

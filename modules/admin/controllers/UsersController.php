@@ -3,24 +3,23 @@
 namespace app\modules\admin\controllers;
 
 use app\models\User;
-use app\models\UserLoginLog;
 use app\models\UserSearch;
+use app\models\Yad;
 use app\modules\admin\forms\ChangePasswordForm;
 use app\modules\admin\forms\RegisterForm;
 use Yii;
 use yii\base\Security;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
- * 用户管理
+ * 系统用户管理
  * 
  * @author hiscaler <hiscaler@gmail.com>
  */
-class UsersController extends Controller
+class UsersController extends GlobalController
 {
 
     public function behaviors()
@@ -30,7 +29,7 @@ class UsersController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'view', 'delete', 'change-password'],
+                        'actions' => ['index', 'create', 'update', 'delete', 'change-password'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -51,7 +50,6 @@ class UsersController extends Controller
      */
     public function actionIndex()
     {
-        Url::remember(Yii::$app->getRequest()->getUrl());
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -62,37 +60,21 @@ class UsersController extends Controller
     }
 
     /**
-     * Displays a single User model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        $model = $this->findModel($id);
-
-        $loginLogsDataProvider = new ActiveDataProvider([
-            'query' => UserLoginLog::find()->where(['user_id' => $model->id])->orderBy(['id' => SORT_DESC])
-        ]);
-
-        return $this->render('view', [
-                'model' => $model,
-                'loginLogsDataProvider' => $loginLogsDataProvider
-        ]);
-    }
-
-    /**
      * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
         $model = new RegisterForm();
+        $model->type = User::TYPE_USER;
+        $model->status = User::STATUS_ACTIVE;
+        $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->password_hash = (new Security())->generatePasswordHash($model->password);
             if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         }
 
@@ -101,18 +83,12 @@ class UsersController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                     'model' => $model,
@@ -128,17 +104,28 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
+        if ((int) $id == Yii::$app->getUser()->getId()) {
+            throw new BadRequestHttpException("Can't remove itself.");
+        }
+
         $model = $this->findModel($id);
-        $model->status = User::STATUS_DELETED;
-        $model->deleted_by = Yii::app()->user->id;
-        $model->deleted_at = time();
-        $model->save(false);
+        $userId = $model->id;
+        $db = Yii::$app->getDb();
+        $db->transaction(function ($db) use ($userId) {
+            $tenantId = Yad::getTenantId();
+            $bindValues = [
+                ':tenantId' => $tenantId,
+                ':userId' => $userId
+            ];
+            $db->createCommand()->delete('{{%tenant_user}}', '[[tenant_id]] = :tenantId AND [[user_id]] = :userId', $bindValues)->execute();
+            $db->createCommand('DELETE FROM {{%auth_node}} WHERE [[user_id]] = :userId AND [[node_id]] IN (SELECT [[id]] FROM {{%node}} WHERE [[tenant_id]] = :tenantId)')->bindValues($bindValues)->execute();
+        });
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Change user password
+     * 修改密码
      * @return mixed
      */
     public function actionChangePassword($id)
@@ -146,16 +133,16 @@ class UsersController extends Controller
         $user = $this->findModel($id);
         $model = new ChangePasswordForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
             $user->setPassword($model->password);
             if ($user->save(false)) {
-                Yii::$app->getDb()->createCommand('UPDATE {{%user}} SET [[last_change_password_time]] = :now WHERE [[id]] = :id', [':now' => time(), ':id' => $user->id])->execute();
+//                Yii::$app->getDb()->createCommand('UPDATE {{%user}} SET [[last_change_password_time]] = :now WHERE [[id]] = :id', [':now' => time(), ':id' => $user->id])->execute();
                 Yii::$app->getSession()->setFlash('notice', "用户 {$user->username} 密码修改成功，请通知用户下次登录使用新的密码。");
-                return $this->redirect(Url::previous());
+                return $this->redirect(['index']);
             }
         }
 
-        return $this->render('changePassword', [
+        return $this->render('change-password', [
                 'user' => $user,
                 'model' => $model,
         ]);
@@ -170,7 +157,9 @@ class UsersController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        $model = User::find()->where(['id' => (int) $id])->one();
+
+        if ($model !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

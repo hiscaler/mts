@@ -42,9 +42,6 @@ class FileUploadConfigSearch extends FileUploadConfig
     public function search($params)
     {
         $query = FileUploadConfig::find()->with(['creater', 'updater', 'deleter'])->asArray(true);
-        $query->where('[[tenant_id]] = :tenantId', [
-            'tenantId' => MTS::getTenantId(),
-        ]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

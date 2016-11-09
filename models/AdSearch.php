@@ -16,7 +16,7 @@ class AdSearch extends Ad
     public function rules()
     {
         return [
-            [['space_id', 'type', 'begin_datetime', 'end_datetime', 'status', 'enabled'], 'integer'],
+            [['space_id', 'type', 'begin_datetime', 'end_datetime', 'enabled'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -43,7 +43,7 @@ class AdSearch extends Ad
      */
     public function search($params, $spaceId)
     {
-        $query = Ad::find()->with(['space', 'creater', 'updater', 'deleter'])->asArray(true);
+        $query = Ad::find()->with(['space', 'creater', 'updater'])->asArray(true);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,6 +54,12 @@ class AdSearch extends Ad
             ]
         ]);
 
+        if (!$this->space_id) {
+            $query->andFilterWhere([
+                'space_id' => (int) $spaceId
+            ]);
+        }
+
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
@@ -63,14 +69,8 @@ class AdSearch extends Ad
             'type' => $this->type,
             'begin_datetime' => $this->begin_datetime,
             'end_datetime' => $this->end_datetime,
-            'status' => $this->status,
             'enabled' => $this->enabled,
         ]);
-        if (!$this->space_id) {
-            $query->andFilterWhere([
-                'space_id' => (int) $spaceId
-            ]);
-        }
 
         $query->andFilterWhere(['like', 'name', $this->name]);
 

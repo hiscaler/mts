@@ -16,9 +16,9 @@ use yii\widgets\ActiveForm;
 
         <?php
         $form = ActiveForm::begin([
-                'id' => 'form-search-ads',
-                'action' => ['index'],
-                'method' => 'get',
+            'id' => 'form-search-ads',
+            'action' => ['index'],
+            'method' => 'get',
         ]);
         ?>
 
@@ -33,8 +33,6 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'enabled')->dropDownList(Option::booleanOptions(), ['prompt' => '']) ?>
         </div>
-
-        <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
 
         <?php // echo $form->field($model, 'begin_datetime') ?>
 

@@ -1,6 +1,5 @@
 <?php
 
-use app\models\Option;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -25,8 +24,6 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'height')->textInput() ?>
 
         <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
 
         <?= $form->field($model, 'enabled')->checkBox([], null) ?>
 

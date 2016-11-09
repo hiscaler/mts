@@ -111,8 +111,17 @@ class Formatter extends \yii\i18n\Formatter
         if ($value === null) {
             return $this->nullDisplay;
         }
-        $options = isset(Yii::$app->params['contentModules']) ? Yii::$app->params['contentModules'] : [];
-        return isset($options[$value]['label']) ? Yii::t('app', $options[$value]['label']) : $value;
+        $modules = isset(Yii::$app->params['modules']) ? Yii::$app->params['modules'] : [];
+        foreach ($modules as $ms) {
+            foreach ($ms as $key =>$item) {
+                if ($value == $key) {
+                    $value = Yii::t('app', $item['label']);
+                    break;
+                }
+            }
+        }
+        
+        return $value;
     }
 
     // IP Access Rule

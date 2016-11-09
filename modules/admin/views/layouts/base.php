@@ -1,44 +1,37 @@
 <?php
-
-use app\models\MTS;
-use app\modules\admin\assets\AdminAsset;
-use app\modules\admin\widgets\MainMenu;
-use app\modules\admin\widgets\Toolbar;
-use yii\helpers\Html;
-use yii\widgets\Spaceless;
-
-/* @var $this View */
+/* @var $this \yii\web\View */
 /* @var $content string */
 
-AdminAsset::register($this);
+use app\modules\admin\widgets\MainMenu;
+use yii\helpers\Html;
+
+app\modules\admin\assets\AppAsset::register($this);
+
 $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
-$siteName = MTS::getTenantName();
-if (YII_ENV == 'prod') {
-    Spaceless::begin();
-}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language; ?>">
+<html lang="<?= Yii::$app->language ?>">
     <head>
-        <meta charset="<?= Yii::$app->charset; ?>"/>
+        <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?= Html::csrfMetaTags(); ?>
-        <title>「Backend」<?= Html::encode($this->title) ?> | <?= $siteName ?></title>
-        <?php $this->head(); ?>
+        <?= Html::csrfMetaTags() ?>
+        <title><?= Html::encode($this->title) ?> - <?= \app\models\Yad::getTenantName() ? : Yii::$app->name ?></title>
+        <?php $this->head() ?>
     </head>
-    <body>
-        <?php $this->beginBody(); ?>
+    <body id="mts-app">
+        <?php $this->beginBody() ?>
+
         <div id="page-hd">
             <div id="page">
                 <!-- Header -->
                 <div id="header">
-                    <div id="logo"><?= Html::a(Html::img($baseUrl . '/images/logo.png'), ['default/index']); ?></div>
+                    <div id="logo"><?php echo Html::a(Html::img($baseUrl . '/images/logo.png'), Yii::$app->homeUrl); ?></div>
                     <div id="main-menu">
-                        <?= MainMenu::widget(); ?>
+                        <?= MainMenu::widget() ?>
                     </div>
                     <div id="header-account-manage">
-                        <?= Toolbar::widget(); ?>
+                        <?= app\modules\admin\widgets\Toolbar::widget(); ?>
                     </div>
                 </div>
                 <!-- // Header -->
@@ -46,22 +39,19 @@ if (YII_ENV == 'prod') {
         </div>
         <div id="page-bd">
             <div class="container">
-                <?= $content; ?>
+                <?= $content ?>
             </div>
         </div>
         <div id="page-ft">
             <div id="footer">
-                Copyright &copy; <?= date('Y') ?> by <?= $siteName ?> All Rights Reserved.
+                Copyright &copy; <?= date('Y'); ?> by <?= \app\models\Lookup::getValue('as.site.name') ? : Yii::$app->name ?> All Rights Reserved.
             </div>
         </div>
 
-        <?php $this->endBody(); ?>
+        <?php $this->endBody() ?>
+        <script type="text/javascript">
+            yadjet.icons.boolean = ['<?= $baseUrl ?>/images/no.png', '<?= $baseUrl ?>/images/yes.png'];
+        </script>
     </body>
 </html>
-<?php
-$this->registerJs('yadjet.icons.boolean = ["' . $baseUrl . '/images/no.png' . '", "' . $baseUrl . '/images/yes.png' . '"];');
-$this->endPage();
-if (YII_ENV == 'prod') {
-    Spaceless::end();
-}
-?>
+<?php $this->endPage() ?>

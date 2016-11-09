@@ -1,7 +1,7 @@
 <?php
 
-use app\models\Constant;
-use app\modules\admin\extensions\GridView;
+use app\models\Option;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -18,7 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
-    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'app-models-FriendlyLink'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-friendly-link']],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
@@ -31,8 +30,10 @@ $this->params['menus'] = [
         'formSelector' => '#form-friendly-links-search',
     ]);
     echo GridView::widget([
-        'id' => 'grid-view-friendly-link',
         'dataProvider' => $dataProvider,
+        'tableOptions' => [
+            'class' => 'table table-striped'
+        ],
         'columns' => [
             [
                 'class' => 'yii\grid\SerialColumn',
@@ -61,96 +62,62 @@ $this->params['menus'] = [
                 'value' => function ($model) {
                     return Html::a($model['title'], ['update', 'id' => $model['id']]);
                 }
-            ],
-            'description',
-            [
-                'attribute' => 'url',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return Html::a($model['url'], $model['url'], ['target' => '_blank']);
-                }
-            ],
-            [
-                'attribute' => 'url_open_target',
-                'format' => 'friendlyLinkUrlOpenTarget',
-                'contentOptions' => ['class' => 'friendly-link-url-open-target center'],
-            ],
-            [
-                'attribute' => 'status',
-                'format' => 'dataStatus',
-                'contentOptions' => ['class' => 'data-status'],
-            ],
-            [
-                'attribute' => 'enabled',
-                'format' => 'boolean',
-                'contentOptions' => ['class' => 'boolean pointer boolean-handler'],
-            ],
-            [
-                'attribute' => 'created_by',
-                'value' => function($model) {
-                    return $model['creater']['nickname'];
-                },
-                'contentOptions' => ['class' => 'username']
-            ],
-            [
-                'attribute' => 'created_at',
-                'format' => 'date',
-                'contentOptions' => ['class' => 'date']
-            ],
-            [
-                'attribute' => 'updated_by',
-                'value' => function($model) {
-                    return $model['updater']['nickname'];
-                },
-                'contentOptions' => ['class' => 'username']
-            ],
-            [
-                'attribute' => 'updated_at',
-                'format' => 'date',
-                'contentOptions' => ['class' => 'date']
-            ],
-            [
-                'attribute' => 'deleted_by',
-                'value' => function($model) {
-                    return $model['deleter']['nickname'];
-                },
-                'contentOptions' => ['class' => 'username']
-            ],
-            [
-                'attribute' => 'deleted_at',
-                'format' => 'date',
-                'contentOptions' => ['class' => 'date']
-            ],
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{update} {delete} {undo}',
-                'buttons' => [
-                    'delete' => function ($url, $model, $key) {
-                        return $model['status'] != Constant::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                            'title' => Yii::t('yii', 'Delete'),
-                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                            'data-method' => 'post',
-                            'data-pjax' => '0',
-                        ]) : '';
-                    },
-                    'undo' => function ($url, $model, $key) {
-                        return $model['status'] == Constant::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-undo"></span>', $url, [
-                            'title' => Yii::t('app', 'Undo'),
-                            'data-confirm' => Yii::t('app', 'Are you sure you want to undo this item?'),
-                            'data-method' => 'post',
-                            'data-pjax' => '0',
-                        ]) : '';
+                ],
+                'description',
+                [
+                    'attribute' => 'url',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        return Html::a($model['url'], $model['url'], ['target' => '_blank']);
                     }
                 ],
-                'headerOptions' => ['class' => 'last'],
-                'contentOptions' => ['class' => 'buttons-2'],
+                [
+                    'attribute' => 'url_open_target',
+                    'format' => 'friendlyLinkUrlOpenTarget',
+                    'contentOptions' => ['class' => 'friendly-link-url-open-target center'],
+                ],
+                [
+                    'attribute' => 'enabled',
+                    'format' => 'boolean',
+                    'contentOptions' => ['class' => 'boolean pointer boolean-handler'],
+                ],
+                [
+                    'attribute' => 'created_by',
+                    'value' => function($model) {
+                        return $model['creater']['nickname'];
+                    },
+                    'contentOptions' => ['class' => 'username']
+                ],
+                [
+                    'attribute' => 'created_at',
+                    'format' => 'date',
+                    'contentOptions' => ['class' => 'date']
+                ],
+                [
+                    'attribute' => 'updated_by',
+                    'value' => function($model) {
+                        return $model['updater']['nickname'];
+                    },
+                    'contentOptions' => ['class' => 'username']
+                ],
+                [
+                    'attribute' => 'updated_at',
+                    'format' => 'date',
+                    'contentOptions' => ['class' => 'date']
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{update} {delete} {undo}',
+                    'headerOptions' => ['class' => 'last'],
+                    'contentOptions' => ['class' => 'buttons-2'],
+                ],
             ],
-        ],
-    ]);
-    Pjax::end();
-    ?>
+        ]);
+        Pjax::end();
+        ?>
 
-</div>
+    </div>
 
 <?php
 $this->registerJs('yadjet.actions.toggle("table td.boolean-handler img", "' . Url::toRoute('toggle') . '");');
+        

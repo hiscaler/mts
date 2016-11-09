@@ -5,7 +5,7 @@ namespace app\modules\admin\controllers;
 use app\models\Constant;
 use app\models\Label;
 use app\models\LabelSearch;
-use app\models\MTS;
+use app\models\Yad;
 use PDO;
 use Yii;
 use yii\filters\AccessControl;
@@ -69,7 +69,8 @@ class LabelsController extends GlobalController
     {
         $model = new Label();
         $model->enabled = Constant::BOOLEAN_TRUE;
-        $model->ordering = Constant::DEFAULT_ORDERING_VALUE;
+        $model->ordering = Label::DEFAULT_ORDERING_VALUE;
+        $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -137,7 +138,7 @@ class LabelsController extends GlobalController
         $command = $db->createCommand('SELECT [[enabled]] FROM {{%label}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId');
         $command->bindValues([
             ':id' => (int) $id,
-            ':tenantId' => MTS::getTenantId(),
+            ':tenantId' => Yad::getTenantId(),
         ]);
         $command->bindValue(':id', (int) $id, PDO::PARAM_INT);
         $value = $command->queryScalar();
@@ -179,7 +180,7 @@ class LabelsController extends GlobalController
     {
         $model = Label::find()->where([
                 'id' => (int) $id,
-                'tenant_id' => MTS::getTenantId(),
+                'tenant_id' => Yad::getTenantId(),
             ])->one();
 
         if ($model !== null) {

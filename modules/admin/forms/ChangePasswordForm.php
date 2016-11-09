@@ -14,7 +14,7 @@ class ChangePasswordForm extends Model
     {
         return [
             [['password', 'confirmPassword'], 'required'],
-            [['password', 'confirmPassword'], 'string', 'min' => 8, 'max' => 12],
+            [['password', 'confirmPassword'], 'string', 'min' => 6, 'max' => 12],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password',
                 'message' => '两次输入的密码不一致，请重新输入。'
             ],

@@ -4,49 +4,44 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
-    'name' => 'MTS',
     'basePath' => dirname(__DIR__),
-    'language' => 'zh-CN',
     'bootstrap' => ['log'],
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
-            'layout' => 'main',
+            'layout' => 'main.php',
+        ],
+        'member' => [
+            'class' => 'app\modules\member\Module',
         ],
     ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '%*()JH()U)I)_OU*()Y)(UJ)UJ',
+            'cookieValidationKey' => '%gio^&*JKOP{',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'i18n' => [
-            'translations' => [
-                '*' => [
-                    'class' => '\yii\i18n\PhpMessageSource',
-                    'basePath' => '@app/messages',
-                ],
-                'app' => [
-                    'class' => '\yii\i18n\PhpMessageSource',
-                    'basePath' => '@app/messages',
-                ],
-            ],
-        ],
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['site/signin']
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.example.com',
+                'username' => '',
+                'password' => '',
+                'port' => '587',
+                'encryption' => 'ssl',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -57,34 +52,30 @@ $config = [
                 ],
             ],
         ],
-        'view' => [
-            'defaultExtension' => 'twig',
-            'renderers' => [
-                'twig' => [
-                    'class' => '\yii\twig\ViewRenderer',
-                    'cachePath' => '@runtime/Twig/cache',
-                    'options' => YII_DEBUG ? ['debug' => true, 'auto_reload' => true] : ['auto_reload' => false],
-                    'extensions' => YII_DEBUG ? ['\Twig_Extension_Debug'] : [],
-                    'globals' => [
-                        'html' => '\yii\helpers\Html',
-                        'stringHelper' => '\yii\helpers\StringHelper',
-                        'formatter' => '\yii\i18n\Formatter',
-                        'dumper' => '\yii\helpers\VarDumper',
-                        'yii' => 'Yii',
-                        'archiveGetter' => '\yadjet\mts\sdk\ArchiveGetter',
-                        'articleGetter' => '\yadjet\mts\sdk\ArticleGetter',
-                        'lookupGetter' => '\yadjet\mts\sdk\LookupGetter',
-                        'nodeGetter' => '\yadjet\mts\sdk\NodeGetter',
-                        'applicationHelper' => '\yadjet\mts\sdk\ApplicationHelper',
-                    ],
-                ],
-            ],
-        ],
         'db' => require(__DIR__ . '/db.php'),
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => true,
             'rules' => [],
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => '\yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                ],
+            ],
+        ],
+        'assetManager' => [
+            'appendTimestamp' => true,
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null, // do not publish the bundle
+                    'js' => [
+                        '/js/jquery.min.js',
+                    ]
+                ],
+            ],
         ],
     ],
     'params' => $params,

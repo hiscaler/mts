@@ -2,7 +2,6 @@
 
 use app\models\Ad;
 use app\models\AdSpace;
-use app\models\Option;
 use yadjet\datePicker\my97\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -25,9 +24,9 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'space_id')->dropDownList(AdSpace::spaceOptions(), ['prompt' => '']) ?>
 
-        <?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-large']) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'url')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-large']) ?>
+        <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($model, 'type')->dropDownList(Ad::typeOptions(), ['prompt' => '']) ?>
 
@@ -53,9 +52,7 @@ use yii\widgets\ActiveForm;
         ]);
         ?>
 
-        <?= $form->field($model, 'message')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-large']) ?>
-
-        <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
+        <?= $form->field($model, 'message')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($model, 'enabled')->checkbox([], null) ?>
 

@@ -5,8 +5,8 @@ namespace app\modules\admin\controllers;
 use app\models\Constant;
 use app\models\FriendlyLink;
 use app\models\FriendlyLinkSearch;
-use app\models\MTS;
 use app\models\Option;
+use app\models\Yad;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -14,11 +14,9 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * 友情链接管理
- * 
- * @author hiscaler <hiscaler@gmail.com>
+ * FriendlyLinksController implements the CRUD actions for FriendlyLink model.
  */
-class FriendlyLinksController extends ContentController
+class FriendlyLinksController extends Controller
 {
 
     public function behaviors()
@@ -28,7 +26,7 @@ class FriendlyLinksController extends ContentController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'update', 'delete', 'undo', 'toggle'],
+                        'actions' => ['index', 'create', 'update', 'delete', 'toggle'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -38,7 +36,6 @@ class FriendlyLinksController extends ContentController
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
-                    'undo' => ['post'],
                 ],
             ],
         ];
@@ -68,9 +65,8 @@ class FriendlyLinksController extends ContentController
     {
         $model = new FriendlyLink();
         $model->url_open_target = FriendlyLink::URL_OPEN_TARGET_BLANK;
-        $model->ordering = Constant::DEFAULT_ORDERING_VALUE;
+        $model->ordering = FriendlyLink::DEFAULT_ORDERING_VALUE;
         $model->enabled = Constant::BOOLEAN_TRUE;
-        $model->status = Constant::STATUS_PUBLISHED;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -109,35 +105,7 @@ class FriendlyLinksController extends ContentController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $userId = Yii::$app->getUser()->getId();
-        $now = time();
-        Yii::$app->getDb()->createCommand()->update('{{%friendly_link}}', [
-            'status' => Option::STATUS_DELETED,
-            'updated_by' => $userId,
-            'updated_at' => $now,
-            'deleted_by' => $userId,
-            'deleted_at' => $now
-            ], ['id' => $model['id']])->execute();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Undo delete an existing Special model.
-     * If undo delete is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUndo($id)
-    {
-        $model = $this->findModel($id);
-        Yii::$app->getDb()->createCommand()->update('{{%friendly_link}}', [
-            'status' => Option::STATUS_PUBLISHED,
-            'updated_by' => Yii::$app->getUser()->getId(),
-            'updated_at' => time(),
-            'deleted_by' => null,
-            'deleted_at' => null,
-            ], ['id' => $model['id']])->execute();
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -150,9 +118,8 @@ class FriendlyLinksController extends ContentController
     {
         $id = Yii::$app->request->post('id');
         $db = Yii::$app->getDb();
-        $value = $db->createCommand('SELECT [[enabled]] FROM {{%friendly_link}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
+        $value = $db->createCommand('SELECT [[enabled]] FROM {{%friendly_link}} WHERE [[id]] = :id')->bindValues([
                 ':id' => (int) $id,
-                ':tenantId' => MTS::getTenantId()
             ])->queryScalar();
         if ($value !== null) {
             $value = !$value;
@@ -192,7 +159,6 @@ class FriendlyLinksController extends ContentController
     {
         $model = FriendlyLink::find()->where([
                 'id' => (int) $id,
-                'tenant_id' => MTS::getTenantId(),
             ])->one();
 
         if ($model !== null) {

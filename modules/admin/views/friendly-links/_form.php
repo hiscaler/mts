@@ -1,9 +1,8 @@
 <?php
 
-use app\models\FriendlyLink;
-use app\models\Option;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\FriendlyLink;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\FriendlyLink */
@@ -16,54 +15,64 @@ use yii\widgets\ActiveForm;
         $form = ActiveForm::begin([
                 'options' => [
                     'enctype' => 'multipart/form-data',
-                ]
+                ],
         ]);
         ?>
 
-        <div class="entry">
-            <?= $form->field($model, 'group_id')->dropDownList(FriendlyLink::groupOptions(), ['prompt' => '']) ?>
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($model, 'group_id')->dropDownList(FriendlyLink::groupOptions(), ['prompt' => '']) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'type')->dropDownList(FriendlyLink::typeOptions()) ?>
+            </div>
 
-            <?= $form->field($model, 'type')->dropDownList(FriendlyLink::typeOptions()) ?>
+            <div class="col-md-4">
+                <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            </div>
         </div>
 
-        <?= $form->field($model, 'title')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-large']) ?>
+        <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'description')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-large']) ?>
+        <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'url')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-large']) ?>
+        <div class="row">
 
-        <div class="entry">
-            <?= $form->field($model, 'url_open_target')->dropDownList(FriendlyLink::urlOpenTargetOptions()) ?>
+            <div class="col-md-3">
+                <?= $form->field($model, 'url_open_target')->dropDownList(FriendlyLink::urlOpenTargetOptions()) ?>
+            </div>
 
-            <?php
-            $imagePreview = null;
-            $imagePath = $model->logo_path;
-            if (!$model->isNewRecord && !empty($imagePath)) {
-                if ($model->_fileUploadConfig['thumb']['generate']) {
-                    $linkOptions = [
-                        'width' => $model->_fileUploadConfig['thumb']['width'],
-                        'height' => $model->_fileUploadConfig['thumb']['height']
-                    ];
-                } else {
-                    $linkOptions = [];
+            <div class="col-md-3">
+                <?php
+                $imagePreview = null;
+                $imagePath = $model->logo_path;
+                if (!$model->isNewRecord && !empty($imagePath)) {
+                    if ($model->_fileUploadConfig['thumb']['generate']) {
+                        $linkOptions = [
+                            'width' => $model->_fileUploadConfig['thumb']['width'],
+                            'height' => $model->_fileUploadConfig['thumb']['height']
+                        ];
+                    } else {
+                        $linkOptions = [];
+                    }
+                    $imagePath = Yii::$app->getRequest()->getBaseUrl() . $imagePath;
+                    $imagePreview = Html::a(Html::img($imagePath, $linkOptions), $imagePath, ['target' => '_blank']);
+                    $imagePreview = Html::tag('div', $imagePreview, ['class' => 'image-preview']);
                 }
-                $imagePath = Yii::$app->getRequest()->getBaseUrl() . $imagePath;
-                $imagePreview = Html::a(Html::img($imagePath, $linkOptions), $imagePath, ['target' => '_blank']);
-                $imagePreview = Html::tag('div', $imagePreview, ['class' => 'image-preview']);
-            }
-            echo $form->field($model, 'logo_path', [
-                'template' => "{label}\n{input}{$imagePreview}\n{hint}\n{error}"
-            ])->fileInput()
-            ?>
+                echo $form->field($model, 'logo_path', [
+                    'template' => "{label}\n{input}{$imagePreview}\n{hint}\n{error}"
+                ])->fileInput()
+                ?>
+            </div>
+            
+            <div class="col-md-3">
+                <?= $form->field($model, 'ordering')->textInput() ?>
+            </div>
+            
+            <div class="col-md-3">
+                <?= $form->field($model, 'enabled')->checkbox([], null) ?>
+            </div>
         </div>
-
-        <div class="entry">
-            <?= $form->field($model, 'ordering')->textInput(['class' => 'g-text g-text-number']) ?>
-
-            <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
-        </div>
-
-        <?= $form->field($model, 'enabled')->checkbox([], null) ?>
 
         <div class="form-group buttons">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

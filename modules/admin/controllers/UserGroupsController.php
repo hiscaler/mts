@@ -2,54 +2,86 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\MTS;
-use app\models\TenantUserGroup;
-use app\models\TenantUserGroupSearch;
+use app\models\UserGroup;
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
 /**
- * UserGroupsController implements the CRUD actions for TenantUserGroup model.
+ * 用户分组管理
+ * @author hiscaler <hiscaler@gmail.com>
  */
-class UserGroupsController extends Controller
+class UserGroupsController extends GlobalController
 {
 
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    'delete' => ['POST'],
                 ],
             ],
         ];
     }
 
     /**
-     * Lists all TenantUserGroup models.
+     * Lists all UserGroup models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TenantUserGroupSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = (new Query())
+            ->from('{{%user_group}}')
+            ->orderBy(['min_credits' => SORT_ASC]);
+
+        $userGroupDataProvider = new ActiveDataProvider([
+            'query' => $query->where(['type' => UserGroup::TYPE_USER_GROUP]),
+            'pagination' => [
+                'pageSize' => $query->count(),
+            ],
+        ]);
+
+        $systemGroupQuery = clone($query);
+        $systemGroupDataProvider = new ActiveDataProvider([
+            'query' => $systemGroupQuery->where(['type' => UserGroup::TYPE_SYSTEM_GROUP]),
+            'pagination' => [
+                'pageSize' => $systemGroupQuery->count(),
+            ],
+        ]);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+                'userGroupDataProvider' => $userGroupDataProvider,
+                'systemGroupDataProvider' => $systemGroupDataProvider,
         ]);
     }
 
     /**
-     * Creates a new TenantUserGroup model.
+     * Creates a new UserGroup model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new TenantUserGroup();
+        $model = new UserGroup();
+        $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -61,7 +93,7 @@ class UserGroupsController extends Controller
     }
 
     /**
-     * Updates an existing TenantUserGroup model.
+     * Updates an existing UserGroup model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -80,7 +112,7 @@ class UserGroupsController extends Controller
     }
 
     /**
-     * Deletes an existing TenantUserGroup model.
+     * Deletes an existing UserGroup model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -93,19 +125,15 @@ class UserGroupsController extends Controller
     }
 
     /**
-     * Finds the TenantUserGroup model based on its primary key value.
+     * Finds the UserGroup model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return TenantUserGroup the loaded model
+     * @return UserGroup the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        $model = TenantUserGroup::find()->where([
-                'id' => (int) $id,
-                'tenant_id' => MTS::getTenantId(),
-            ])->one();
-        if ($model !== null) {
+        if (($model = UserGroup::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

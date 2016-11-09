@@ -1,7 +1,5 @@
 <?php
 
-use app\models\Option;
-use app\modules\admin\extensions\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -11,7 +9,7 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $formatter = Yii::$app->getFormatter();
-$baseUrl = Yii::$app->getRequest()->baseUrl;
+$baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
 
 $this->title = Yii::t('app', 'Ad Spaces');
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
-    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'app-models-AdSpace'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-ad-space']],
+    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'common-models-AdSpace'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-ad-spaces']],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
@@ -32,8 +30,12 @@ $this->params['menus'] = [
         'formSelector' => '#form-search-ad-spaces',
         'linkSelector' => '#grid-view-ad-spaces a',
     ]);
-    echo GridView::widget([
-        'id' => 'grid-view-ad-space',
+    echo yii\grid\GridView::widget([
+        'id' => 'grid-view-ad-spaces',
+        'tableOptions' => [
+            'class' => 'table table-striped'
+        ],
+//        'name' => 'common-models-AdSpace',
         'dataProvider' => $dataProvider,
         'columns' => [
             [
@@ -42,8 +44,8 @@ $this->params['menus'] = [
             ],
             [
                 'attribute' => 'group_id',
-                'value' => function($model, $key, $index, $grid) use ($formatter) {
-                    return $formatter->asGroupName('ad.space.group', $model['group_id']);
+                'value' => function ($model, $key, $index, $grid) use ($formatter) {
+                    //return $formatter->asGroupName('ad.space.group', $model['group_id']);
                 },
                 'format' => 'raw',
                 'contentOptions' => ['class' => 'group-name'],
@@ -74,7 +76,6 @@ $this->params['menus'] = [
                 ],
                 [
                     'attribute' => 'status',
-                    'format' => 'dataStatus',
                     'contentOptions' => ['class' => 'data-status'],
                 ],
                 [
@@ -84,7 +85,7 @@ $this->params['menus'] = [
                 ],
                 [
                     'attribute' => 'created_by',
-                    'value' => function($model) {
+                    'value' => function ($model) {
                         return $model['creater']['nickname'];
                     },
                     'contentOptions' => ['class' => 'username']
@@ -96,7 +97,7 @@ $this->params['menus'] = [
                 ],
                 [
                     'attribute' => 'updated_by',
-                    'value' => function($model) {
+                    'value' => function ($model) {
                         return $model['updater']['nickname'];
                     },
                     'contentOptions' => ['class' => 'username']
@@ -106,44 +107,44 @@ $this->params['menus'] = [
                     'format' => 'date',
                     'contentOptions' => ['class' => 'date']
                 ],
-                [
-                    'attribute' => 'deleted_by',
-                    'value' => function($model) {
-                        return $model['deleter']['nickname'];
-                    },
-                    'contentOptions' => ['class' => 'username']
-                ],
-                [
-                    'attribute' => 'deleted_at',
-                    'format' => 'date',
-                    'contentOptions' => ['class' => 'date']
-                ],
+                /* [
+                  'attribute' => 'deleted_by',
+                  'value' => function ($model) {
+                  return $model['deleter']['nickname'];
+                  },
+                  'contentOptions' => ['class' => 'username']
+                  ],
+                  [
+                  'attribute' => 'deleted_at',
+                  'format' => 'date',
+                  'contentOptions' => ['class' => 'date']
+                  ], */
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {photos} {update} {delete} {undo}',
                     'buttons' => [
                         'photos' => function ($url, $model, $key) use ($baseUrl) {
-                            return Html::a(Html::img($baseUrl . '/images/ads.png'), ['ads/index', 'spaceId' => $model['id']], ['title' => Yii::t('app', 'Ads')]);
+                            return Html::a(Html::img($baseUrl . '/images/ads.png'), ['ads/index', 'AdSearch[spaceId]' => $model['id']], ['title' => Yii::t('app', 'Ads')]);
                         },
-                            'delete' => function ($url, $model, $key) {
-                            return $model['status'] != Option::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                                    'data-method' => 'post',
-                                    'data-pjax' => '0',
-                                ]) : '';
-                        },
-                            'undo' => function ($url, $model, $key) {
-                            return $model['status'] == Option::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-undo"></span>', $url, [
-                                    'title' => Yii::t('app', 'Undo'),
-                                    'data-confirm' => Yii::t('app', 'Are you sure you want to undo this item?'),
-                                    'data-method' => 'post',
-                                    'data-pjax' => '0',
-                                ]) : '';
-                        }
+//                        'delete' => function ($url, $model, $key) {
+//                            return $model['status'] != Option::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+//                                'title' => Yii::t('yii', 'Delete'),
+//                                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+//                                'data-method' => 'post',
+//                                'data-pjax' => '0',
+//                            ]) : '';
+//                        },
+//                        'undo' => function ($url, $model, $key) {
+//                            return $model['status'] == Option::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-undo"></span>', $url, [
+//                                'title' => Yii::t('app', 'Undo'),
+//                                'data-confirm' => Yii::t('app', 'Are you sure you want to undo this item?'),
+//                                'data-method' => 'post',
+//                                'data-pjax' => '0',
+//                            ]) : '';
+//                        }
                         ],
                         'headerOptions' => ['class' => 'last'],
-                        'contentOptions' => ['class' => 'btn-4'],
+                        'contentOptions' => ['class' => 'buttons-4'],
                     ],
                 ],
             ]);

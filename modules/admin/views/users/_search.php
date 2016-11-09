@@ -1,8 +1,8 @@
 <?php
 
+use app\models\Option;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\UserSearch */
@@ -22,13 +22,17 @@ use app\models\User;
         <div class="entry">
             <?= $form->field($model, 'username') ?>
 
-            <?php echo $form->field($model, 'nickname') ?>
+            <?php echo $form->field($model, 'status')->dropDownList(Option::booleanOptions(), ['prompt' => '']) ?>
         </div>
 
         <div class="entry">
-            <?php  // echo $form->field($model, 'role')->dropDownList(User::roleOptions(), ['prompt' => '']) ?>
+            <?php //echo $form->field($model, 'user_group_id')->dropDownList(Tenant::userGroups(), ['prompt' => '']) ?>
 
-            <?php echo $form->field($model, 'status')->dropDownList(User::statusOptions(), ['prompt' => '']) ?>
+            <?php // echo $form->field($model, 'role')->dropDownList(User::roleOptions(), ['prompt' => '']) ?>
+        </div>
+
+        <div class="entry">
+            <?php // echo $form->field($model, 'rule_id')->dropDownList(Tenant::workflowRules(), ['prompt' => '']) ?>
         </div>
 
         <div class="form-group buttons">

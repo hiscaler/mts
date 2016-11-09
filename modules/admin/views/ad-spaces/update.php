@@ -3,7 +3,7 @@
 /* @var $model app\models\AdSpace */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-        'modelClass' => Yii::t('model', 'Ad Space'),
+        'modelClass' => 'Ad Space',
     ]) . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Ad Spaces'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];

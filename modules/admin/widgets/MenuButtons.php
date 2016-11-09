@@ -2,32 +2,32 @@
 
 namespace app\modules\admin\widgets;
 
+use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 
 /**
  * 记录操作按钮部件
  */
-class MenuButtons extends Widget {
+class MenuButtons extends Widget
+{
 
     public $outerTag = 'ul';
-    public $outerHtmlOptions = ['class' => 'tasks'];
+    public $outerHtmlOptions = array('class' => 'tasks');
     public $innerTag = 'li';
-    public $items = [];
+    public $items = array();
 
-    public function run() {
-        $output = Html::beginTag('div', ['id' => 'menu-buttons']);
-        $output .= Html::beginTag($this->outerTag, $this->outerHtmlOptions);
-        foreach ($this->items as $i => $item) {
-            if (isset($item['visible']) && $item['visible'] === false) {
-                unset($this->items[$i]);
-                continue;
-            }
-        }
+    public function run()
+    {
+        echo Html::beginTag('div', array('id' => 'menu-buttons'));
+        echo Html::beginTag($this->outerTag, $this->outerHtmlOptions);
         $max = count($this->items) - 1;
         foreach ($this->items as $i => $item) {
-            $linkHtmlOptions = isset($item['htmlOptions']) ? $item['htmlOptions'] : [];
-            $innerHtmlOptions = [];
+            if (isset($item['visible']) && $item['visible'] === false) {
+                continue;
+            }
+            $linkHtmlOptions = (isset($item['htmlOptions'])) ? $item['htmlOptions'] : array();
+            $innerHtmlOptions = array();
             if ($max == 0) {
                 $innerHtmlOptions['class'] = 'first-last';
             } else {
@@ -38,22 +38,19 @@ class MenuButtons extends Widget {
                 }
             }
             if ($item['url'] == '#') {
-                $item['url'] = 'javascript:;';
+                $item['url'] = 'javascript: void(0);';
                 if (isset($innerHtmlOptions['class'])) {
-                    $innerHtmlOptions['class'] .= ' btn-search-form';
+                    $innerHtmlOptions['class'] .= ' search-button';
                 } else {
-                    $innerHtmlOptions['class'] = 'btn-search-form';
+                    $innerHtmlOptions['class'] = 'search-button';
                 }
             }
-            $output .= Html::beginTag($this->innerTag, $innerHtmlOptions);
-            $output .= Html::a($item['label'], $item['url'], $linkHtmlOptions);
-            $output .= Html::endTag($this->innerTag);
+            echo Html::beginTag($this->innerTag, $innerHtmlOptions);
+            echo Html::a($item['label'], $item['url'], $linkHtmlOptions);
+            echo Html::endTag($this->innerTag);
         }
-        $output .= Html::endTag($this->outerTag);
-        $output .= Html::endTag('div');
-        $this->getView()->registerJs('jQuery(document).on("click", ".btn-search-form", function(){$(this).toggleClass("active");$(".search-form").toggle(); return false;});');
-
-        return $output;
+        echo Html::endTag($this->outerTag);
+        echo Html::endTag('div');
     }
 
 }

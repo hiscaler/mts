@@ -3,11 +3,19 @@ input[type=text].disabled, select.disabled, input[type=password].disabled, input
 }
 .g-text {
     background: url(../images/input-bg.png) repeat-x scroll 0 -130px #fff;
-    border: 1px solid #d5d5d5;
+    border: 1px solid #AAAAAA;
+    height: 14px;
     padding: 5px 5px 6px;
+    width: 180px;
+}
+.g-text-username {
+    width: 80px;
+}
+.g-text-tel {
+    width: 80px;
 }
 .g-text:focus {
-    border-color: #d5d5d5;
+    border-color: #999;
 }
 .g-text-area {
     background: url(../images/input-bg.png) repeat-x scroll 0 -130px #fff;
@@ -21,16 +29,20 @@ input[type=text].disabled, select.disabled, input[type=password].disabled, input
     resize: none;
 }
 .g-text-area:focus {
-    border-color: #d5d5d5;
+    border-color: #999;
 }
 .g-editor {
     background-color: #ccc;
     width: 600px;
     height: 200px;
 }
+.icon-date-picker {
+    width: 100px;
+    background: #FFF url(../images/calendar.png) no-repeat 90px 50%!important;
+}
 .icon-datetime-picker {
     width: 140px;
-    background:#fff url(../images/calendar.png) no-repeat right;
+    background: #FFF url(../images/calendar.png) no-repeat 120px 50%!important;
 }
 .button {
     border: #ccc solid 1px;
@@ -70,9 +82,12 @@ input[type=text].disabled, select.disabled, input[type=password].disabled, input
  * 通用 Tabs 样式
  ******************************************************************************/
 .tabs-common {
-    border-bottom: 1px solid #E9E9E9;
+    margin: 0;
+}
+.tabs-common {
+    display: block;
     height: 25px;
-    margin: 0 0 10px;
+    border-bottom: 1px solid #E9E9E9;
 }
 .tabs-common li {
     float: left;
@@ -106,9 +121,16 @@ input[type=text].disabled, select.disabled, input[type=password].disabled, input
     padding: 0.25em 1em;
     text-decoration: none;
 }
-.tabs-common .badges {
-    margin-left: 10px;
+.tabs-common li .badges {
+    margin-left: 5px;
 }
+.panels {
+    border: 1px solid #E9E9E9;
+    border-top: none;
+    padding: 10px;
+    border-radius: 0 0 5px 5px
+}
+
 /*******************************************************************************
  * label
  ******************************************************************************/
@@ -122,6 +144,19 @@ input[type=text].disabled, select.disabled, input[type=password].disabled, input
 }
 .label:hover {
     text-decoration: none;
+}
+/*******************************************************************************
+ * Site error
+ ******************************************************************************/
+.site-error {
+    padding: 50px 140px;
+}
+.site-error h1 {
+    background: url(../images/error-message.png) no-repeat left center;
+    padding-left: 40px;
+}
+.site-error .message {
+    color: #e4393c;
 }
 /*******************************************************************************
  * Message box
@@ -276,21 +311,6 @@ ul.pagination li.disabled span {
     color: #E9E9E9;
 }
 /*******************************************************************************
- * 系统错误消息
- ******************************************************************************/
-.site-error {
-    width: 800px;
-    margin: 60px auto;
-}
-.site-error h1 {
-    background: url(../images/error-message.png) no-repeat left center;
-    padding-left: 40px;
-}
-.site-error .alert {
-    margin-left: 0;
-    margin-right: 0;
-}
-/*******************************************************************************
  * Message box
  ******************************************************************************/
 .message-box {
@@ -314,22 +334,12 @@ ul.pagination li.disabled span {
     float: right;
     font-size: 12px;
 }
-.message-box .hd em a.btn {
-    font-weight: bold;
-    font-size: 20px;
-    text-decoration: none;
-    margin: 0;
-    padding: 0;
-}
 .message-box .hd em a.close-button {
     border: #FFD324 solid 1px;
     padding: 0 5px;
     color: #FFD324;
     font-weight: bold;
     text-decoration: none;
-}
-.message-box .hd em a.btn:hover {
-    color: #CCC;
 }
 .message-box .hd em a.close-button:hover {
     color: #6C7B81;
@@ -447,54 +457,28 @@ ul.pagination li.disabled span {
     background-repeat: no-repeat;
     font-size: 0;
 }
+/* glyphicon */
 .glyphicon {
-    display: inline-block !important;
+    position: relative;
+    top: 1px;
+    display: inline-block;
     width: 16px;
     height: 16px;
-    overflow: hidden;
-    vertical-align: middle;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     background-image: url(../images/icons.png);
     background-repeat: no-repeat;
-    font-size: 0;
 }
 .glyphicon-eye-open {
-    background-position: -1905px -16px;
+    background-position: -1904px -16px;
+}
+.glyphicon-pencil {
+    background-position: -1166px -16px;
 }
 .glyphicon-trash {
     background-position: -816px -16px;
-}
-/*a:hover .glyphicon-trash {
-    background-position: -881px -16px;
-}*/
-.glyphicon-pencil {
-    background-position: -1168px -16px;
-}
-.glyphicon-undo {
-    background-position: -5551px -16px;
-}
-/*******************************************************************************
- * Buttons
- ******************************************************************************/
-.btn-download {
-    display: inline-block;
-    padding: 2px 5px 2px 25px;
-    background: url(../images/download.png) no-repeat 5px 50%;
-    background-color: #F5F5F5;
-    border: #CCC solid 1px;
-    border-radius: 3px;
-}
-.not-set {
-    color: #fbc2c4;
-}
-/*******************************************************************************
- * Fixed ZTree
- ******************************************************************************/
-.ztree * {
-    font-size: 14px!important; 
-}
-.ztree li {
-    line-height: 20px!important;
-}
-.ztree li span.button {
-    margin-top: 2px;
 }

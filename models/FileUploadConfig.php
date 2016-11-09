@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use PDO;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
@@ -56,9 +55,9 @@ class FileUploadConfig extends BaseActiveRecord
             ['model_name', 'match', 'pattern' => '/^[a-zA-Z-]+$/'],
             ['extensions', 'match', 'pattern' => '/^[a-z0-9,]+$/'],
             ['attribute', 'match', 'pattern' => '/^[a-zA-Z0-9_]+$/'],
-//            ['attribute', 'checkAttribute'],
-            [['model_name', 'attribute'], 'unique', 'targetAttribute' => ['model_name', 'attribute', 'tenant_id']],
-            [['type', 'min_size', 'max_size', 'thumb_width', 'thumb_height', 'deleted_by', 'deleted_at'], 'integer'],
+            ['attribute', 'checkAttribute'],
+            [['model_name', 'attribute'], 'unique', 'targetAttribute' => ['model_name', 'attribute']],
+            [['type', 'min_size', 'max_size', 'thumb_width', 'thumb_height', 'tenant_id', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_by', 'deleted_at'], 'integer'],
             ['min_size', 'default', 'value' => 100],
             ['max_size', 'default', 'value' => 200],
             ['max_size', 'checkMaxSize'],
@@ -85,7 +84,7 @@ class FileUploadConfig extends BaseActiveRecord
     public function checkAttribute($attribute, $params)
     {
         if (!empty($this->model_name) && !empty($this->attribute)) {
-            $tableName = MTS::modelName2TableName(self::id2ClassName($this->model_name));
+            $tableName = Yad::modelName2TableName(self::id2ClassName($this->model_name));
             if ($tableName) {
                 $allTableNames = Yii::$app->getDb()->getSchema()->getTableNames('', true);
                 if (in_array($tableName, $allTableNames)) {
@@ -107,6 +106,7 @@ class FileUploadConfig extends BaseActiveRecord
     {
         return array_merge(parent::attributeLabels(), [
             'type' => Yii::t('fileUploadConfig', 'Type'),
+            'type_text' => Yii::t('fileUploadConfig', 'Type'),
             'model_attribute' => Yii::t('fileUploadConfig', 'Model Attribute'),
             'attribute' => Yii::t('fileUploadConfig', 'Attribute'),
             'extensions' => Yii::t('fileUploadConfig', 'Extensions'),
@@ -127,6 +127,17 @@ class FileUploadConfig extends BaseActiveRecord
         ];
     }
 
+    public function getType_text()
+    {
+        $options = self::typeOptions();
+
+        return isset($options[$this->type]) ? $options[$this->type] : null;
+    }
+
+    /**
+     * 默认配置
+     * @return array
+     */
     public static function defaultConfig()
     {
         return [
@@ -142,40 +153,50 @@ class FileUploadConfig extends BaseActiveRecord
     }
 
     /**
-     * Return upload file configs
-     * @param string $modelName
-     * @param string $attribute
+     * 返回指定的上传配置（可以返回多个）
+     * @param array $pairs
      * @return array
      */
     public static function getConfigs($pairs = [])
     {
-        $configs = [];
-        foreach ($pairs as $key => $value) {
-            $configs[$key . '@' . $value] = self::defaultConfig();
-        }
-        $rawData = Yii::$app->getDb()->createCommand('SELECT [[model_name]], [[attribute]], [[extensions]], [[min_size]], [[max_size]], [[thumb_width]], [[thumb_height]] FROM ' . static::tableName() . ' WHERE [[tenant_id]] = :tenantId AND [[deleted_at]] IS NULL')->bindValue(':tenantId', MTS::getTenantId(), PDO::PARAM_INT)->queryAll();
-        foreach ($rawData as $data) {
-            $key = $data['model_name'] . '@' . $data['attribute'];
-            $configs[$key] = [
-                'extensions' => $data['extensions'],
-                'size' => [
-                    'min' => (int) $data['min_size'],
-                    'max' => (int) $data['max_size'],
-                ],
-                'thumb' => [
-                    'generate' => false,
-                ],
-            ];
-            if ($data['thumb_width'] && $data['thumb_height']) {
-                $configs[$key]['thumb'] = [
-                    'generate' => true,
-                    'width' => (int) $data['thumb_width'],
-                    'height' => (int) $data['thumb_height'],
-                ];
+        $cacheKey = static::className() . __FUNCTION__;
+        $cache = Yii::$app->getCache();
+        $cacheData = $cache->get($cacheKey);
+        if ($cacheData === false) {
+            $configs = [];
+            foreach ($pairs as $key => $value) {
+                $configs[$key . '@' . $value] = self::defaultConfig();
             }
-        }
+            $rawData = Yii::$app->getDb()->createCommand('SELECT [[type]], [[model_name]], [[attribute]], [[extensions]], [[min_size]], [[max_size]], [[thumb_width]], [[thumb_height]] FROM ' . static::tableName() . ' WHERE [[tenant_id]] = :tenantId AND [[deleted_at]] IS NULL', [':tenantId' => Yad::getTenantId()])->queryAll();
+            foreach ($rawData as $data) {
+                $key = $data['model_name'] . '@' . $data['attribute'];
+                $configs[$key] = [
+                    'extensions' => !empty($data['extensions']) ? $data['extensions'] : null,
+                    'size' => [
+                        'min' => (int) $data['min_size'],
+                        'max' => (int) $data['max_size'],
+                    ],
+                    'thumb' => [
+                        'generate' => false,
+                    ],
+                ];
+                if ($data['type'] == self::TYPE_IMAGE && $data['thumb_width'] && $data['thumb_height']) {
+                    $configs[$key]['thumb'] = [
+                        'generate' => true,
+                        'width' => (int) $data['thumb_width'],
+                        'height' => (int) $data['thumb_height'],
+                    ];
+                }
+            }
 
-        return $configs;
+            $cache->set($cacheKey, $configs, 0, new \yii\caching\DbDependency([
+                'sql' => 'SELECT MAX(updated_at) FROM ' . static::tableName(),
+            ]));
+
+            return $configs;
+        } else {
+            return $cacheData;
+        }
     }
 
     /**
@@ -186,34 +207,9 @@ class FileUploadConfig extends BaseActiveRecord
      */
     public static function getConfig($modelName, $attribute)
     {
-        $data = Yii::$app->getDb()->createCommand('SELECT [[type]], [[extensions]], [[min_size]], [[max_size]], [[thumb_width]], [[thumb_height]] FROM ' . static::tableName() . ' WHERE [[tenant_id]] = :tenantId AND [[deleted_at]] IS NULL AND [[model_name]] = :modelName AND [[attribute]] = :attribute')->bindValues([
-                ':tenantId' => MTS::getTenantId(),
-                ':modelName' => $modelName,
-                ':attribute' => $attribute
-            ])->queryOne();
-        if ($data) {
-            $config = [
-                'extensions' => !empty($data['extensions']) ? $data['extensions'] : null,
-                'size' => [
-                    'min' => (int) $data['min_size'],
-                    'max' => (int) $data['max_size'],
-                ],
-                'thumb' => [
-                    'generate' => false,
-                ],
-            ];
-            if ($data['type'] == self::TYPE_IMAGE && $data['thumb_width'] && $data['thumb_height']) {
-                $config['thumb'] = [
-                    'generate' => true,
-                    'width' => (int) $data['thumb_width'],
-                    'height' => (int) $data['thumb_height'],
-                ];
-            }
-        } else {
-            $config = self::defaultConfig();
-        }
-
-        return $config;
+        $configs = static::getConfigs();
+        $key = "{$modelName}@{$attribute}";
+        return isset($configs[$key]) ? $configs[$key] : static::defaultConfig();
     }
 
     /**
@@ -224,7 +220,7 @@ class FileUploadConfig extends BaseActiveRecord
     {
         $names = [];
         $contentModels = ArrayHelper::getValue(Yii::$app->params, 'contentModules', []);
-        $rawData = Yii::$app->getDb()->createCommand('SELECT DISTINCT([[model_name]]) FROM ' . static::tableName() . ' WHERE [[tenant_id]] = :tenantId')->bindValue(':tenantId', MTS::getTenantId(), PDO::PARAM_INT)->queryColumn();
+        $rawData = Yii::$app->getDb()->createCommand('SELECT DISTINCT([[model_name]]) FROM ' . static::tableName() . ' WHERE [[tenant_id]] = :tenantId', [':tenantId' => Yad::getTenantId()])->queryColumn();
         foreach ($rawData as $name) {
             if (isset($contentModels[$name]['label'])) {
                 $text = Yii::t("app", $contentModels[$name]['label']);
@@ -246,18 +242,22 @@ class FileUploadConfig extends BaseActiveRecord
     {
         $options = [];
         $db = Yii::$app->getDb();
-        $talbePrefix = $db->tablePrefix;
+        $tablePrefix = $db->tablePrefix;
         $tableSchemas = $db->schema->tableSchemas;
-        $contentModules = Yii::$app->params['contentModules'];
+        $modules = [];
+        $modulesRawData = isset(Yii::$app->params['modules']) ? Yii::$app->params['modules'] : [];
+        foreach ($modulesRawData as $ms) {
+            $modules = array_merge($modules, $ms);
+        }
         foreach ($tableSchemas as $tableSchema) {
             $rawColumns = $tableSchema->columns;
-            $modelName = Inflector::id2camel(str_replace($talbePrefix, '', $tableSchema->name), '_');
+            $modelName = Inflector::id2camel(str_replace($tablePrefix, '', $tableSchema->name), '_');
             $modelName = 'app-models-' . $modelName;
-            if (isset($contentModules[$modelName])) {
+            if (isset($modules[$modelName])) {
                 $attributeLabels = Yii::createObject(BaseActiveRecord::id2ClassName($modelName))->attributeLabels();
                 foreach ($rawColumns as $name => $column) {
                     if ($column->type === 'string' && strpos($name, '_path') !== false) {
-                        $options[$modelName . ':' . $name] = '「' . Yii::t('app', $contentModules[$modelName]['label']) . '」' . (isset($attributeLabels[$name]) ? $attributeLabels[$name] : $name);
+                        $options[$modelName . ':' . $name] = '「' . Yii::t('app', $modules[$modelName]['label']) . '」' . (isset($attributeLabels[$name]) ? $attributeLabels[$name] : $name);
                     }
                 }
             }

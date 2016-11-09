@@ -19,7 +19,7 @@ use yii\helpers\Inflector;
  * @property integer $created_by
  * @property integer $created_at
  * @property integer $updated_by
- * @property integer $updated_at
+ * @property integer $updated_at 
  */
 class Label extends BaseActiveRecord
 {
@@ -38,7 +38,7 @@ class Label extends BaseActiveRecord
     public function rules()
     {
         return [
-            [['name', 'ordering'], 'required'],
+            [['alias', 'name', 'ordering'], 'required'],
             ['alias', 'match', 'pattern' => '/^[a-z]+[.]?[a-z-]+[a-z]$/'],
             ['alias', 'unique', 'targetAttribute' => ['alias', 'tenant_id']],
             [['enabled'], 'boolean'],
@@ -68,7 +68,7 @@ class Label extends BaseActiveRecord
     {
         $items = [];
         $sql = 'SELECT [[id]], [[alias]], [[name]] FROM {{%label}} WHERE [[tenant_id]] = :tenantId';
-        $params = [':tenantId' => MTS::getTenantId()];
+        $params = [':tenantId' => Yad::getTenantId()];
         if (!$all) {
             $sql .= ' AND [[enabled]] = :enabled';
             $params[':enabled'] = Constant::BOOLEAN_TRUE;
@@ -126,14 +126,14 @@ class Label extends BaseActiveRecord
     }
 
     /**
-     * 根据文档编号和模型名称获取关联的推送位编号列表
-     * @param integer $archiveId
-     * @param string $modelName
+     * 根据实体编号和实体名称获取关联的自定义属性编号列表
+     * @param integer $entityId
+     * @param string $entityName
      * @return array
      */
-    public static function getArchiveLabelIds($archiveId, $modelName)
+    public static function getEntityLabelIds($entityId, $entityName)
     {
-        return Yii::$app->getDb()->createCommand('SELECT [[label_id]] FROM {{%archive_label}} WHERE [[archive_id]] = :archiveId AND [[model_name]] = :modelName')->bindValues([':archiveId' => (int) $archiveId, ':modelName' => $modelName])->queryColumn();
+        return Yii::$app->getDb()->createCommand('SELECT [[label_id]] FROM {{%entity_label}} WHERE [[entity_id]] = :entityId AND [[entity_name]] = :entityName')->bindValues([':entityId' => (int) $entityId, ':entityName' => $entityName])->queryColumn();
     }
 
     /**
@@ -153,9 +153,6 @@ class Label extends BaseActiveRecord
         if (parent::beforeSave($insert)) {
             if ($insert) {
                 $this->frequency = 0;
-            }
-            if (empty($this->alias)) {
-                $this->alias = Inflector::slug($this->name);
             }
 
             return true;

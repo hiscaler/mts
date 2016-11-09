@@ -28,16 +28,12 @@ use yii\widgets\Pjax;
                 'contentOptions' => ['class' => 'serial-number']
             ],
             [
-                'attribute' => 'attribute',                
+                'attribute' => 'attribute',
                 'label' => Yii::t('gridColumnConfig', 'Attribute'),
             ],
             [
                 'attribute' => 'css_class',
                 'label' => Yii::t('gridColumnConfig', 'CSS Class'),
-            ],
-            [
-                'attribute' => 'css_style',
-                'label' => Yii::t('gridColumnConfig', 'CSS Style'),
             ],
             [
                 'attribute' => 'visible',

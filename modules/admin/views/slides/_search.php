@@ -2,34 +2,31 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\Option;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\SlideSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="form-outside search-form form-layout-column" style="display: none">
+<div class="form-outside form-search form-layout-column" style="display: none">
     <div class="slide-search form">
 
         <?php
         $form = ActiveForm::begin([
-                'id' => 'form-search-slides',
+                'id' => 'form-slide-search',
                 'action' => ['index'],
                 'method' => 'get',
         ]);
         ?>
 
         <div class="entry">
-            <?= $form->field($model, 'group_id')->dropDownList(\app\models\Slide::groupOptions(), ['prompt' => '']) ?>
+            <?= $form->field($model, 'group_id')->dropDownList(\app\models\Lookup::getValue(app\models\Slide::GROUP_KEY, [])) ?>
 
             <?= $form->field($model, 'title') ?>
         </div>
 
         <div class="entry">
-            <?= $form->field($model, 'enabled')->dropDownList(Option::booleanOptions(), ['prompt' => '']) ?>
-
-            <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
+            <?= $form->field($model, 'enabled')->dropDownList(\app\models\Option::booleanOptions(), ['prompt' => '']) ?>
         </div>
 
         <div class="form-group buttons">

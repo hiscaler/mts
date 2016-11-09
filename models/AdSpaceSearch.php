@@ -17,7 +17,7 @@ class AdSpaceSearch extends AdSpace
     public function rules()
     {
         return [
-            [['group_id', 'status', 'enabled'], 'integer'],
+            [['group_id', 'enabled'], 'integer'],
             [['alias', 'name', 'description'], 'safe'],
         ];
     }
@@ -40,10 +40,7 @@ class AdSpaceSearch extends AdSpace
      */
     public function search($params)
     {
-        $query = AdSpace::find()->with(['creater', 'updater', 'deleter'])->asArray(true);
-        $query->where('[[tenant_id]] = :tenantId', [
-            ':tenantId' => MTS::getTenantId()
-        ]);
+        $query = AdSpace::find()->with(['creater', 'updater'])->asArray(true);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,7 +57,6 @@ class AdSpaceSearch extends AdSpace
 
         $query->andFilterWhere([
             'group_id' => $this->group_id,
-            'status' => $this->status,
             'enabled' => $this->enabled,
         ]);
 

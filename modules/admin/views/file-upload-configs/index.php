@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\FileUploadConfigSearch */
+/* @var $searchModel common\models\FileUploadConfigSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'File Upload Configs');
@@ -33,8 +33,7 @@ $this->params['menus'] = [
                 'contentOptions' => ['class' => 'serial-number'],
             ],
             [
-                'attribute' => 'type',
-                'format' => 'fileUploadConfigType',
+                'attribute' => 'type_text',
                 'contentOptions' => ['class' => 'center', 'style' => 'width: 40px'],
             ],
             [
@@ -104,8 +103,7 @@ $this->params['menus'] = [
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
-                'headerOptions' => ['class' => 'last'],
-                'contentOptions' => ['class' => 'buttons-2'],
+                'headerOptions' => ['class' => 'buttons-2 last'],
             ],
         ],
     ]);

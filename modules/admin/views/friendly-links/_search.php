@@ -15,9 +15,9 @@ use app\models\Option;
 
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'form-friendly-links-search',
-                    'action' => ['index'],
-                    'method' => 'get',
+                'id' => 'form-friendly-links-search',
+                'action' => ['index'],
+                'method' => 'get',
         ]);
         ?>
 
@@ -35,8 +35,6 @@ use app\models\Option;
 
         <div class="entry">
             <?= $form->field($model, 'enabled')->dropDownList(Option::booleanOptions(), ['prompt' => '']) ?>
-
-            <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
         </div>
 
         <div class="form-group buttons">

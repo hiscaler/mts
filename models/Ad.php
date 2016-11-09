@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use app\modules\admin\extensions\ApplicationHelper;
+use app\modules\admin\components\ApplicationHelper;
 use PDO;
 use yadjet\behaviors\FileUploadBehavior;
 use yadjet\helpers\DatetimeHelper;
@@ -24,14 +24,11 @@ use yii\db\ActiveQueryInterface;
  * @property string $message
  * @property integer $views_count
  * @property integer $clicks_count
- * @property integer $status
  * @property integer $enabled
  * @property integer $created_by
  * @property integer $created_at
  * @property integer $updated_by
  * @property integer $updated_at
- * @property integer $deleted_at
- * @property integer $deleted_by
  */
 class Ad extends BaseActiveRecord
 {
@@ -66,15 +63,15 @@ class Ad extends BaseActiveRecord
      */
     public function rules()
     {
-        return array_merge(parent::rules(), [
+        return [
             [['space_id', 'name', 'type', 'begin_datetime', 'end_datetime'], 'required'],
             [['name', 'url', 'message'], 'trim'],
             ['url', 'url'],
-            [['status'], 'default', 'value' => 0],
             [['file_path'], 'required', 'on' => ['picture', 'flash']],
             ['enabled', 'boolean'],
-            [['begin_datetime', 'end_datetime'], 'date', 'format' => Yii::$app->getFormatter()->datetimeFormat],
-            [['space_id', 'type', 'status', 'views_count', 'clicks_count', 'deleted_at', 'deleted_by'], 'integer'],
+            [['begin_datetime'], 'date', 'type' => 'datetime', 'format' => Yii::$app->getFormatter()->datetimeFormat, 'timestampAttribute' => 'begin_datetime', 'timestampAttributeFormat' => Yii::$app->getFormatter()->datetimeFormat, 'timestampAttributeTimeZone' => 'PRC'],
+            [['end_datetime'], 'date', 'type' => 'datetime', 'format' => Yii::$app->getFormatter()->datetimeFormat, 'timestampAttribute' => 'end_datetime'],
+            [['space_id', 'type', 'views_count', 'clicks_count', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
             [['text'], 'string'],
             [['name', 'url', 'message'], 'string', 'max' => 255],
             ['file_path', 'file',
@@ -101,7 +98,7 @@ class Ad extends BaseActiveRecord
                     'limit' => ApplicationHelper::friendlyFileSize($this->_fileUploadConfig['size']['max']),
                 ]),
             ],
-        ]);
+        ];
     }
 
     public function behaviors()
@@ -124,12 +121,14 @@ class Ad extends BaseActiveRecord
             'name' => Yii::t('ad', 'Name'),
             'url' => Yii::t('ad', 'URL'),
             'type' => Yii::t('ad', 'Type'),
+            'type_text' => Yii::t('ad', 'Type'),
             'file_path' => Yii::t('ad', 'File'),
             'text' => Yii::t('ad', 'Text'),
             'begin_datetime' => Yii::t('ad', 'Begin Datetime'),
             'end_datetime' => Yii::t('ad', 'End Datetime'),
             'message' => Yii::t('ad', 'Message'),
             'views_count' => Yii::t('ad', 'Views Count'),
+            'clicks_count' => Yii::t('ad', 'Clicks Count'),
         ]);
     }
 
@@ -140,6 +139,13 @@ class Ad extends BaseActiveRecord
             self::TYPE_FLASH => Yii::t('ad', 'Flash Type'),
             self::TYPE_TEXT => Yii::t('ad', 'Text Type'),
         ];
+    }
+
+    public function getType_text()
+    {
+        $options = self::typeOptions();
+
+        return isset($options[$this->type]) ? $options[$this->type] : null;
     }
 
     /**
@@ -156,8 +162,11 @@ class Ad extends BaseActiveRecord
     {
         parent::afterFind();
         $this->_oldType = $this->type;
-        $this->begin_datetime = Yii::$app->getFormatter()->asDate($this->begin_datetime);
-        $this->end_datetime = Yii::$app->getFormatter()->asDate($this->end_datetime);
+        if (!$this->isNewRecord) {
+            $formatter = Yii::$app->getFormatter();
+            $this->begin_datetime = $formatter->asDate($this->begin_datetime);
+            $this->end_datetime = $formatter->asDate($this->end_datetime);
+        }
     }
 
     public function beforeValidate()

@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -22,8 +21,6 @@ else:
         <div class="form user-form">
 
             <?php $form = ActiveForm::begin(); ?>
-
-            <?= $form->field($model, 'type')->dropDownList(User::typeOptions(), ['prompt' => '', 'disabled' => 'disabled', 'readonly' => 'readonly', 'class' => 'disabled']) ?>
 
             <?= $form->field($model, 'username')->textInput(['maxlength' => true, 'disabled' => 'disabled', 'readonly' => 'readonly', 'class' => 'disabled']) ?>
 

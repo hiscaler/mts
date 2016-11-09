@@ -2,9 +2,10 @@
 
 namespace app\models;
 
-use app\models\User;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use app\models\User;
 
 /**
  * UserSearch represents the model behind the search form about `app\models\User`.
@@ -18,7 +19,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['status'], 'integer'],
+            [['role', 'status'], 'integer'],
             [['username', 'nickname'], 'safe'],
         ];
     }
@@ -41,7 +42,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find()->with(['creater', 'updater', 'deleter'])->asArray(true);
+        $query = User::find()->where(['type' => self::TYPE_USER]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,6 +58,7 @@ class UserSearch extends User
         }
 
         $query->andFilterWhere([
+            'role' => $this->role,
             'status' => $this->status,
         ]);
 

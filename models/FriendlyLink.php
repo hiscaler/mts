@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use app\modules\admin\extensions\ApplicationHelper;
+use app\models\FileUploadConfig;
+use app\modules\admin\components\ApplicationHelper;
 use yadjet\behaviors\ImageUploadBehavior;
 use Yii;
 use yii\web\UploadedFile;
@@ -19,15 +20,12 @@ use yii\web\UploadedFile;
  * @property string $url_open_target
  * @property string $logo_path
  * @property integer $ordering
- * @property integer $status
  * @property integer $enabled
  * @property integer $tenant_id
  * @property integer $created_by
  * @property integer $created_at
  * @property integer $updated_by
  * @property integer $updated_at
- * @property integer $deleted_by
- * @property integer $deleted_at
  */
 class FriendlyLink extends BaseActiveRecord
 {
@@ -66,13 +64,14 @@ class FriendlyLink extends BaseActiveRecord
      */
     public function rules()
     {
-        return array_merge(parent::rules(), [
-            [['type', 'title', 'url', 'url_open_target', 'ordering', 'status'], 'required'],
+        return [
+            [['type', 'title', 'url', 'url_open_target', 'ordering'], 'required'],
             [['title', 'url', 'description'], 'trim'],
             ['group_id', 'default', 'value' => 0],
             [['url'], 'url'],
+            ['url', 'unique', 'targetAttribute' => ['url']],
             [['enabled'], 'boolean'],
-            [['group_id', 'type', 'ordering', 'status', 'deleted_by', 'deleted_at'], 'integer'],
+            [['group_id', 'type', 'tenant_id', 'ordering', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
             [['title', 'description', 'url', 'url_open_target'], 'string', 'max' => 255],
             ['logo_path', 'image',
                 'extensions' => $this->_fileUploadConfig['extensions'],
@@ -87,7 +86,7 @@ class FriendlyLink extends BaseActiveRecord
                     'limit' => ApplicationHelper::friendlyFileSize($this->_fileUploadConfig['size']['max']),
                 ]),
             ],
-        ]);
+        ];
     }
 
     /**
@@ -107,13 +106,13 @@ class FriendlyLink extends BaseActiveRecord
 
     public function behaviors()
     {
-        return array_merge(parent::behaviors(), [
+        return [
             [
                 'class' => ImageUploadBehavior::className(),
                 'attribute' => 'logo_path',
                 'thumb' => $this->_fileUploadConfig['thumb']
             ],
-        ]);
+        ];
     }
 
     public static function typeOptions()
@@ -126,14 +125,14 @@ class FriendlyLink extends BaseActiveRecord
 
     public static function groupOptions()
     {
-        return GroupOption::getItems('friendly.link.group');
+        return Lookup::getValue('m.models.friendly-link.group', []);
     }
 
     public static function urlOpenTargetOptions()
     {
         return [
             self::URL_OPEN_TARGET_SELF => Yii::t('friendlyLink', 'Self'),
-            self::URL_OPEN_TARGET_BLANK => Yii::t('friendlyLink', 'Blank')
+            self::URL_OPEN_TARGET_BLANK => Yii::t('friendlyLink', 'Blank'),
         ];
     }
 

@@ -42,7 +42,7 @@ class TenantUserGroupSearch extends TenantUserGroup
     public function search($params)
     {
         $query = TenantUserGroup::find();
-        $query->where(['tenant_id' => MTS::getTenantId()]);
+        $query->where(['tenant_id' => Yad::getTenantId()]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

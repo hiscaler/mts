@@ -1,20 +1,19 @@
 <?php
 
-use app\modules\admin\extensions\GridView;
-use yii\helpers\Html;
-use yii\helpers\Url;
+use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ArticleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->params['breadcrumbs'][] = Yii::t('app', 'Articles');
+$this->title = Yii::t('app', 'Articles');
+$this->params['breadcrumbs'][] = $this->title;
+
 
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
-    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'app-models-Article'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-article']],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
@@ -22,13 +21,9 @@ $this->params['menus'] = [
 
     <?= $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php
-    Pjax::begin([
-        'formSelector' => '#form-articles',
-        'linkSelector' => '#grid-view-article a',
-    ]);
-    echo GridView::widget([
-        'id' => 'grid-view-article',
+    <?php Pjax::begin(); ?>  
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             [
@@ -36,99 +31,65 @@ $this->params['menus'] = [
                 'contentOptions' => ['class' => 'serial-number']
             ],
             [
-                'attribute' => 'ordering',
-                'contentOptions' => ['class' => 'ordering']
-            ],
-            [
-                'attribute' => 'alias',
-                'contentOptions' => ['class' => 'article-alias'],
-            ],
-            [
                 'attribute' => 'title',
                 'format' => 'raw',
-                'value' => function($model) {
-                    return Html::a($model['title'], ['update', 'id' => $model['id']]);
+                'value' => function ($model) {
+                    return "[ {$model['alias']} ] " . yii\helpers\Html::a($model['title'], ['update', 'id' => $model['id']]);
                 },
-                ],
-                'tags',
-                'keywords',
-                [
-                    'attribute' => 'enabled',
-                    'format' => 'boolean',
-                    'contentOptions' => ['class' => 'boolean pointer enabled-handler'],
-                ],
-                [
-                    'attribute' => 'status',
-                    'format' => 'dataStatus',
-                    'contentOptions' => ['class' => 'data-status'],
-                ],
-                [
-                    'attribute' => 'created_by',
-                    'value' => function($model) {
-                        return $model['creater']['nickname'];
-                    },
-                    'contentOptions' => ['class' => 'username']
-                ],
-                [
-                    'attribute' => 'created_at',
-                    'format' => 'date',
-                    'contentOptions' => ['class' => 'date']
-                ],
-                [
-                    'attribute' => 'updated_by',
-                    'value' => function($model) {
-                        return $model['updater']['nickname'];
-                    },
-                    'contentOptions' => ['class' => 'username']
-                ],
-                [
-                    'attribute' => 'updated_at',
-                    'format' => 'date',
-                    'contentOptions' => ['class' => 'date']
-                ],
-                [
-                    'attribute' => 'deleted_by',
-                    'value' => function($model) {
-                        return $model['deleter']['nickname'];
-                    },
-                    'contentOptions' => ['class' => 'username']
-                ],
-                [
-                    'attribute' => 'deleted_at',
-                    'format' => 'date',
-                    'contentOptions' => ['class' => 'date']
-                ],
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'template' => '{view} {update} {delete} {undo}',
-                    'buttons' => [
-                        'delete' => function ($url, $model, $key) {
-                            return $model['status'] != \app\models\Constant::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                                    'data-method' => 'post',
-                                    'data-pjax' => '0',
-                                ]) : '';
-                        },
-                            'undo' => function ($url, $model, $key) {
-                            return $model['status'] == \app\models\Constant::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-undo"></span>', $url, [
-                                    'title' => Yii::t('app', 'Undo'),
-                                    'data-confirm' => Yii::t('app', 'Are you sure you want to undo this item?'),
-                                    'data-method' => 'post',
-                                    'data-pjax' => '0',
-                                ]) : '';
-                        }
-                        ],
-                        'headerOptions' => ['class' => 'last'],
-                        'contentOptions' => ['class' => 'buttons-3']
-                    ],
-                ],
-            ]);
-            Pjax::end();
-            ?>
+            ],
+            [
+                'attribute' => 'enabled',
+                'format' => 'boolean',
+                'contentOptions' => ['class' => 'boolean pointer enabled-handler'],
+            ],
+            [
+                'attribute' => 'created_by',
+                'value' => function($model) {
+                    return $model['creater']['nickname'];
+                },
+                'contentOptions' => ['class' => 'username']
+            ],
+            [
+                'attribute' => 'created_at',
+                'format' => 'date',
+                'contentOptions' => ['class' => 'date']
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function($model) {
+                    return $model['updater']['nickname'];
+                },
+                'contentOptions' => ['class' => 'username']
+            ],
+            [
+                'attribute' => 'updated_at',
+                'format' => 'date',
+                'contentOptions' => ['class' => 'date']
+            ],
+            [
+                'attribute' => 'deleted_by',
+                'value' => function($model) {
+                    return $model['deleter']['nickname'];
+                },
+                'contentOptions' => ['class' => 'username']
+            ],
+            [
+                'attribute' => 'deleted_at',
+                'format' => 'date',
+                'contentOptions' => ['class' => 'date']
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'headerOptions' => array('class' => 'buttons-3 last'),
+            ],
+        ],
+    ]);
+    ?>
+    <?php Pjax::end(); ?>
+</div>
 
-        </div>
-
-        <?php
-        $this->registerJs('yadjet.actions.toggle("table td.enabled-handler img", "' . Url::toRoute('toggle') . '");');
-        
+<?php \app\modules\admin\components\JsBlock::begin() ?>
+    <script type="text/javascript">
+        yadjet.actions.toggle("table td.enabled-handler img", "<?= yii\helpers\Url::toRoute('toggle') ?>");
+    </script>
+<?php \app\modules\admin\components\JsBlock::end() ?>

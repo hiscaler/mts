@@ -1,7 +1,5 @@
 <?php
 
-use yii\widgets\Menu;
-
-echo Menu::widget([
+echo yii\widgets\Menu::widget([
     'items' => $items,
 ]);

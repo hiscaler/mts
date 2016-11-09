@@ -2,15 +2,8 @@
 
 namespace app\models;
 
-use app\models\Constant;
-use app\models\MTS;
-use app\models\TenantAccessToken;
-use PDO;
 use Yii;
-use yii\db\ActiveRecord;
 use yii\db\Query;
-use yii\web\HttpException;
-
 
 /**
  * This is the model class for table "tenant".
@@ -92,11 +85,10 @@ class Tenant extends BaseActiveRecord
     public function getUsers()
     {
         return (new Query())
-                ->select(['u.id', 'u.username', 'u.nickname', 'u.email', 'u.status', 't.enabled', 't.role', 'wkr.name AS rule_name', 'tug.name AS group_name'])
+                ->select(['u.id', 'u.username', 'u.nickname', 'u.email', 'u.status', 't.enabled', 't.role', 'tug.name AS group_name'])
                 ->from('{{%tenant_user}} t')
                 ->leftJoin('{{%user}} u', '[[t.user_id]] = [[u.id]]')
                 ->leftJoin('{{%tenant_user_group}} tug', '[[t.user_group_id]] = [[tug.id]]')
-                ->leftJoin('{{%workflow_rule}} wkr', '[[t.rule_id]] = [[wkr.id]]')
                 ->where(['t.tenant_id' => $this->id])
                 ->all();
     }
@@ -118,16 +110,15 @@ class Tenant extends BaseActiveRecord
     public static function userGroups($tenantId = null)
     {
         if ($tenantId === null) {
-            $tenantId = MTS::getTenantId();
+            $tenantId = Yad::getTenantId();
         }
         $items = (new Query())
             ->select('name')
             ->from('{{%tenant_user_group}}')
             ->where([
-                'tenant_id' => $tenantId === null ? MTS::getTenantId() : $tenantId,
+                'tenant_id' => $tenantId === null ? Yad::getTenantId() : $tenantId,
                 'enabled' => Constant::BOOLEAN_TRUE
             ])
-            ->orderBy(['alias' => SORT_ASC])
             ->indexBy('id')
             ->column();
 
@@ -145,7 +136,7 @@ class Tenant extends BaseActiveRecord
             ->from('{{%tenant_user}} t')
             ->leftJoin('{{%user}} u', '[[t.user_id]] = [[u.id]]')
             ->where([
-                'tenant_id' => MTS::getTenantId(),
+                'tenant_id' => Yad::getTenantId(),
             ])
             ->orderBy(['u.username' => SORT_ASC])
             ->indexBy('u.id')
@@ -160,11 +151,12 @@ class Tenant extends BaseActiveRecord
      */
     public static function workflowRules($tenantId = null)
     {
+        return [];
         $items = (new Query())
             ->select('name')
             ->from('{{%workflow_rule}}')
             ->where([
-                'tenant_id' => $tenantId === null ? MTS::getTenantId() : $tenantId
+                'tenant_id' => $tenantId === null ? Yad::getTenantId() : $tenantId
             ])
             ->indexBy('id')
             ->column();
@@ -177,7 +169,7 @@ class Tenant extends BaseActiveRecord
      */
     public static function modules()
     {
-        return Yii::$app->getDb()->createCommand('SELECT [[module_name]] FROM {{%tenant_module}} WHERE [[tenant_id]] = :tenantId')->bindValue(':tenantId', MTS::getTenantId(), PDO::PARAM_INT)->queryColumn();
+        return Yii::$app->getDb()->createCommand('SELECT [[module_name]] FROM {{%tenant_module}} WHERE [[tenant_id]] = :tenantId')->bindValue(':tenantId', Yad::getTenantId(), \PDO::PARAM_INT)->queryColumn();
     }
 
     // Events
@@ -187,7 +179,7 @@ class Tenant extends BaseActiveRecord
         if ($this->isNewRecord) {
             $this->modules = [];
         } else {
-            $this->modules = Yii::$app->getDb()->createCommand('SELECT [[module_name]] FROM {{%tenant_module}} WHERE [[tenant_id]] = :tenantId')->bindValue(':tenantId', $this->id, PDO::PARAM_INT)->queryColumn();
+            $this->modules = Yii::$app->getDb()->createCommand('SELECT [[module_name]] FROM {{%tenant_module}} WHERE [[tenant_id]] = :tenantId')->bindValue(':tenantId', $this->id, \PDO::PARAM_INT)->queryColumn();
         }
         $this->_modules = $this->modules;
     }

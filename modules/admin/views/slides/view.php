@@ -21,37 +21,16 @@ $this->params['menus'] = [
     DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'id',
             'ordering',
-            [
-                'attribute' => 'group_id',
-                'value' => Yii::$app->getFormatter()->asGroupName('slide.group', $model['group_id']),
-                'format' => 'raw',
-            ],
+            'group_name',
             'title',
-            [
-                'attribute' => 'url',
-                'value' => \yii\helpers\Html::a($model['url'], $model['url'], ['target' => '_blank']),
-                'format' => 'raw',
-            ],
-            'url_open_target:slideUrlOpenTarget',
-            'picture:image',
+            'url:url',
+            'url_open_target_text',
+            'picture_path:image',
             'enabled:boolean',
-            'status:dataStatus',
-            [
-                'attribute' => 'created_by',
-                'value' => $model['creater']['nickname']
-            ],
             'created_at:datetime',
-            [
-                'attribute' => 'updated_by',
-                'value' => $model['updater']['nickname']
-            ],
             'updated_at:datetime',
-            [
-                'attribute' => 'deleted_by',
-                'value' => $model['deleter']['nickname']
-            ],
-            'deleted_at:datetime',
         ],
     ])
     ?>

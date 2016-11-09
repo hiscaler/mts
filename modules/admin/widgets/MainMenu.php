@@ -3,25 +3,55 @@
 namespace app\modules\admin\widgets;
 
 use Yii;
+use yii\base\Widget;
+use yii\helpers\ArrayHelper;
 
-class MainMenu extends \yii\base\Widget
+/**
+ * 顶部菜单
+ *
+ * @author hiscaler <hiscaler@gmail.com>
+ */
+class MainMenu extends Widget
 {
 
     public function getItems()
     {
         $controllerId = $this->view->context->id;
-        return [
+        $globalControllerIds = ['global'];
+        $modules = ArrayHelper::getValue(Yii::$app->params, 'modules', []);
+        $firstControllerId = null;
+        foreach ($modules as $ms) {
+            foreach ($ms as $item) {
+                $urlControllerId = null;
+                foreach (explode('/', $item['url'][0]) as $d) {
+                    if (!empty($d)) {
+                        $urlControllerId = $d;
+                        break;
+                    }
+                }
+                if ($urlControllerId) {
+                    $globalControllerIds[] = $urlControllerId;
+                    $firstControllerId === null && $firstControllerId = $urlControllerId;
+                }
+            }
+        }
+
+        $items = [
             [
-                'label' => Yii::t('app', 'System Management'),
-                'url' => ['system/index'],
-                'active' => in_array($controllerId, ['system', 'default', 'users', 'tenants', 'labels', 'nodes', 'file-upload-configs', 'group-options', 'lookups', 'user-login-logs']),
-            ],
-            [
-                'label' => Yii::t('app', 'Content Management'),
-                'url' => ['archives/index'],
-                'active' => in_array($controllerId, ['content', 'archives', 'friendly-links', 'ad-spaces', 'ads', 'slides', 'articles']),
+                'label' => '首页',
+                'url' => ['default/index'],
+                'active' => $controllerId == 'default',
             ],
         ];
+        if ($firstControllerId) {
+            $items[] = [
+                'label' => '全局管理',
+                'url' => ["{$firstControllerId}/index"],
+                'active' => in_array($controllerId, $globalControllerIds),
+            ];
+        }
+
+        return $items;
     }
 
     public function run()

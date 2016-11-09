@@ -1,6 +1,6 @@
 <?php
 
-use app\models\MTS;
+use app\models\Yad;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -33,9 +33,9 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'modules')->checkboxList(\app\models\Option::modulesOptions(true)) ?>
 
-        <?= $form->field($model, 'language')->dropDownList(MTS::getLanguages(), ['prompt' => '']) ?>
+        <?= $form->field($model, 'language')->dropDownList(Yad::getLanguages(), ['prompt' => '']) ?>
 
-        <?= $form->field($model, 'timezone')->dropDownList(MTS::getTimezones(), ['prompt' => '']) ?>
+        <?= $form->field($model, 'timezone')->dropDownList(Yad::getTimezones(), ['prompt' => '']) ?>
 
         <?= $form->field($model, 'date_format')->textInput(['maxlength' => true]) ?>
 

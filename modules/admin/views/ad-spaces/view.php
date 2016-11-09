@@ -23,14 +23,15 @@ $this->params['menus'] = [
         'attributes' => [
             [
                 'attribute' => 'group_id',
-                'value' => Yii::$app->getFormatter()->asGroupName('ad.space.group', $model['group_id']),
+                // 'value' => Yii::$app->getFormatter()->asGroupName('ad.space.group', $model['group_id']),
+                'value' => $model['group_id'],
                 'format' => 'raw',
             ],
             'alias',
             'name',
             [
                 'value' => "{$model['width']}px X {$model['height']}px",
-                'label' => Yii::t('adSpace', 'Size'),
+                'label' => 'Size',
             ],
             'description',
             'ads_count',
@@ -45,11 +46,11 @@ $this->params['menus'] = [
                 'value' => $model['updater']['nickname']
             ],
             'updated_at:datetime',
-            [
+            /*[
                 'attribute' => 'deleted_by',
                 'value' => $model['deleter']['nickname']
             ],
-            'deleted_at:datetime',
+            'deleted_at:datetime',*/
         ],
     ])
     ?>

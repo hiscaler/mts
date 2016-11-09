@@ -1,7 +1,7 @@
 <?php
 
 use app\models\User;
-use app\models\MTS;
+use app\models\Yad;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -9,7 +9,7 @@ use yii\helpers\Url;
 
 $this->title = Yii::$app->name;
 
-$isAdministrator = MTS::getUserRole() == User::ROLE_ADMINISTRATOR;
+$isAdministrator = true;
 ?>
 
 <div id="tenants-list" class="message-box">

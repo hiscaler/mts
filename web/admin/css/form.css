@@ -96,6 +96,19 @@ form .form-group div label {
     font-weight: normal;
     padding: 0 20px 0 0;
 }
+form .form-group label.item {
+    width: 70px;
+    padding: 5px 0;
+    margin-left: 0;
+    font-weight: normal;
+    text-align: left;
+}
+form .form-group .hint-block {
+    color: #ccc;
+    height: 24px;
+    line-height: 24px;
+    margin-left: 135px;
+}
 div.form .form-group input[type="radio"], div.form .form-group div label input[type="checkbox"] {
     margin: 6px 0;
 }
@@ -128,7 +141,7 @@ input[type=text].disabled, select.disabled, input[type=password].disabled, input
     color: #999;
 }
 select {
-    margin: 6px 0;
+    margin: 0;
 }
 input[type="text"],
 .g-text {
@@ -178,10 +191,6 @@ textarea.focus, input.focus {
 }
 textarea.blur, input.blur {
     background-color: #FFFFFF;
-}
-.form div.editor {
-    margin-left: 135px;
-    width: 610px;
 }
 .form div.help-block {
     color: #C00;
@@ -367,4 +376,22 @@ div.form .buttons {
 }
 .form .btn:hover {
     border-color: #3b7fc4;
+}
+/*******************************************************************************
+ * specifications form
+ ******************************************************************************/
+.specifications-form #tab-values table caption .btn {
+    border-color: #E9E9E9;
+    border-bottom: none;
+    border-radius: 0 3px 0 0;
+    margin-left: -5px;
+    background-color: #F5F5F5;
+}
+.specifications-form #tab-values table select {
+    width: 60px;
+}
+.specifications-form #tab-values table .form-group {
+    padding: 0;
+    margin: 0;
+    background: none;
 }

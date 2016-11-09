@@ -59,11 +59,20 @@
     background: url(../images/down.gif) right center no-repeat;
     padding-right: 10px;
 }
-.grid-view table.table tr.even {
+.grid-view table.table tr.enabled {
     background: #FFF;
 }
-.grid-view table.table tr.odd {
+.grid-view table.table tr.disabled {
+    background: #F5F5F5;
+}
+.grid-view table.table tr.new {
+    background: #FFF6BF;
+}
+.grid-view table.table tr.even {
     background: #FAFCFF;
+}
+.grid-view table.table tr.odd {
+    background: #FFF;
 }
 .grid-view table.table tr.block {
     background: #FFF6BF;
@@ -71,18 +80,22 @@
 .grid-view table.table tr.selected td {
     background: #FFFFEF;
 }
-.grid-view table.table tr.disabled td {
-    background: #F5F5F5;
-    color: #CCC;
-}
-.grid-view table.table tr.disabled td a {
-    color: #CCC;
-}
-.grid-view table.table tr.today {
-    border-left: #E7002E solid 2px;
-}
 .grid-view table.table tr.root .name {
     font-weight: bold;
+}
+.grid-view table.table tr td.enterprise-name em a {
+    float: right;
+    width: 16px;
+    height: 16px;
+    line-height: 1px;
+    display: inline-block;
+    font-size: 0;
+}
+.grid-view table.table tr td.enterprise-name em a.unpick {
+    background: url(../images/map-unpick.png) no-repeat center center;
+}
+.grid-view table.table tr td.enterprise-name em a.is-picked {
+    background: url(../images/map-is-picked.png) no-repeat center center;
 }
 .grid-view table.table tr.children-2 .name,
 .grid-view table.table tr.children-3 .name,
@@ -105,7 +118,6 @@
 }
 .grid-view table.table tr td img {
     border: none;
-    vertical-align: middle;
 }
 .grid-view .link-column img {
     border: 0;
@@ -163,6 +175,9 @@
     white-space: nowrap;
     color: #999;
     text-align: center;
+}
+.grid-view table.table td.alias {
+    width: 80px;
 }
 .grid-view table.table td.pk a {
     color: #999;
@@ -229,6 +244,15 @@
 .grid-view table.table td.industry {
     width: 160px;
 }
+.grid-view table.table td.group-name {
+    width: 72px;
+}
+.grid-view table.table td.url-open-target {
+    width: 100px;
+}
+.grid-view table.table td.url {
+    width: 160px;
+}
 .grid-view table.table td.node-name {
     width: 80px;
 }
@@ -238,6 +262,10 @@
 }
 .grid-view table.table td.model-name {
     width: 100px;
+}
+.grid-view table.table td.mobile-phone {
+    width: 90px;
+    text-align: center;
 }
 .grid-view table.table td.tel {
     width: 90px;
@@ -307,10 +335,6 @@
     background: url(../images/node-parameters.png) no-repeat center center;
     cursor: pointer;
 }
-/* friendly link */
-.grid-view table.table td.friendly-link-url-open-target {
-    width: 72px;
-}
 /* article */
 .grid-view table.table td.article-alias {
     width: 100px;
@@ -345,17 +369,30 @@
     width: 280px;
 }
 /* meta */
-.grid-view table.table td.meta-name {
-    width: 120px;
-}
-.grid-view table.table td.meta-form-field-type {
+.grid-view table.table td.meta-object-name {
+    width: 80px;
+}.grid-view table.table td.meta-form-field-type {
     width: 90px;
 }
-.grid-view table.table td.meta-db-field-type {
+.grid-view table.table td.meta-key {
     width: 100px;
 }
-.grid-view table.table td.meta-validator-rule {
+.grid-view table.table td.meta-label {
     width: 100px;
+}
+.grid-view table.table td.meta-label span {
+    color: #ccc;
+    margin-left: 10px;
+    font-size: 12px;
+}
+.grid-view table.table td.meta-input-type {
+    width: 60px;
+}
+.grid-view table.table td.meta-return-value-type {
+    width: 60px;
+}
+.grid-view table.table td.meta-default-value {
+    width: 60px;
 }
 /* file upload configs */
 .grid-view table.table td.file-upload-config-attribute {
@@ -365,7 +402,22 @@
 .grid-view table.table td.file-upload-config-size {
     width: 100px;
 }
-
+.grid-view table.table td.order-sn {
+    width: 150px;
+    text-align: center;
+}
+.grid-view table.table td.price {
+    width: 60px;
+    text-align: center;
+}
+.grid-view table.table td.quantity {
+    width: 60px;
+    text-align: center;
+}
+.grid-view table.table td.amount {
+    width: 80px;
+    text-align: center;
+}
 .grid-view table.table td a.preview {
     padding-left: 20px;
     background: url(../images/preview.gif) no-repeat;
@@ -373,6 +425,14 @@
 .grid-view table.table td span.pk {
     color: #E7002E;
     margin-right: 5px;
+}
+.grid-view table.table td span.alias {
+    color: #000;
+    background-color: #f5f5f5;
+    border: #CCC solid 1px;
+    border-radius: 5px;
+    padding: 0 5px;
+    margin-left: 10px;
 }
 .grid-view table.table td span.attributes {
     color: #E7002E;
@@ -389,19 +449,74 @@
 .grid-view table.table td a.float-update:hover {
     background: url(../images/update.png) no-repeat right center;
 }
-.grid-view table.table td.button { width: 20px; _width: 30px; }
-.grid-view table.table td.buttons-2 { width: 40px; _width: 40px; }
-.grid-view table.table td.buttons-3 { width: 60px; _width: 70px; }
-.grid-view table.table td.buttons-4 { width: 80px; _widht: 90px; }
-.grid-view table.table td.buttons-5 { width: 100px; _widht: 110px; }
-.grid-view table.table td.buttons-6 { width: 120px; _widht: 130px; }
-.grid-view table.table td.buttons-7 { width: 140px; _widht: 150px; }
-.grid-view table.table td.buttons-8 { width: 160px; _widht: 170px; }
-.grid-view table.table td.buttons-9 { width: 180px; _widht: 190px; }
-.grid-view table.table td.buttons-10 { width: 200px; _widht: 210px; }
+.grid-view table.table th.button-1 { width: 20px; _width: 30px; }
+.grid-view table.table th.buttons-2 { width: 40px; _width: 40px; }
+.grid-view table.table th.buttons-3 { width: 60px; _width: 70px; }
+.grid-view table.table th.buttons-4 { width: 80px; _widht: 90px; }
+.grid-view table.table th.buttons-5 { width: 100px; _widht: 110px; }
+.grid-view table.table th.buttons-6 { width: 120px; _widht: 130px; }
+.grid-view table.table th.buttons-7 { width: 140px; _widht: 150px; }
+.grid-view table.table th.buttons-8 { width: 160px; _widht: 170px; }
+.grid-view table.table th.buttons-9 { width: 180px; _widht: 190px; }
+.grid-view table.table th.buttons-10 { width: 200px; _widht: 210px; }
+/*******************************************************************************
+ * 商品评论
+ ******************************************************************************/
+.level-text {
+    width: 60px;
+    text-align: center;
+}
 /*******************************************************************************
  * IP Access Rule
  ******************************************************************************/
 .ip-access-rule-type {
     width: 60px;
+}
+#grid-goods-images table .btn {
+    border-color: #E9E9E9;
+    border-bottom: none;
+    border-radius: 0 3px 0 0;
+    margin-left: -5px;
+    background-color: #F5F5F5;
+}
+/*******************************************************************************
+ * 商品规格选择表单
+ ******************************************************************************/
+#mai3-item-specification-values-combination-render td {
+    text-align: center;
+}
+#mai3-item-specification-values-combination-render td.error input {
+    border-bottom: #E7002E solid 1px;
+}
+#mai3-item-specification-values-combination-render input {
+    background: none;
+    border: none;
+    border-bottom: #4362BF solid 1px;
+    border-radius: 0;
+    text-align: center;
+}
+#mai3-item-specification-values-combination-render td.item-specification-values {
+    width: 160px;
+    text-align: left;
+}
+#mai3-item-specification-values-combination-render th.item-sn {
+    width: 150px;
+}
+#mai3-item-specification-values-combination-render input.sn {
+    text-align: left;
+    width: 130px;
+}
+#mai3-item-specification-values-combination-render input.name {
+    text-align: left;
+    width: 100%;
+}
+#mai3-item-specification-values-combination-render input.ordering {
+    width: 30px;
+}
+#mai3-item-specification-values-combination-render th.price {
+    width: 80px;
+}
+#mai3-item-specification-values-combination-render input.price {
+    width: 60px;
+    margin: 0 auto;
 }

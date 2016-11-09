@@ -2,8 +2,8 @@
 
 namespace app\models;
 
-use app\models\MTS;
 use app\models\User;
+use app\models\Yad;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
@@ -46,13 +46,12 @@ class TenantUserSearch extends TenantUser
      */
     public function search($params)
     {
-        $tenantId = MTS::getTenantId();
+        $tenantId = Yad::getTenantId();
         $query = User::find()
-            ->select(['t.id', 'tup.name AS user_group_name', 'wfr.name AS rule_name', 't.username', 't.nickname', 't.email', 'tu.role', 'tu.enabled'])
+            ->select(['t.id', 'tup.name AS user_group_name', 't.username', 't.nickname', 't.email', 'tu.role', 'tu.enabled'])
             ->from(['{{%user}} t'])
             ->leftJoin('{{%tenant_user}} tu', '[[t.id]] = tu.user_id AND [[tu.tenant_id]] = :tenantId', [':tenantId' => $tenantId])
             ->leftJoin('{{%tenant_user_group}} tup', '[[tu.user_group_id]] = tup.id')
-            ->leftJoin('{{%workflow_rule}} wfr', '[[tu.rule_id]] = wfr.id')
             ->asArray(true);
         $query->andWhere([
             't.id' => (new Query)

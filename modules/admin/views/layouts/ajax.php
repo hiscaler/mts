@@ -16,7 +16,7 @@ app\modules\admin\assets\AppAsset::register($this);
         <title><?= Html::encode($this->title) ?> - <?= Yii::$app->name ?></title>
         <?php $this->head() ?>
     </head>
-    <body id="mai3-app">
+    <body id="mts-app">
         <?php $this->beginBody() ?>
         <?= $content ?>
         <?php $this->endBody() ?>

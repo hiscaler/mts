@@ -81,10 +81,10 @@ class TenantsController extends GlobalController
     public function actionCreate()
     {
         $model = new Tenant();
-        $model->loadDefaultValues();
         $model->date_format = 'php:Y-m-d';
         $model->time_format = 'php:H:i:s';
         $model->datetime_format = 'php:Y-m-d H:i:s';
+        $model->enabled = Constant::BOOLEAN_TRUE;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -123,9 +123,10 @@ class TenantsController extends GlobalController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $userId = Yii::$app->user->id;
+        $userId = Yii::$app->getUser()->getId();
         $now = time();
         Yii::$app->getDb()->createCommand()->update('{{%tenant}}', [
+            'status' => Option::STATUS_DELETED,
             'updated_by' => $userId,
             'updated_at' => $now,
             'deleted_by' => $userId,
@@ -145,7 +146,8 @@ class TenantsController extends GlobalController
     {
         $model = $this->findModel($id);
         Yii::$app->getDb()->createCommand()->update('{{%tenant}}', [
-            'updated_by' => Yii::$app->user->id,
+            'status' => Option::STATUS_PUBLISHED,
+            'updated_by' => Yii::$app->getUser()->getId(),
             'updated_at' => time(),
             'deleted_by' => null,
             'deleted_at' => null,

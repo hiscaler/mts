@@ -2,14 +2,13 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Slide */
 
-$this->title = Yii::t('app', 'Create {modelClass}', [
-            'modelClass' => Yii::t('model', 'Slide'),
-        ]);
+$this->title = Yii::t('app', 'Create');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Slides'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Create');
+$this->params['breadcrumbs'][] = $this->title;
 
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
+    ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
 ];
 ?>
 <div class="slide-create">

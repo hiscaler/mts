@@ -4,18 +4,16 @@ namespace app\modules\admin\controllers;
 
 use app\models\FileUploadConfig;
 use app\models\FileUploadConfigSearch;
-use app\models\MTS;
+use app\models\Yad;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
 /**
- * 附件上传设置管理
- * 
- * @author hiscaler <hiscaler@gmail.com>
+ * FileUploadConfigsController implements the CRUD actions for UploadConfig model.
  */
-class FileUploadConfigsController extends Controller
+class FileUploadConfigsController extends GlobalController
 {
 
     public function behaviors()
@@ -75,6 +73,7 @@ class FileUploadConfigsController extends Controller
     public function actionCreate()
     {
         $model = new FileUploadConfig();
+        $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -128,7 +127,7 @@ class FileUploadConfigsController extends Controller
     {
         $model = FileUploadConfig::find()->where([
                 'id' => (int) $id,
-                'tenant_id' => MTS::getTenantId(),
+                'tenant_id' => Yad::getTenantId(),
             ])->one();
 
         if ($model !== null) {
