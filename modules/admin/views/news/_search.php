@@ -9,18 +9,18 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="form-outside search-form form-layout-column" style="display: none">
+<div class="form-outside form-search form-layout-column" style="display: none">
     <div class="news-search form">
 
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'form-news',
-                    'action' => ['index'],
-                    'method' => 'get',
+                'id' => 'form-news-search',
+                'action' => ['index'],
+                'method' => 'get',
         ]);
         ?>
 
-        <div class="entry">            
+        <div class="entry">
             <?= $form->field($model, 'id') ?>
 
             <?= $form->field($model, 'title') ?>
@@ -31,8 +31,8 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'entityAttributeId')->dropDownList(\app\models\Label::getItems(true), ['prompt' => '', 'multiple' => 'multiple'])->label(Yii::t('app', 'Entity Attributes')) ?>
         </div>
-        
-        <div class="entry">            
+
+        <div class="entry">
             <?= $form->field($model, 'author') ?>
 
             <?= $form->field($model, 'source') ?>

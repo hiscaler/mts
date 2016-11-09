@@ -79,11 +79,11 @@ class NewsSearch extends News
             if (is_array($nodeId)) {
                 $allIdList = [];
                 foreach ($nodeId as $id) {
-                    $allIdList += Node::getChildrenIds($id);
+                    $allIdList += Category::getChildrenIds($id);
                     $allIdList[] = $id;
                 }
             } else {
-                $allIdList = Node::getChildrenIds($this->category_id);
+                $allIdList = Category::getChildrenIds($this->category_id);
                 $allIdList[] = $this->category_id;
             }
 

@@ -27,8 +27,7 @@ $this->params['menus'] = [
 
     <?php
     Pjax::begin([
-        'formSelector' => '#form-news',
-        'linkSelector' => '#grid-view-news a',
+        'formSelector' => '#form-news-search',
     ]);
     $offsetTimestamp = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
     echo app\modules\admin\components\GridView::widget([
