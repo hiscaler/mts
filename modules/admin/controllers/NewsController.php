@@ -2,27 +2,24 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Constant;
 use app\models\Lookup;
-use app\models\Meta;
 use app\models\News;
 use app\models\NewsContent;
 use app\models\NewsSearch;
-use app\models\Option;
 use app\models\Yad;
-use backend\forms\DynamicForm;
 use PDO;
 use Yii;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\Inflector;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
  * 资讯管理
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class NewsController extends GlobalController
@@ -160,7 +157,7 @@ class NewsController extends GlobalController
         $userId = Yii::$app->getUser()->getId();
         $now = time();
         Yii::$app->getDb()->createCommand()->update('{{%news}}', [
-            'status' => Option::STATUS_DELETED,
+            'status' => Constant::STATUS_DELETED,
             'updated_by' => $userId,
             'updated_at' => $now,
             'deleted_by' => $userId,
@@ -180,7 +177,7 @@ class NewsController extends GlobalController
     {
         $model = $this->findModel($id);
         Yii::$app->getDb()->createCommand()->update('{{%news}}', [
-            'status' => Option::STATUS_PUBLISHED,
+            'status' => Constant::STATUS_PUBLISHED,
             'updated_by' => Yii::$app->getUser()->getId(),
             'updated_at' => time(),
             'deleted_by' => null,
@@ -280,7 +277,7 @@ class NewsController extends GlobalController
         if (!empty($imageSavePath)) {
             $db->createCommand()->update('{{%news}}', [
                 'picture_path' => null,
-                'is_picture_news' => Option::BOOLEAN_FALSE,
+                'is_picture_news' => Constant::BOOLEAN_FALSE,
                 'updated_by' => Yii::$app->getUser()->getId(),
                 'updated_at' => time()
                 ], '[[id]] = :id', [':id' => (int) $id])->execute();

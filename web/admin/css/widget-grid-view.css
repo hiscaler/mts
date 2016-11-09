@@ -83,20 +83,6 @@
 .grid-view table.table tr.root .name {
     font-weight: bold;
 }
-.grid-view table.table tr td.enterprise-name em a {
-    float: right;
-    width: 16px;
-    height: 16px;
-    line-height: 1px;
-    display: inline-block;
-    font-size: 0;
-}
-.grid-view table.table tr td.enterprise-name em a.unpick {
-    background: url(../images/map-unpick.png) no-repeat center center;
-}
-.grid-view table.table tr td.enterprise-name em a.is-picked {
-    background: url(../images/map-is-picked.png) no-repeat center center;
-}
 .grid-view table.table tr.children-2 .name,
 .grid-view table.table tr.children-3 .name,
 .grid-view table.table tr.children-4 .name {
@@ -164,6 +150,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #999;
+}
+.grid-view table.table td a.picture {
+    padding-right: 20px;
+    background: url(../images/picture.png) no-repeat right center;
 }
 .grid-view table.table td.checkbox {
     width: 20px;

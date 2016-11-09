@@ -59,7 +59,7 @@ $this->params['menus'] = [
                 'attribute' => 'title',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    $output = "<span class=\"pk\">[ {$model['id']} ]</span>" . Html::a($model['title'], ['news/update', 'id' => $model['id']]);
+                    $output = "<span class=\"pk\">[ {$model['id']} ]</span>" . Html::a($model['title'], ['news/update', 'id' => $model['id']], ['class' => $model['is_picture_news'] ? 'picture' : '']);
                     $words = [];
                     foreach ($model['customeAttributes'] as $attr) {
                         $words[] = $attr['name'];
