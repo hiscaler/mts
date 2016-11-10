@@ -13,6 +13,10 @@ use yii\grid\DataColumn;
 class GridView extends \yii\grid\GridView
 {
 
+    /**
+     * 对应的表格名称
+     * @var string
+     */
     public $name;
 
     protected function initColumns()
