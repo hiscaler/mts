@@ -4,6 +4,7 @@ namespace app\modules\admin\controllers;
 
 use app\models\Attribute;
 use app\models\BaseActiveRecord;
+use app\models\Constant;
 use app\models\Label;
 use app\models\Option;
 use app\models\Yad;
@@ -172,7 +173,7 @@ class EntityLabelsController extends Controller
         } else {
             $tenantId = Yad::getTenantId();
             $db = Yii::$app->getDb();
-            $entityEnabled = $db->createCommand('SELECT [[entity_enabled]] FROM {{%label}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
+            $entityEnabled = $db->createCommand('SELECT [[enabled]] FROM {{%label}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
                     ':id' => $labelId,
                     ':tenantId' => $tenantId
                 ])->queryScalar();
@@ -188,7 +189,7 @@ class EntityLabelsController extends Controller
                         ':entityId' => $entityId,
                         ':entityName' => $entityName,
                         ':labelId' => $labelId,
-                        'tenantId' => $tenantId
+                        ':tenantId' => $tenantId
                     ])->queryScalar();
                 $transaction = $db->beginTransaction();
                 try {
@@ -205,20 +206,26 @@ class EntityLabelsController extends Controller
                         ];
                     } else {
                         // Add it
+                        $now = time();
+                        $userId = Yii::$app->getUser()->getId();
                         $db->createCommand()->insert('{{%entity_label}}', [
                             'entity_id' => $entityId,
                             'entity_name' => $entityName,
                             'label_id' => $labelId,
                             'enabled' => $entityEnabled,
-                            'ordering' => Attribute::DEFAULT_ORDERING_VALUE,
-                            'tenant_id' => $tenantId
+                            'ordering' => Label::DEFAULT_ORDERING_VALUE,
+                            'tenant_id' => $tenantId,
+                            'created_at' => $now,
+                            'created_by' => $userId,
+                            'updated_at' => $now,
+                            'updated_by' => $userId,
                         ])->execute();
                         // Update attribute frequency count
                         $db->createCommand('UPDATE {{%label}} SET [[frequency]] = [[frequency]] + 1 WHERE [[id]] = :id')->bindValue(':id', $labelId, PDO::PARAM_INT)->execute();
                         $responseData = [
                             'success' => true,
                             'data' => [
-                                'value' => Option::BOOLEAN_TRUE
+                                'value' => Constant::BOOLEAN_TRUE
                             ]
                         ];
                     }

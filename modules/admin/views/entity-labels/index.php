@@ -96,4 +96,4 @@ EOT;
 </div>
 
 <?php
-$this->registerJs('yadjet.actions.toggle("table td.set-entity-label-handler img", "' . Url::toRoute('set-entity-attribute') . '", {}, ["entity-id", "entity-name", "label-id"]);');
+$this->registerJs('yadjet.actions.toggle("table td.set-entity-label-handler img", "' . Url::toRoute('set-entity-label') . '", {}, ["entity-id", "entity-name", "label-id"]);');

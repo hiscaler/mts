@@ -97,7 +97,7 @@ class Label extends BaseActiveRecord
      */
     public static function getEntityItems($entityId, $entityName)
     {
-        $items = (new Query())->select('a.name')->from('{{%entity_lable}} t')
+        $items = (new Query())->select('a.name')->from('{{%entity_label}} t')
             ->leftJoin('{{%label}} a', '[[t.label_id]] = [[a.id]]')
             ->where([
                 't.entity_id' => (int) $entityId,
