@@ -61,12 +61,12 @@ $this->params['menus'] = [
                 'value' => function ($model) {
                     $output = "<span class=\"pk\">[ {$model['id']} ]</span>" . Html::a($model['title'], ['news/update', 'id' => $model['id']], ['class' => $model['is_picture_news'] ? 'picture' : '']);
                     $words = [];
-                    foreach ($model['customeAttributes'] as $attr) {
+                    foreach ($model['relatedLabels'] as $attr) {
                         $words[] = $attr['name'];
                     }
                     $sentence = Inflector::sentence($words, '、', null, '、');
                     if (!empty($sentence)) {
-                        $sentence = "<span class=\"attributes\">{$sentence}</span>";
+                        $sentence = "<span class=\"labels\">{$sentence}</span>";
                     }
 
                     return $sentence . $output;

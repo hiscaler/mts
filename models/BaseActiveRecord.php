@@ -126,12 +126,12 @@ class BaseActiveRecord extends ActiveRecord
 //    }
 
     /**
-     * 自定义属性
+     * 数据关联的推送位
      * @return ActiveRecord
      */
-    public function getCustomeAttributes()
+    public function getRelatedLabels()
     {
-        return $this->hasMany(Label::className(), ['id' => 'attribute_id'])
+        return $this->hasMany(Label::className(), ['id' => 'label_id'])
                 ->select(['id', 'name'])
                 ->viaTable('{{%entity_label}}', ['entity_id' => 'id'], function ($query) {
                     $query->where(['entity_name' => static::className2Id()]);
