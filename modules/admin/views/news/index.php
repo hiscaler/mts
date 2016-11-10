@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\NewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$baseUrl = Yii::$app->getRequest()->getBaseUrl();
+$baseUrl = Yii::$app->getRequest()->getBaseUrl()  . '/admin';
 
 $this->params['breadcrumbs'][] = Yii::t('app', 'News');
 
@@ -150,10 +150,10 @@ $this->params['menus'] = [
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {entityAttributes} {update} {delete} {undo}',
+                'template' => '{view} {entityLabels} {update} {delete} {undo}',
                 'buttons' => [
-                    'entityAttributes' => function ($url, $model, $key) use ($baseUrl) {
-                        return Html::a(Html::img($baseUrl . '/images/attributes.png'), ['entity-attributes/index', 'entityId' => $model['id'], 'entityName' => 'common-models-News'], ['title' => Yii::t('app', 'Entity Attributes'), 'class' => 'setting-entity-attributes', 'data-pjax' => '0']);
+                    'entityLabels' => function ($url, $model, $key) use ($baseUrl) {
+                        return Html::a(Html::img($baseUrl . '/images/attributes.png'), ['entity-labels/index', 'entityId' => $model['id'], 'entityName' => 'app-models-News'], ['title' => Yii::t('app', 'Entity Labels'), 'class' => 'setting-entity-labels', 'data-pjax' => '0']);
                     },
                     'delete' => function ($url, $model, $key) {
                         return $model['status'] != Option::STATUS_DELETED ? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
@@ -187,7 +187,7 @@ $this->registerJs('yadjet.actions.toggle("table td.news-enabled-handler img", "'
 $this->registerJs('yadjet.actions.toggle("table td.news-enabled-comment-handler img", "' . Url::toRoute('toggle-comment') . '");');
 
 $js = <<<'EOT'
-jQuery(document).on('click', 'a.setting-entity-attributes', function () {
+jQuery(document).on('click', 'a.setting-entity-labels', function () {
     var $this = $(this);
     $.ajax({
         type: 'GET',
@@ -203,7 +203,7 @@ jQuery(document).on('click', 'a.setting-entity-attributes', function () {
             });
             $.fn.unlock();
         }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-            $.alert('[ ' + XMLHttpRequest.status + ' ] ' + XMLHttpRequest.responseText);
+            layer.alert('[ ' + XMLHttpRequest.status + ' ] ' + XMLHttpRequest.responseText);
             $.fn.unlock();
         }
     });

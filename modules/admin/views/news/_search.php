@@ -55,7 +55,7 @@ use yii\widgets\ActiveForm;
 </div>
 
 <?php
-$baseUrl = Yii::$app->getRequest()->getBaseUrl();
+$baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
 $this->registerJsFile($baseUrl . '/chosen/chosen.jquery.min.js', ['depends' => 'yii\web\JqueryAsset']);
 $this->registerCssFile($baseUrl . '/chosen/chosen.min.css');
 $js = <<<EOT

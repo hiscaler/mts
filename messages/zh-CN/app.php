@@ -34,7 +34,7 @@ return array(
     'Updated By' => '更新人',
     'Deleted At' => '删除时间',
     'Deleted By' => '删除人',
-    'Entity Attributes' => '推送位',
+    'Entity Labels' => '推送位',
     'Relation Node' => '关联节点',
     'Model Name' => '模型名称',
     'Draft' => '草稿',
