@@ -84,7 +84,37 @@ class Category extends BaseActiveRecord
      */
     public static function typeOptions()
     {
-        return Lookup::getValue('m.models.category.type', []);
+        return Lookup::getValue('system.models.category.type', []);
+    }
+
+    private static function getRawItems()
+    {
+        $key = '__category_' . __FUNCTION__;
+        $cache = Yii::$app->getCache();
+        $cacheData = $cache->get($key);
+        if ($cacheData !== false) {
+            return $cacheData;
+        } else {
+            $items = [];
+            $rawData = Yii::$app->getDb()->createCommand('SELECT [[id]], [[type]], [[alias]], [[name]], [[parent_id]], [[icon_path]], [[enabled]] FROM {{%category}} WHERE [[tenant_id]] = :tenantId ORDER BY [[level]] ASC', [':tenantId' => Yad::getTenantId()])->queryAll();
+            foreach ($rawData as $data) {
+                $items[$data['id']] = [
+                    'id' => $data['id'],
+                    'alias' => $data['alias'],
+                    'name' => $data['name'],
+                    'parent' => $data['parent_id'],
+                    'icon' => $data['icon_path'],
+                    'enabled' => $data['enabled'] ? true : false,
+                    'hasChildren' => false
+                ];
+                if ($data['parent_id'] && isset($items[$data['parent_id']])) {
+                    $items[$data['parent_id']]['hasChildren'] = true;
+                }
+            }
+            $cache->set($key, $items);
+
+            return $items;
+        }
     }
 
     /**
@@ -163,6 +193,9 @@ class Category extends BaseActiveRecord
      */
     private static function hasChildren($id)
     {
+        $rawData = self::getRawItems();
+        return isset($rawData[$id]) && $rawData[$id]['hasChildren'];
+
         return Yii::$app->getDb()->createCommand('SELECT COUNT(*) FROM {{%category}} WHERE parent_id = :parentId', [':parentId' => (int) $id])->queryScalar();
     }
 
