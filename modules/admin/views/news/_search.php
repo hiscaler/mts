@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="entry">
-            <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::getTree(\app\models\Lookup::getValue('m.models.category.type.news', 0)), ['prompt' => '', 'multiple' => 'multiple']) ?>
+            <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::getTree(\app\models\Lookup::getValue('system.models.category.type.news', 0)), ['prompt' => '', 'multiple' => 'multiple']) ?>
 
             <?= $form->field($model, 'entityAttributeId')->dropDownList(\app\models\Label::getItems(true), ['prompt' => '', 'multiple' => 'multiple'])->label(Yii::t('app', 'Entity Attributes')) ?>
         </div>

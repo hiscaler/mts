@@ -39,9 +39,9 @@ use yii\widgets\ActiveForm;
         $btnChoiceNodes = Html::a($choiceNodesText, ['nodes/choice'], ['class' => 'dialog-choice-nodes button']) . '<span id="node-names">' . $names . '</span>';
         ?>
 
-        <div id="panel-common" class="panel">      
+        <div id="panel-common" class="panel">
 
-            <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::getTree(\app\models\Lookup::getValue('m.models.category.type.news', 0)), ['prompt' => '']) ?>
+            <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::getTree(\app\models\Lookup::getValue('system.models.category.type.news', 0)), ['prompt' => '']) ?>
 
             <?= $form->field($model, 'entityNodeIds', [ 'template' => "{label}\n{input}{$btnChoiceNodes}\n{hint}\n{error}",])->hiddenInput() ?>
 
@@ -186,7 +186,7 @@ jQuery(document).on('click', 'a.dialog-choice-nodes', function () {
             $.fn.unlock();
         }
     });
-    
+
     return false;
 });
 EOT;
@@ -211,7 +211,7 @@ jQuery(document).on('click', 'a.btn-remove', function () {
             $.fn.unlock();
         }
     });
-    
+
     return false;
 });
 EOT;
@@ -247,7 +247,7 @@ jQuery(document).on('click', 'a.btn-choice-lookup', function () {
             $.fn.unlock();
         }
     });
-    
+
     return false;
 });
 EOT;

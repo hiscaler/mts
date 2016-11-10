@@ -62,6 +62,7 @@ class Feedback extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
+            'group_id' => Yii::t('app', 'Group'),
             'username' => Yii::t('feedback', 'Username'),
             'tel' => Yii::t('feedback', 'Tel'),
             'email' => Yii::t('feedback', 'Email'),
@@ -82,7 +83,7 @@ class Feedback extends \yii\db\ActiveRecord
 
     public static function groupOptions()
     {
-        return Lookup::getValue('m.models.feedback.group', []);
+        return Lookup::getValue('system.models.feedback.group', []);
     }
 
     // Events
