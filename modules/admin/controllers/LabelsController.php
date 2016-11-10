@@ -16,7 +16,7 @@ use yii\web\Response;
 
 /**
  * 推送位管理
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class LabelsController extends GlobalController
@@ -62,18 +62,18 @@ class LabelsController extends GlobalController
 
     /**
      * Creates a new Label model.
-     * If creation is successful, the browser will be redirected to the 'index' page.
+     * If creation is successful, the browser will be redirected to the 'create' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($ordering = 1)
     {
         $model = new Label();
         $model->enabled = Constant::BOOLEAN_TRUE;
-        $model->ordering = Label::DEFAULT_ORDERING_VALUE;
+        $model->ordering = (int) $ordering;
         $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['create', 'ordering' => $model->ordering + 1]);
         } else {
             return $this->render('create', [
                     'model' => $model,
@@ -133,7 +133,7 @@ class LabelsController extends GlobalController
      */
     public function actionToggle()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->getRequest()->post('id');
         $db = Yii::$app->getDb();
         $command = $db->createCommand('SELECT [[enabled]] FROM {{%label}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId');
         $command->bindValues([
