@@ -17,9 +17,11 @@ use yii\web\Response;
 /**
  * GridColumnConfigsController implements the CRUD actions for GridColumnConfig model.
  */
-class GridColumnConfigsController extends Controller {
+class GridColumnConfigsController extends Controller
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -44,7 +46,12 @@ class GridColumnConfigsController extends Controller {
      * Lists all GridColumnConfig models.
      * @return mixed
      */
-    public function actionIndex($name) {
+    public function actionIndex($name)
+    {
+        $request = Yii::$app->getRequest();
+        if (!$request->isAjax && !$request->isPjax) {
+            throw new \yii\web\BadRequestHttpException(Yii::t('app', 'Bad Request.'));
+        }
         $attributeLabels = Yii::createObject(BaseActiveRecord::id2ClassName($name))->attributeLabels();
         if (!isset(Yii::$app->params['gridColumns'][$name])) {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -69,21 +76,22 @@ class GridColumnConfigsController extends Controller {
         ]);
 
         return $this->renderAjax('index', [
-                    'name' => $name,
-                    'dataProvider' => $dataProvider,
+                'name' => $name,
+                'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionToggle() {
+    public function actionToggle()
+    {
         $attribute = Yii::$app->request->post('id');
         $name = Yii::$app->request->post('name');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[visible]] FROM {{%grid_column_config}} WHERE [[tenant_id]] = :tenantId AND [[user_id]] = :userId AND [[name]] = :name AND [[attribute]] = :attribute')->bindValues([
-                    ':tenantId' => Yad::getTenantId(),
-                    ':userId' => Yii::$app->getUser()->getId(),
-                    ':name' => $name,
-                    ':attribute' => $attribute
-                ])->queryScalar();
+                ':tenantId' => Yad::getTenantId(),
+                ':userId' => Yii::$app->getUser()->getId(),
+                ':name' => $name,
+                ':attribute' => $attribute
+            ])->queryScalar();
         if ($value !== false) {
             $value = $value ? Constant::BOOLEAN_FALSE : Constant::BOOLEAN_TRUE;
             $db->createCommand()->update('{{%grid_column_config}}', ['visible' => $value], '[[tenant_id]] = :tenantId AND [[user_id]] = :userId AND [[name]] = :name AND [[attribute]] = :attribute', [

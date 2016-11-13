@@ -44,10 +44,8 @@ use yii\widgets\Pjax;
             ],
         ],
     ]);
+    $this->registerJs('yadjet.actions.toggle("table td.visible-handler img", "' . Url::toRoute('toggle') . '", {"name": "' . $name . '"});');
     Pjax::end();
     ?>
 
 </div>
-
-<?php
-$this->registerJs('yadjet.actions.toggle("table td.visible-handler img", "' . Url::toRoute('toggle') . '", {"name": "' . $name . '"});');
