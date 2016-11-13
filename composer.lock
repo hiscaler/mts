@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9ab2e81054e5b199b58906e5b7c5b695",
-    "content-hash": "78a93cf2dbfe7a0006f6e3e10667a32c",
+    "hash": "32fd5d81830e2b700615cf196e33f28e",
+    "content-hash": "d4b22760d00140b1b928eb5e72a8430b",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -555,6 +555,48 @@
             "time": "2015-09-10 00:41:32"
         },
         {
+            "name": "yadjet/yii2-ztree",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hiscaler/yii2-ztree.git",
+                "reference": "d340d383cd90731ef5d6673f0d84aba3108edc9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hiscaler/yii2-ztree/zipball/d340d383cd90731ef5d6673f0d84aba3108edc9b",
+                "reference": "d340d383cd90731ef5d6673f0d84aba3108edc9b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "yiisoft/yii2": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "yadjet\\ztree\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "hiscaler",
+                    "email": "hiscaler@gmail.com"
+                }
+            ],
+            "description": "JQuery ZTree Yii2",
+            "keywords": [
+                "tree",
+                "yii2",
+                "ztree"
+            ],
+            "time": "2016-03-05 01:30:20"
+        },
+        {
             "name": "yiisoft/yii2",
             "version": "2.0.9",
             "source": {
@@ -953,6 +995,7 @@
                 "codeception",
                 "yii2"
             ],
+            "abandoned": "codeception/codeception",
             "time": "2016-03-17 03:41:26"
         },
         {
@@ -1108,7 +1151,8 @@
     "stability-flags": {
         "yadjet/yii2-date-picker": 20,
         "yadjet/yii2-ueditor": 20,
-        "yadjet/yii2-tagged-behavior": 20
+        "yadjet/yii2-tagged-behavior": 20,
+        "yadjet/yii2-ztree": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
