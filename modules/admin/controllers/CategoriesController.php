@@ -15,7 +15,7 @@ use yii\web\Response;
 
 /**
  * 分类管理
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class CategoriesController extends GlobalController
@@ -92,7 +92,7 @@ class CategoriesController extends GlobalController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'CategorySearch[type]' => $model->type]);
         } else {
             return $this->render('update', [
                     'model' => $model,
@@ -116,7 +116,7 @@ class CategoriesController extends GlobalController
             $model->delete();
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'CategorySearch[type]' => $model->type]);
     }
 
     /**
