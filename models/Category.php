@@ -217,8 +217,6 @@ class Category extends BaseActiveRecord
     {
         $rawData = self::getRawItems();
         return isset($rawData[$id]) && $rawData[$id]['hasChildren'];
-
-        return Yii::$app->getDb()->createCommand('SELECT COUNT(*) FROM {{%category}} WHERE parent_id = :parentId', [':parentId' => (int) $id])->queryScalar();
     }
 
     /**
@@ -230,33 +228,21 @@ class Category extends BaseActiveRecord
     {
         $children = [];
         $parent = (int) $parent;
-        $rawItems = self::getRawItems();
-        if ($parent && isset($rawItems[$parent])) {
-            foreach (self::getRawItemsByType($rawItems[$parent]['type']) as $item) {
-                if ($item['hasChildren']) {
-                    $children = array_merge(array_unshift($children, $item), static::getChildren($item['id']));
+        $rawItems = self::getRawItems(true);
+        if ($parent) {
+            foreach ($rawItems as $item) {
+                if ($item['id'] == $parent) {
+                    if ($item['hasChildren'] && $item['children']) {
+                        foreach ($item['children'] as $child) {
+                            $children = array_merge($children, \yadjet\helpers\ArrayHelper::treeToArray($child));
+                        }
+                        break;
+                    }
                 }
             }
         }
 
         return $children;
-
-//        $children = [];
-//        $sql = 'SELECT * FROM {{%category}} WHERE [[tenant_id]] = :tenantId';
-//        $bindValues = [':tenantId' => Yad::getTenantId()];
-//        if ($parent) {
-//            $sql.= ' AND [[parent_id]] = :parentId';
-//            $bindValues[':parentId'] = $parent;
-//        }
-//        $rawData = Yii::$app->getDb()->createCommand($sql, $bindValues)->queryAll();
-//        foreach ($rawData as $data) {
-//            $children[] = $data;
-//            if (static::hasChildren($data['id'])) {
-//                $children = array_merge($children, static::getChildren($data['id']));
-//            }
-//        }
-//
-//        return $children;
     }
 
     /**
@@ -266,18 +252,11 @@ class Category extends BaseActiveRecord
      */
     public static function getChildrenIds($parent = 0)
     {
-        $childrenIds = [];
-        $parent = (int) $parent;
-        $rawItems = self::getRawItems();
-        if ($parent && isset($rawItems[$parent])) {
-            foreach (self::getRawItemsByType($rawItems[$parent]['type']) as $item) {
-                if (self::hasChildren($item['id'])) {
-                    $childrenIds = array_merge(array_unshift($childrenIds, $item['id']), static::getChildren($item['id']));
-                }
-            }
+        foreach (self::getChildren($parent) as $child) {
+            $ids[] = (int) $child['id'];
         }
 
-        return $childrenIds;
+        return $ids;
     }
 
     // 事件
