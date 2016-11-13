@@ -51,7 +51,7 @@ class Category extends BaseActiveRecord
             [['enabled'], 'default', 'value' => Constant::BOOLEAN_TRUE],
             [['description'], 'string'],
             [['alias'], 'string', 'max' => 120],
-            ['alias', 'match', 'pattern' => '/^[a-z]+[a-z-]+[a-z]$/'],
+            ['alias', 'match', 'pattern' => '/^[a-z]+[a-z-\/]+[a-z]$/'],
             [['name'], 'string', 'max' => 30],
             [['parent_ids', 'icon_path'], 'string', 'max' => 100],
             [['parent_names'], 'string', 'max' => 255],
