@@ -50,7 +50,7 @@ use yii\widgets\ActiveForm;
             if ($entityAttributes):
                 ?>
                 <fieldset>
-                    <legend><?= Yii::t('app', 'Entity Attributes') ?></legend>
+                    <legend><?= Yii::t('app', 'Entity Labels') ?></legend>
                     <?php
                     foreach ($entityAttributes as $key => $attributes) {
                         echo $form->field($model, 'entityAttributes')->checkboxList($attributes, ['unselect' => null])->label($key);

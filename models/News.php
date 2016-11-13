@@ -26,6 +26,7 @@ use yii\web\UploadedFile;
  * @property integer $enabled
  * @property integer $enabled_comment
  * @property integer $comments_count
+ * @property integer $clicks_count
  * @property integer $up_count
  * @property integer $down_count
  * @property integer $ordering

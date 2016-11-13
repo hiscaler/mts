@@ -46,12 +46,9 @@ class NewsSearch extends News
     public function search($params)
     {
         $query = News::find()->with(['category', 'creater', 'updater', 'deleter', 'relatedLabels'])->asArray(true);
-//        $query->where('[[tenant_id]] = :tenantId AND [[category_id]] IN (SELECT [[category_id]] FROM {{%auth_category}} WHERE [[user_id]] = :userId)', [
-//            ':tenantId' => Yad::getTenantId(),
-//            ':userId' => Yii::$app->getUser()->getId()
-//        ]);
-        $query->where('[[tenant_id]] = :tenantId', [
-            ':tenantId' => Yad::getTenantId()
+        $query->where('[[tenant_id]] = :tenantId AND [[category_id]] IN (SELECT [[category_id]] FROM {{%user_auth_category}} WHERE [[user_id]] = :userId)', [
+            ':tenantId' => Yad::getTenantId(),
+            ':userId' => Yii::$app->getUser()->getId()
         ]);
 
         $dataProvider = new ActiveDataProvider([

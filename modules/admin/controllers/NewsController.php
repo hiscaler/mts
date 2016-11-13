@@ -91,7 +91,7 @@ class NewsController extends GlobalController
     {
         $model = new News();
         $model->author = Yii::$app->getUser()->getIdentity()->nickname;
-        $model->source = Lookup::getValue('APP.MODELS.NEWS.SOURCE');
+        $model->source = Lookup::getValue('system.models.news.source');
         $model->ordering = News::DEFAULT_ORDERING_VALUE;
         $model->published_at = Yii::$app->getFormatter()->asDateTime(time());
 
