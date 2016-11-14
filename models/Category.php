@@ -173,6 +173,40 @@ class Category extends BaseActiveRecord
         return $items;
     }
 
+    /**
+     * 获取用户可操作分类项目
+     *
+     * @param integer $type
+     * @param mixed $prompt
+     * @param boolean $all
+     * @param mixed|integer $userId
+     * @return string
+     */
+    public static function getOwnerTree($type, $prompt = null, $all = false, $userId = null)
+    {
+        $items = [];
+        if ($prompt) {
+            $items[] = $prompt;
+        }
+        $rawData = self::getRawItemsByType($type, $all, false);
+        $ownerCategoryIds = Yii::$app->getDb()->createCommand('SELECT [[category_id]] FROM {{%user_auth_category}} WHERE [[user_id]] = :userId', [':userId' => $userId ? : Yii::$app->getUser()->getId()])->queryColumn();
+        if ($ownerCategoryIds) {
+            foreach ($rawData as $key => $data) {
+                if (!in_array($data['id'], $ownerCategoryIds)) {
+                    unset($rawData[$key]);
+                }
+            }
+            if ($rawData) {
+                $rawData = TreeFormatHelper::dumpArrayTree(\yadjet\helpers\ArrayHelper::toTree($rawData, 'id', 'parent'));
+                foreach ($rawData as $data) {
+                    $items[$data['id']] = $data['levelstr'] . $data['name'];
+                }
+            }
+        }
+
+        return $items;
+    }
+
     public static function sortItems($tree)
     {
         $ret = [];
