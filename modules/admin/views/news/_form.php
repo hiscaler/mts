@@ -1,8 +1,8 @@
 <?php
 
-use app\models\Attribute;
-use app\models\News;
-use app\models\Node;
+use app\models\Category;
+use app\models\Label;
+use app\models\Lookup;
 use app\models\Option;
 use yadjet\datePicker\my97\DatePicker;
 use yadjet\editor\UEditor;
@@ -20,9 +20,9 @@ use yii\widgets\ActiveForm;
 
         <?php
         $form = ActiveForm::begin([
-                    'options' => [
-                        'enctype' => 'multipart/form-data',
-                    ],
+                'options' => [
+                    'enctype' => 'multipart/form-data',
+                ],
         ]);
         $names = [];
         if ($model['entityNodeNames']) {
@@ -41,12 +41,12 @@ use yii\widgets\ActiveForm;
 
         <div id="panel-common" class="panel">
 
-            <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::getTree(\app\models\Lookup::getValue('system.models.category.type.news', 0)), ['prompt' => '']) ?>
+            <?= $form->field($model, 'category_id')->dropDownList(Category::getOwnerTree(Lookup::getValue('system.models.category.type.news', 0)), ['prompt' => '']) ?>
 
             <?= $form->field($model, 'entityNodeIds', [ 'template' => "{label}\n{input}{$btnChoiceNodes}\n{hint}\n{error}",])->hiddenInput() ?>
 
             <?php
-            $entityAttributes = \app\models\Label::getItems(false, true);
+            $entityAttributes = Label::getItems(false, true);
             if ($entityAttributes):
                 ?>
                 <fieldset>
