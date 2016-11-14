@@ -206,9 +206,10 @@ yadjet.actions = yadjet.actions || {
                         title: '表格栏位设定',
                         content: response,
                         lock: true,
-                        padding: '10px'
-                    }, function () {
-                        $.pjax.reload({container: '#' + $this.attr('data-reload-object')});
+                        padding: '10px',
+                        yes: function () {
+                            $.pjax.reload({container: '#' + $this.attr('data-reload-object')});
+                        }
                     });
                     $.fn.unlock();
                 }, error: function (XMLHttpRequest, textStatus, errorThrown) {
