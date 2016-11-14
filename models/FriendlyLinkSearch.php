@@ -42,13 +42,13 @@ class FriendlyLinkSearch extends FriendlyLink
      */
     public function search($params)
     {
-        $query = FriendlyLink::find()->with(['creater', 'updater'])->asArray(true);
+        $query = FriendlyLink::find()->where(['tenantId' => Yad::getTenantId()])->with(['creater', 'updater'])->asArray(true);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
-                    'updated_at' => SORT_DESC,
+                    'ordering' => SORT_ASC,
                 ]
             ]
         ]);
