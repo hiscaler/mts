@@ -4,19 +4,21 @@
  * Lookup
  */
 return [
+    'Type' => '类型',
+    'Key' => '键名',
     'Label' => '标签',
     'Description' => '描述',
-    'Value' => '标签值',
-    'Return Type' => '返回类型',
+    'Value' => '值',
+    'Return Type' => '返回值类型',
     'Integer' => '整形',
     'String' => '字符型',
     'Input Method' => '输入方式',
+    'Input Value' => '输入值',
     'Text' => '文本',
     'Textarea' => '大段文本',
     'DropdownList' => '下拉框',
     'Checkbox' => '复选框',
     'Radio' => '单选框',
-    'Input Value' => '输入值',
     // 自定义设置文本翻译
     // custom
     'Site Name' => '站点名称',
