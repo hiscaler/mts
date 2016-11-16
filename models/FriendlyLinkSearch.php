@@ -42,7 +42,7 @@ class FriendlyLinkSearch extends FriendlyLink
      */
     public function search($params)
     {
-        $query = FriendlyLink::find()->where(['tenantId' => Yad::getTenantId()])->with(['creater', 'updater'])->asArray(true);
+        $query = FriendlyLink::find()->where(['tenant_id' => Yad::getTenantId()])->with(['creater', 'updater'])->asArray(true);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
