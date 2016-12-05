@@ -18,7 +18,7 @@ class Controller extends \yii\web\Controller
      */
     public function getI18nValue($key, $default = null)
     {
-        $tenant = Yii::$app->getRequest()->getCookies()->get('_site');
+        $tenant = Yii::$app->getRequest()->getCookies()->get(Yii::$app->id . '_site');
         if ($tenant != null) {
             $value = $tenant->value;
 
