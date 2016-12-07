@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
 
         <div id="panel-common" class="panel">
 
-            <?= $form->field($model, 'category_id')->dropDownList(Category::getOwnerTree(Lookup::getValue('system.models.category.type.news', 0)), ['prompt' => '']) ?>
+            <?= $form->field($model, 'category_id')->dropDownList(Category::getOwnerTree(Lookup::getValue('custom.models.category.type.news', 0)), ['prompt' => '']) ?>
 
             <?= $form->field($model, 'entityNodeIds', [ 'template' => "{label}\n{input}{$btnChoiceNodes}\n{hint}\n{error}",])->hiddenInput() ?>
 
