@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = '帐号资料';
 
 $session = Yii::$app->session;
 if ($session->hasFlash('success')):
-    echo backend\components\MessageBox::widget([
+    echo \app\modules\admin\components\MessageBox::widget([
         'message' => $session->getFlash('success'),
     ]);
 else:
