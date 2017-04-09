@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="form-outside search-form form-layout-column" style="display: none">
+<div class="form-outside form-search form-layout-column" style="display: none">
     <div class="tenant-search form">
 
         <?php
