@@ -34,7 +34,17 @@ class Module extends \yii\base\Module
             'assetManager' => [
                 'class' => '\yii\web\AssetManager',
                 'appendTimestamp' => true,
-                'bundles' => [],
+                'bundles' => [
+                    'yii\web\JqueryAsset' => [
+                        'sourcePath' => null, // do not publish the bundle
+                        'js' => [
+                            '/admin/js/jquery.min.js',
+                        ]
+                    ],
+                    'yii\grid\GridViewAsset' => [
+                        'js' => ['/admin/js/yii.gridView.js'],
+                    ],
+                ],
             ],
             'response' => [
                 'class' => '\yii\web\Response',

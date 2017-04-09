@@ -468,10 +468,12 @@ ul.list li em {
  ******************************************************************************/
 .breadcrumbs {
     border-bottom: #E9E9E9 solid 1px;
-    padding: 10px 10px 10px 40px;
+    padding: 0 10px 0 40px;
     background: #F5F5F5 url(../images/logo-16x16.png) no-repeat 10px 50%;
     font-size: 14px;
     display: block;
+    height: 40px;
+    line-height: 40px;
 }
 .breadcrumbs li {
     display: inline-block;
