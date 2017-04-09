@@ -33,7 +33,7 @@ $this->params['menus'] = [
     <?php if ($items): ?>
         <?php echo Html::beginForm(['index']); ?>
         <div class="panels">
-            <div class="form">
+            <div id="form-lookup" class="form">
 
                 <?php
                 foreach ($items as $group => $data):
@@ -79,7 +79,7 @@ $this->params['menus'] = [
 
                                     echo $input;
                                     if ($group == 'custom') {
-                                        echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $d['id']], ['class' => 'btn btn-primary']);
+                                        echo Html::a(Yii::t('app', 'Update'), ['update', 'id' => $d['id']], ['class' => 'btn btn-primary btn-lookup-update']);
                                     }
                                     ?>
                                 </div>

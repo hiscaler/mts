@@ -374,8 +374,20 @@ div.form .buttons {
     color: #4362BF;
     padding: 5px 10px;
 }
+.form .btn-lookup-update {
+    margin-left: -1px;
+    border: 1px solid #d5d5d5;
+    border-radius: 0 3px 3px 0;
+    vertical-align: top;
+}
 .form .btn:hover {
     border-color: #3b7fc4;
+}
+/*******************************************************************************
+ * Lookup form
+ ******************************************************************************/
+#form-lookup label {
+    width: 120px;
 }
 /*******************************************************************************
  * specifications form
