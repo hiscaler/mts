@@ -18,7 +18,7 @@ class TenantAccessTokenSearch extends TenantAccessToken
     public function rules()
     {
         return [
-            [['status', 'tenant_id'], 'integer'],
+            [['enabled', 'tenant_id'], 'integer'],
             [['name', 'access_token'], 'safe'],
         ];
     }
@@ -62,7 +62,7 @@ class TenantAccessTokenSearch extends TenantAccessToken
         }
 
         $query->andFilterWhere([
-            'status' => $this->status,
+            'enabled' => $this->enabled,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
