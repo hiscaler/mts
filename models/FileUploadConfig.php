@@ -190,7 +190,8 @@ class FileUploadConfig extends BaseActiveRecord
             }
 
             $cache->set($cacheKey, $configs, 0, new \yii\caching\DbDependency([
-                'sql' => 'SELECT MAX(updated_at) FROM ' . static::tableName(),
+                'sql' => 'SELECT MAX(updated_at) FROM ' . static::tableName() . ' WHERE [[tenant_id]] = :tenantId',
+                'params' => [':tenantId' => Yad::getTenantId()]
             ]));
 
             return $configs;
