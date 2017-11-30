@@ -53,7 +53,7 @@ class ArticlesController extends GlobalController
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -83,7 +83,7 @@ class ArticlesController extends GlobalController
         $model = new Article();
         $model->loadDefaultValues();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -102,7 +102,7 @@ class ArticlesController extends GlobalController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -130,7 +130,7 @@ class ArticlesController extends GlobalController
      */
     public function actionToggle()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->getRequest()->post('id');
         $db = Yii::$app->getDb();
         $command = $db->createCommand('SELECT [[enabled]] FROM {{%article}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId');
         $command->bindValues([

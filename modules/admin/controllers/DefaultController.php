@@ -79,7 +79,7 @@ class DefaultController extends Controller
         $this->layout = false;
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
             $tenantIds = Yii::$app->getDb()->createCommand('SELECT [[tenant_id]] FROM {{%tenant_user}} WHERE [[user_id]] = :userId AND [[enabled]] = :enabled')->bindValues([
                 ':userId' => Yii::$app->getUser()->getId(),
                 ':enabled' => Constant::BOOLEAN_TRUE
@@ -116,7 +116,7 @@ class DefaultController extends Controller
     {
         $model = $this->findCurrentUserModel();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'User profile save successed.'));
 
             return $this->redirect(['profile']);
@@ -137,7 +137,7 @@ class DefaultController extends Controller
         $user = $this->findCurrentUserModel();
         $model = new ChangeMyPasswordForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
             $user->setPassword($model->password);
             if ($user->save(false)) {
                 Yii::$app->getSession()->setFlash('notice', "您的密码修改成功，请下次登录使用新的密码。");

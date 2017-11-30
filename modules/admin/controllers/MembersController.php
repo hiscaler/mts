@@ -43,7 +43,7 @@ class MembersController extends ShopController
     public function actionIndex()
     {
         $searchModel = new MemberSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -55,7 +55,7 @@ class MembersController extends ShopController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [

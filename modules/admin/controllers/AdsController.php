@@ -153,7 +153,7 @@ class AdsController extends Controller
 
     public function actionToggle()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->getRequest()->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled]] FROM {{%ad}} WHERE [[id]] = :id')->bindValue(':id', (int) $id, PDO::PARAM_INT)->queryScalar();
         if ($value !== null) {

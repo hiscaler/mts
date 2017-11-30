@@ -58,7 +58,7 @@ class NewsController extends GlobalController
     public function actionIndex()
     {
         $searchModel = new NewsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -194,7 +194,7 @@ class NewsController extends GlobalController
      */
     public function actionToggle()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->getRequest()->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled]] FROM {{%news}} WHERE [[id]] = :id')->bindValue(':id', (int) $id, PDO::PARAM_INT)->queryScalar();
         if ($value !== null) {
@@ -230,7 +230,7 @@ class NewsController extends GlobalController
      */
     public function actionToggleComment()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->getRequest()->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled_comment]] FROM {{%news}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
             ':id' => (int) $id,

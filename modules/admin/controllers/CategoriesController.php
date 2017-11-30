@@ -51,7 +51,7 @@ class CategoriesController extends GlobalController
     public function actionIndex()
     {
         $searchModel = new CategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -72,7 +72,7 @@ class CategoriesController extends GlobalController
         $model->ordering = (int) $ordering;
         $model->loadDefaultValues();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['create', 'type' => $model->type, 'parentId' => $model->parent_id, 'ordering' => $model['ordering'] + 1]);
         } else {
             return $this->render('create', [
@@ -91,7 +91,7 @@ class CategoriesController extends GlobalController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index', 'CategorySearch[type]' => $model->type]);
         } else {
             return $this->render('update', [

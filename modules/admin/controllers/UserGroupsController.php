@@ -83,7 +83,7 @@ class UserGroupsController extends GlobalController
         $model = new UserGroup();
         $model->loadDefaultValues();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -102,7 +102,7 @@ class UserGroupsController extends GlobalController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [

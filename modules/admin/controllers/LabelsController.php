@@ -8,6 +8,7 @@ use app\models\LabelSearch;
 use app\models\Yad;
 use PDO;
 use Yii;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\NotAcceptableHttpException;
@@ -118,9 +119,9 @@ class LabelsController extends GlobalController
                 $db->createCommand('DELETE FROM {{%label}} WHERE id = :id', [':id' => (int) $id])->execute();
                 $db->createCommand('DELETE FROM {{%entity_label}} WHERE label_id = :labelId', [':labelId' => (int) $id])->execute();
                 $transaction->commit();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $transaction->rollBack();
-                throw $e->getMessage();
+                throw new Exception($e->getMessage());
             }
 
             return $this->redirect(['index']);

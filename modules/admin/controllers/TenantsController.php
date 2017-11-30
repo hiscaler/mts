@@ -53,7 +53,7 @@ class TenantsController extends GlobalController
     public function actionIndex()
     {
         $searchModel = new TenantSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -86,7 +86,7 @@ class TenantsController extends GlobalController
         $model->datetime_format = 'php:Y-m-d H:i:s';
         $model->enabled = Constant::BOOLEAN_TRUE;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -105,7 +105,7 @@ class TenantsController extends GlobalController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

@@ -49,7 +49,7 @@ class AdSpacesController extends Controller
     public function actionIndex()
     {
         $searchModel = new AdSpaceSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -79,7 +79,7 @@ class AdSpacesController extends Controller
         $model = new AdSpace();
         $model->enabled = Constant::BOOLEAN_TRUE;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -98,7 +98,7 @@ class AdSpacesController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -151,7 +151,7 @@ class AdSpacesController extends Controller
 
     public function actionToggle()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->getRequest()->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled]] FROM {{%ad_space}} WHERE [[id]] = :id')->bindValues([
             ':id' => (int) $id

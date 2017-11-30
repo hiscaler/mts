@@ -92,7 +92,7 @@ class LookupsController extends Controller
     public function actionList()
     {
         $searchModel = new LookupSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('list', [
             'searchModel' => $searchModel,
@@ -111,7 +111,7 @@ class LookupsController extends Controller
         $model->return_type = Lookup::RETURN_TYPE_STRING;
         $model->enabled = Constant::BOOLEAN_TRUE;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -130,7 +130,7 @@ class LookupsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
@@ -154,7 +154,7 @@ class LookupsController extends Controller
 
     public function actionToggle()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->getRequest()->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled]] FROM {{%lookup}} WHERE [[id]] = :id')->bindValues([
             ':id' => (int) $id,

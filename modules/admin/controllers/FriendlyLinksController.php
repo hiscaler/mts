@@ -48,7 +48,7 @@ class FriendlyLinksController extends Controller
     public function actionIndex()
     {
         $searchModel = new FriendlyLinkSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -64,11 +64,12 @@ class FriendlyLinksController extends Controller
     public function actionCreate()
     {
         $model = new FriendlyLink();
+        $model->loadDefaultValues();
         $model->url_open_target = FriendlyLink::URL_OPEN_TARGET_BLANK;
         $model->ordering = FriendlyLink::DEFAULT_ORDERING_VALUE;
         $model->enabled = Constant::BOOLEAN_TRUE;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -87,7 +88,7 @@ class FriendlyLinksController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
@@ -116,7 +117,7 @@ class FriendlyLinksController extends Controller
      */
     public function actionToggle()
     {
-        $id = Yii::$app->request->post('id');
+        $id = Yii::$app->getRequest()->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled]] FROM {{%friendly_link}} WHERE [[id]] = :id')->bindValues([
             ':id' => (int) $id,

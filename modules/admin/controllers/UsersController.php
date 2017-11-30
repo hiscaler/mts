@@ -54,7 +54,7 @@ class UsersController extends GlobalController
     public function actionIndex()
     {
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -74,7 +74,7 @@ class UsersController extends GlobalController
         $model->status = User::STATUS_ACTIVE;
         $model->loadDefaultValues();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->validate()) {
             $model->password_hash = (new Security())->generatePasswordHash($model->password);
             if ($model->save()) {
                 return $this->redirect(['index']);
@@ -90,7 +90,7 @@ class UsersController extends GlobalController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
