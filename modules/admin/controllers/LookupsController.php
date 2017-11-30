@@ -85,7 +85,7 @@ class LookupsController extends Controller
         }
 
         return $this->render('index', [
-                'items' => $items,
+            'items' => $items,
         ]);
     }
 
@@ -95,8 +95,8 @@ class LookupsController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('list', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -115,7 +115,7 @@ class LookupsController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -134,7 +134,7 @@ class LookupsController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -157,8 +157,8 @@ class LookupsController extends Controller
         $id = Yii::$app->request->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled]] FROM {{%lookup}} WHERE [[id]] = :id')->bindValues([
-                ':id' => (int) $id,
-            ])->queryScalar();
+            ':id' => (int) $id,
+        ])->queryScalar();
         if ($value !== null) {
             $value = !$value;
             $db->createCommand()->update('{{%lookup}}', ['enabled' => $value, 'updated_at' => time()], '[[id]] = :id', [':id' => (int) $id])->execute();
@@ -193,8 +193,8 @@ class LookupsController extends Controller
     protected function findModel($id)
     {
         $model = Lookup::find()->where([
-                'id' => (int) $id,
-            ])->one();
+            'id' => (int) $id,
+        ])->one();
 
         if ($model !== null) {
             return $model;

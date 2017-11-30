@@ -137,6 +137,7 @@ class News extends BaseActiveRecord
     public function saveContent($newsContent)
     {
         $newsContent->news_id = $this->id;
+
         return $newsContent->save();
     }
 
@@ -152,7 +153,7 @@ class News extends BaseActiveRecord
                 Yii::$app->getDb()->createCommand()->update('{{%news}}', [
                     'is_picture_news' => Constant::BOOLEAN_TRUE,
                     'picture_path' => $picturePath,
-                    ], '[[id]] = :id', [':id' => $model->id])->execute();
+                ], '[[id]] = :id', [':id' => $model->id])->execute();
             }
         }
     }

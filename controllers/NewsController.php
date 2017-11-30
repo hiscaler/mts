@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 
 /**
  * 资讯管理
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class NewsController extends Controller
@@ -36,9 +36,9 @@ class NewsController extends Controller
             ->all();
 
         return $this->render('index', [
-                'categoryName' => $categoryName,
-                'items' => $items,
-                'pagination' => $pagination,
+            'categoryName' => $categoryName,
+            'items' => $items,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -59,7 +59,7 @@ class NewsController extends Controller
             Yii::$app->getDb()->createCommand('UPDATE {{%news}} SET [[clicks_count]] = [[clicks_count]] + 1 WHERE [[id]] = :id', array(':id' => $data['id']))->execute();
 
             return $this->render('view', [
-                    'data' => $data,
+                'data' => $data,
             ]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

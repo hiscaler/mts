@@ -83,11 +83,11 @@ class GridColumnConfig extends ActiveRecord
     public static function getInvisibleColumns($name)
     {
         return Yii::$app->getDb()->createCommand('SELECT [[attribute]] FROM {{%grid_column_config}} WHERE [[tenant_id]] = :tenantId AND [[user_id]] = :userId AND [[name]] = :name AND [[visible]] = :visible')->bindValues([
-                ':tenantId' => Yad::getTenantId(),
-                ':userId' => Yii::$app->getUser()->getId(),
-                ':name' => $name,
-                ':visible' => Constant::BOOLEAN_FALSE
-            ])->queryColumn();
+            ':tenantId' => Yad::getTenantId(),
+            ':userId' => Yii::$app->getUser()->getId(),
+            ':name' => $name,
+            ':visible' => Constant::BOOLEAN_FALSE
+        ])->queryColumn();
     }
 
     // Events

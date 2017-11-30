@@ -15,9 +15,9 @@ use app\models\Option;
 
         <?php
         $form = ActiveForm::begin([
-                'id' => 'form-friendly-links-search',
-                'action' => ['index'],
-                'method' => 'get',
+            'id' => 'form-friendly-links-search',
+            'action' => ['index'],
+            'method' => 'get',
         ]);
         ?>
 

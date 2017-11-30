@@ -38,15 +38,15 @@ $this->params['menus'] = [
     ];
 
 
-//    if ($metaItems) {
-//        foreach ($metaItems as $attribute => $item) {
-//            $attributes[] = [
-//                'attribute' => $attribute,
-//                'label' => Yii::t('news', Inflector::camel2words(Inflector::id2camel($attribute, '_'))),
-//                'value' => $item['value'],
-//            ];
-//        }
-//    }
+    //    if ($metaItems) {
+    //        foreach ($metaItems as $attribute => $item) {
+    //            $attributes[] = [
+    //                'attribute' => $attribute,
+    //                'label' => Yii::t('news', Inflector::camel2words(Inflector::id2camel($attribute, '_'))),
+    //                'value' => $item['value'],
+    //            ];
+    //        }
+    //    }
     echo DetailView::widget([
         'model' => $model,
         'attributes' => $attributes,

@@ -14,9 +14,9 @@ use app\models\FileUploadConfig;
 
         <?php
         $form = ActiveForm::begin([
-                    'id' => 'form-upload-configs-search',
-                    'action' => ['index'],
-                    'method' => 'get',
+            'id' => 'form-upload-configs-search',
+            'action' => ['index'],
+            'method' => 'get',
         ]);
         ?>
 

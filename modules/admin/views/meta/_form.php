@@ -30,18 +30,18 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'return_value_type')->dropDownList(\app\models\Meta::returnValueTypeOptions()) ?>
         </div>
-        
+
         <?= $form->field($model, 'input_candidate_value')->textarea() ?>
-        
+
         <div class="entry">
             <?= $form->field($model, 'default_value')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'enabled')->checkbox([], false) ?>
         </div>
-        
+
         <fieldset v-for="item in metaValidators">
             <legend>
-                <input class="control-label" type="checkbox" id="meta-validator-name-{{ item.name }}" name="Meta[validatorsList][{{ item.name }}][name]" v-model="item.active" value="{{ item.name }}" />
+                <input class="control-label" type="checkbox" id="meta-validator-name-{{ item.name }}" name="Meta[validatorsList][{{ item.name }}][name]" v-model="item.active" value="{{ item.name }}"/>
                 <label for="meta-validator-name-{{ item.name }}">{{ item.label }}</label>
             </legend>
             <div class="panel-body" v-if="!isEmptyObject(item.options)">
@@ -49,7 +49,7 @@ use yii\widgets\ActiveForm;
                     <li class="list-group-item" v-for="cfg in item.options">
                         <div class="form-group">
                             <label>{{ item.messages[$key] }}</label>
-                            <input class="form-control" type="text" name="Meta[validatorsList][{{ item.name }}][options][{{ $key }}]" value="{{ cfg }}" />
+                            <input class="form-control" type="text" name="Meta[validatorsList][{{ item.name }}][options][{{ $key }}]" value="{{ cfg }}"/>
                         </div>
                     </li>
                 </ul>
@@ -76,11 +76,13 @@ use yii\widgets\ActiveForm;
             validators: '<?= \yii\helpers\Url::toRoute(['api/meta-validators', 'metaId' => $model['id']]) ?>'
         }
     };
-    Vue.http.get(yadjet.urls.validators).then((res) => {
+    Vue.http.get(yadjet.urls.validators).then((res) = > {
         vm.validators = res.data;
-    });
-    Vue.http.get(yadjet.urls.meta.validators).then((res) => {
+    })
+    ;
+    Vue.http.get(yadjet.urls.meta.validators).then((res) = > {
         vm.meta.validators = res.data;
-    });
+    })
+    ;
 </script>
 <?php \app\modules\admin\components\JsBlock::end() ?>

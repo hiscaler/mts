@@ -98,6 +98,7 @@ class Formatter extends \yii\i18n\Formatter
             return $this->nullDisplay;
         }
         $options = Option::statusOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -113,14 +114,14 @@ class Formatter extends \yii\i18n\Formatter
         }
         $modules = isset(Yii::$app->params['modules']) ? Yii::$app->params['modules'] : [];
         foreach ($modules as $ms) {
-            foreach ($ms as $key =>$item) {
+            foreach ($ms as $key => $item) {
                 if ($value == $key) {
                     $value = Yii::t('app', $item['label']);
                     break;
                 }
             }
         }
-        
+
         return $value;
     }
 
@@ -131,6 +132,7 @@ class Formatter extends \yii\i18n\Formatter
             return $this->nullDisplay;
         }
         $options = IpAccessRule::typeOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -141,6 +143,7 @@ class Formatter extends \yii\i18n\Formatter
             return $this->nullDisplay;
         }
         $options = Meta::formFieldTypeOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -150,6 +153,7 @@ class Formatter extends \yii\i18n\Formatter
             return $this->nullDisplay;
         }
         $options = Meta::dbFieldTypeOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -160,6 +164,7 @@ class Formatter extends \yii\i18n\Formatter
             return $this->nullDisplay;
         }
         $options = User::typeOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -169,6 +174,7 @@ class Formatter extends \yii\i18n\Formatter
             return $this->nullDisplay;
         }
         $options = User::statusOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -178,6 +184,7 @@ class Formatter extends \yii\i18n\Formatter
             return $this->nullDisplay;
         }
         $options = User::roleOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -193,6 +200,7 @@ class Formatter extends \yii\i18n\Formatter
     }
 
     // Lookup
+
     /**
      * 返回类型
      * @param integer $value
@@ -205,10 +213,12 @@ class Formatter extends \yii\i18n\Formatter
         }
 
         $options = Lookup::returnTypeOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
     // Friendly Link
+
     /**
      * 链接类型
      * @param integer $value
@@ -221,6 +231,7 @@ class Formatter extends \yii\i18n\Formatter
         }
 
         $options = FriendlyLink::typeOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -236,10 +247,12 @@ class Formatter extends \yii\i18n\Formatter
         }
 
         $options = FriendlyLink::urlOpenTargetOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
     // Ad
+
     /**
      * 广告类型
      * @param integer $value
@@ -252,6 +265,7 @@ class Formatter extends \yii\i18n\Formatter
         }
 
         $options = Ad::typeOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
@@ -275,6 +289,7 @@ class Formatter extends \yii\i18n\Formatter
     }
 
     // Slide
+
     /**
      * 链接打开方式
      * @param integer $value
@@ -286,6 +301,7 @@ class Formatter extends \yii\i18n\Formatter
     }
 
     // Feedback
+
     /**
      * 记录状态
      * @param integer $value
@@ -298,10 +314,12 @@ class Formatter extends \yii\i18n\Formatter
         }
 
         $options = Feedback::statusOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
     // Video
+
     /**
      * 视频路径保存类型
      * @param integer $value
@@ -314,10 +332,12 @@ class Formatter extends \yii\i18n\Formatter
         }
 
         $options = Video::pathTypeOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 
     // Workflow
+
     /**
      * 任务状态
      * @param integer $value
@@ -330,6 +350,7 @@ class Formatter extends \yii\i18n\Formatter
         }
 
         $options = WorkflowTask::statusOptions();
+
         return isset($options[$value]) ? $options[$value] : $this->nullDisplay;
     }
 

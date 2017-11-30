@@ -52,14 +52,14 @@ class GlobalControlPanel extends Widget
                 $items[$group]['items'] = $rawItems;
             }
         }
-        
+
         return $items;
     }
 
     public function run()
     {
         return $this->render('ControlPanel', [
-                'items' => $this->getItems(),
+            'items' => $this->getItems(),
         ]);
     }
 

@@ -16,7 +16,7 @@ use yii\web\Response;
 
 /**
  * 站点管理
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class TenantsController extends GlobalController
@@ -56,8 +56,8 @@ class TenantsController extends GlobalController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -69,7 +69,7 @@ class TenantsController extends GlobalController
     public function actionView($id)
     {
         return $this->render('view', [
-                'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -90,7 +90,7 @@ class TenantsController extends GlobalController
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -109,7 +109,7 @@ class TenantsController extends GlobalController
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -131,7 +131,7 @@ class TenantsController extends GlobalController
             'updated_at' => $now,
             'deleted_by' => $userId,
             'deleted_at' => $now
-            ], ['id' => $model['id']])->execute();
+        ], ['id' => $model['id']])->execute();
 
         return $this->redirect(['index']);
     }
@@ -151,7 +151,7 @@ class TenantsController extends GlobalController
             'updated_at' => time(),
             'deleted_by' => null,
             'deleted_at' => null,
-            ], ['id' => $model['id']])->execute();
+        ], ['id' => $model['id']])->execute();
 
         return $this->redirect(['index']);
     }
@@ -216,12 +216,13 @@ class TenantsController extends GlobalController
                 'updated_by' => $userId
             ])->execute();
             Yii::$app->getSession()->setFlash('notice', "用户 {$model->username} 已经成功绑定「{$tenant->name}」站点。");
+
             return $this->redirect(['view', 'id' => $tenant->id, 'tab' => 'users']);
         }
 
         return $this->render('createUser', [
-                'tenant' => $tenant,
-                'model' => $model,
+            'tenant' => $tenant,
+            'model' => $model,
         ]);
     }
 

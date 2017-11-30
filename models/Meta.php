@@ -157,7 +157,7 @@ class Meta extends \yii\db\ActiveRecord
     {
         $names = [];
         $db = Yii::$app->getDb();
-        $tables = array_map(function($v) use ($db) {
+        $tables = array_map(function ($v) use ($db) {
             return str_replace($db->tablePrefix, '', $v);
         }, $db->getSchema()->getTableNames());
 
@@ -175,7 +175,7 @@ class Meta extends \yii\db\ActiveRecord
                         }
                     }
                 } catch (Exception $exc) {
-                    
+
                 }
             }
         }
@@ -206,7 +206,7 @@ class Meta extends \yii\db\ActiveRecord
             ->where([
                 'object_name' => strtr($activeRecord->tableName(), ['{{%' => '', '}}' => '']),
                 'enabled' => Constant::BOOLEAN_TRUE,
-                'tenant_id' => $tenantId ? : Yad::getTenantId(),
+                'tenant_id' => $tenantId ?: Yad::getTenantId(),
             ])
             ->indexBy('id')
             ->all();
@@ -292,7 +292,7 @@ class Meta extends \yii\db\ActiveRecord
         $rules = [];
         $validators = Yii::$app->getDb()->createCommand('SELECT [[name]], [[options]] FROM {{%meta_validator}} WHERE [[meta_id]] = :metaId', [':metaId' => (int) $metaId])->queryAll();
         foreach ($validators as $validator) {
-            $options = unserialize($validator['options']) ? : [];
+            $options = unserialize($validator['options']) ?: [];
             foreach ($options as $key => $value) {
                 if (trim($value) == '') {
                     unset($options[$key]);
@@ -328,7 +328,7 @@ class Meta extends \yii\db\ActiveRecord
                 ->where([
                     'key' => array_keys($attributes),
                     'object_name' => strtr($activeRecord->tableName(), ['{{%' => '', '}}' => '']),
-                    'tenant_id' => $tenantId ? : Yad::getTenantId(),
+                    'tenant_id' => $tenantId ?: Yad::getTenantId(),
                 ])
                 ->column();
             if (!$activeRecord->isNewRecord) {
@@ -396,7 +396,7 @@ class Meta extends \yii\db\ActiveRecord
             ->select(['m.id', 'm.key', 'm.label', 'm.description', 't.value'])
             ->from('{{%meta_value}} t')
             ->leftJoin('{{%meta}} m', '[[t.meta_id]] = [[m.id]]')
-            ->where([ 't.object_id' => (int) $objectId,])
+            ->where(['t.object_id' => (int) $objectId,])
             ->andWhere(['in', 't.meta_id', (new \yii\db\Query())->select(['id'])->from('{{%meta}}')->where($where)])
             ->all();
         foreach ($rawValues as $data) {
@@ -417,7 +417,7 @@ class Meta extends \yii\db\ActiveRecord
         $db = Yii::$app->getDb();
         $metaId = $db->createCommand('SELECT [[id]] FROM {{%meta}} WHERE [[object_name]] = :objectName AND [[key]] = :key', [':objectName' => strtolower(trim($objectName)), ':key' => trim($key)])->queryScalar();
         if ($metaId) {
-            $value = $db->createCommand('SELECT [[value]] FROM {{%meta_value}} WHERE [[meta_id]] = :metaId AND [[object_id]] = :objectId', [':metaId' => $metaId, ':objectId' => (int) $objectId])->queryScalar() ? : null;
+            $value = $db->createCommand('SELECT [[value]] FROM {{%meta_value}} WHERE [[meta_id]] = :metaId AND [[object_id]] = :objectId', [':metaId' => $metaId, ':objectId' => (int) $objectId])->queryScalar() ?: null;
         }
 
         return $value;

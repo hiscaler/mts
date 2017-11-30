@@ -120,59 +120,59 @@ $title = Yii::t('app', 'Please choice this user can manager nodes');
 \app\modules\admin\components\JsBlock::begin();
 ?>
 <script type="text/javascript">
-$(function () {
-    jQuery(document).on('click', 'a.user-auth', function () {
-        var t = $(this);
-        var url = t.attr('href');
-        $.ajax({
-            type: 'GET',
-            url: url,
-            beforeSend: function(xhr) {
-                $.fn.lock();
-            }, success: function(response) {
-                layer.open({
-                    id: 'nodes-list',
-                    title: "<?= $title ?>" + ' [ ' + t.attr('data-name') + ' ]',
-                    content: response,
-                    lock: true,
-                    padding: '10px',
-                    yes: function (index, layero) {
-                        var nodes = $.fn.zTree.getZTreeObj("__ztree__").getCheckedNodes(true);
-                        var ids = [];
-                        for(var i = 0, l = nodes.length; i < l; i++){
-                            ids.push(nodes[i].id);
-                        }
-
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            data: { choiceCategoryIds: ids.toString() },
-                            dataType: 'json',
-                            beforeSend: function(xhr) {
-                                $.fn.lock();
-                            }, success: function(response) {
-                                if (response.success === false) {
-                                    layer.alert(response.error.message);
-                                }
-                                $.fn.unlock();
-                            }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                layer.alert('[ ' + XMLHttpRequest.status + ' ] ' + XMLHttpRequest.responseText);
-                                $.fn.unlock();
+    $(function () {
+        jQuery(document).on('click', 'a.user-auth', function () {
+            var t = $(this);
+            var url = t.attr('href');
+            $.ajax({
+                type: 'GET',
+                url: url,
+                beforeSend: function (xhr) {
+                    $.fn.lock();
+                }, success: function (response) {
+                    layer.open({
+                        id: 'nodes-list',
+                        title: "<?= $title ?>" + ' [ ' + t.attr('data-name') + ' ]',
+                        content: response,
+                        lock: true,
+                        padding: '10px',
+                        yes: function (index, layero) {
+                            var nodes = $.fn.zTree.getZTreeObj("__ztree__").getCheckedNodes(true);
+                            var ids = [];
+                            for (var i = 0, l = nodes.length; i < l; i++) {
+                                ids.push(nodes[i].id);
                             }
-                        });
 
-                        layer.close(index);
-                    }
-                });
-                $.fn.unlock();
-            }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-                layer.alert('[ ' + XMLHttpRequest.status + ' ] ' + XMLHttpRequest.responseText);
-                $.fn.unlock();
-            }
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                data: {choiceCategoryIds: ids.toString()},
+                                dataType: 'json',
+                                beforeSend: function (xhr) {
+                                    $.fn.lock();
+                                }, success: function (response) {
+                                    if (response.success === false) {
+                                        layer.alert(response.error.message);
+                                    }
+                                    $.fn.unlock();
+                                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    layer.alert('[ ' + XMLHttpRequest.status + ' ] ' + XMLHttpRequest.responseText);
+                                    $.fn.unlock();
+                                }
+                            });
+
+                            layer.close(index);
+                        }
+                    });
+                    $.fn.unlock();
+                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.alert('[ ' + XMLHttpRequest.status + ' ] ' + XMLHttpRequest.responseText);
+                    $.fn.unlock();
+                }
+            });
+
+            return false;
         });
-
-        return false;
     });
-});
 </script>
 <?php \app\modules\admin\components\JsBlock::end() ?>

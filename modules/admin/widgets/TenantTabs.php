@@ -45,8 +45,8 @@ class TenantTabs extends Widget
     public function run()
     {
         return $this->render('TenantTabs', [
-                'model' => $this->model,
-                'items' => $this->getItems(),
+            'model' => $this->model,
+            'items' => $this->getItems(),
         ]);
     }
 

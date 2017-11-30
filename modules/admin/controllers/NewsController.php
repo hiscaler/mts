@@ -61,8 +61,8 @@ class NewsController extends GlobalController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -74,11 +74,12 @@ class NewsController extends GlobalController
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
 //        $metaItems = Meta::getItems($model->className(), $model->id);
 
         return $this->render('view', [
-                'model' => $model,
-                'metaItems' => [],
+            'model' => $model,
+            'metaItems' => [],
         ]);
     }
 
@@ -114,8 +115,8 @@ class NewsController extends GlobalController
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
-                    'newsContent' => $newsContent,
+                'model' => $model,
+                'newsContent' => $newsContent,
             ]);
         }
     }
@@ -139,8 +140,8 @@ class NewsController extends GlobalController
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                    'model' => $model,
-                    'newsContent' => $newsContent,
+                'model' => $model,
+                'newsContent' => $newsContent,
             ]);
         }
     }
@@ -162,7 +163,7 @@ class NewsController extends GlobalController
             'updated_at' => $now,
             'deleted_by' => $userId,
             'deleted_at' => $now
-            ], ['id' => $model['id']])->execute();
+        ], ['id' => $model['id']])->execute();
 
         return $this->redirect(['index']);
     }
@@ -182,7 +183,7 @@ class NewsController extends GlobalController
             'updated_at' => time(),
             'deleted_by' => null,
             'deleted_at' => null,
-            ], ['id' => $model['id']])->execute();
+        ], ['id' => $model['id']])->execute();
 
         return $this->redirect(['index']);
     }
@@ -232,9 +233,9 @@ class NewsController extends GlobalController
         $id = Yii::$app->request->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled_comment]] FROM {{%news}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
-                ':id' => (int) $id,
-                ':tenantId' => Yad::getTenantId()
-            ])->queryScalar();
+            ':id' => (int) $id,
+            ':tenantId' => Yad::getTenantId()
+        ])->queryScalar();
         if ($value !== null) {
             $value = !$value;
             $now = time();
@@ -271,16 +272,16 @@ class NewsController extends GlobalController
     {
         $db = Yii::$app->getDb();
         $imageSavePath = $db->createCommand('SELECT [[picture_path]] FROM {{%news}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
-                ':id' => (int) $id,
-                ':tenantId' => Yad::getTenantId()
-            ])->queryScalar();
+            ':id' => (int) $id,
+            ':tenantId' => Yad::getTenantId()
+        ])->queryScalar();
         if (!empty($imageSavePath)) {
             $db->createCommand()->update('{{%news}}', [
                 'picture_path' => null,
                 'is_picture_news' => Constant::BOOLEAN_FALSE,
                 'updated_by' => Yii::$app->getUser()->getId(),
                 'updated_at' => time()
-                ], '[[id]] = :id', [':id' => (int) $id])->execute();
+            ], '[[id]] = :id', [':id' => (int) $id])->execute();
 
             $responseData = [
                 'success' => true
@@ -312,8 +313,8 @@ class NewsController extends GlobalController
             $values = $values ? explode(',', $values) : [];
 
             return $this->renderAjax('choice-lookup', [
-                    'values' => $values,
-                    'current' => $current,
+                'values' => $values,
+                'current' => $current,
             ]);
         } else {
             throw new BadRequestHttpException('The requested is bad.');
@@ -330,9 +331,9 @@ class NewsController extends GlobalController
     protected function findModel($id)
     {
         $model = News::find()->where([
-                'id' => (int) $id,
-                'tenant_id' => Yad::getTenantId(),
-            ])->with(['newsContent'])->one();
+            'id' => (int) $id,
+            'tenant_id' => Yad::getTenantId(),
+        ])->with(['newsContent'])->one();
 
         if ($model !== null) {
             return $model;

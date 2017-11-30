@@ -16,7 +16,7 @@ $this->params['menus'] = [
 ?>
 
 
-<div class = "user-create">
+<div class="user-create">
 
     <?=
     $this->render('_createTenantUserForm', [

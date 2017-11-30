@@ -76,8 +76,8 @@ class GridColumnConfigsController extends Controller
         ]);
 
         return $this->renderAjax('index', [
-                'name' => $name,
-                'dataProvider' => $dataProvider,
+            'name' => $name,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -87,11 +87,11 @@ class GridColumnConfigsController extends Controller
         $name = Yii::$app->request->post('name');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[visible]] FROM {{%grid_column_config}} WHERE [[tenant_id]] = :tenantId AND [[user_id]] = :userId AND [[name]] = :name AND [[attribute]] = :attribute')->bindValues([
-                ':tenantId' => Yad::getTenantId(),
-                ':userId' => Yii::$app->getUser()->getId(),
-                ':name' => $name,
-                ':attribute' => $attribute
-            ])->queryScalar();
+            ':tenantId' => Yad::getTenantId(),
+            ':userId' => Yii::$app->getUser()->getId(),
+            ':name' => $name,
+            ':attribute' => $attribute
+        ])->queryScalar();
         if ($value !== false) {
             $value = $value ? Constant::BOOLEAN_FALSE : Constant::BOOLEAN_TRUE;
             $db->createCommand()->update('{{%grid_column_config}}', ['visible' => $value], '[[tenant_id]] = :tenantId AND [[user_id]] = :userId AND [[name]] = :name AND [[attribute]] = :attribute', [

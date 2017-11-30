@@ -3,8 +3,8 @@
 /* @var $model app\models\UserGroup */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-        'modelClass' => Yii::t('model', 'User Group'),
-    ]);
+    'modelClass' => Yii::t('model', 'User Group'),
+]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User Groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 

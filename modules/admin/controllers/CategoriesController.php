@@ -54,8 +54,8 @@ class CategoriesController extends GlobalController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -76,7 +76,7 @@ class CategoriesController extends GlobalController
             return $this->redirect(['create', 'type' => $model->type, 'parentId' => $model->parent_id, 'ordering' => $model['ordering'] + 1]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -95,7 +95,7 @@ class CategoriesController extends GlobalController
             return $this->redirect(['index', 'CategorySearch[type]' => $model->type]);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }

@@ -54,8 +54,8 @@ class TenantAccessTokensController extends GlobalController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -67,7 +67,7 @@ class TenantAccessTokensController extends GlobalController
     public function actionView($id)
     {
         return $this->render('view', [
-                'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -87,7 +87,7 @@ class TenantAccessTokensController extends GlobalController
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -106,7 +106,7 @@ class TenantAccessTokensController extends GlobalController
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -128,7 +128,7 @@ class TenantAccessTokensController extends GlobalController
             'updated_at' => $now,
             'deleted_by' => $userId,
             'deleted_at' => $now
-            ], ['id' => $model['id']])->execute();
+        ], ['id' => $model['id']])->execute();
 
         return $this->redirect(['index']);
     }
@@ -148,7 +148,7 @@ class TenantAccessTokensController extends GlobalController
             'updated_at' => time(),
             'deleted_by' => null,
             'deleted_at' => null,
-            ], ['id' => $model['id']])->execute();
+        ], ['id' => $model['id']])->execute();
 
         return $this->redirect(['index']);
     }

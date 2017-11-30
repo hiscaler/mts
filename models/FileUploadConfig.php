@@ -209,6 +209,7 @@ class FileUploadConfig extends BaseActiveRecord
     {
         $configs = static::getConfigs();
         $key = "{$modelName}@{$attribute}";
+
         return isset($configs[$key]) ? $configs[$key] : static::defaultConfig();
     }
 

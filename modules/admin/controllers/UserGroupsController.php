@@ -68,8 +68,8 @@ class UserGroupsController extends GlobalController
         ]);
 
         return $this->render('index', [
-                'userGroupDataProvider' => $userGroupDataProvider,
-                'systemGroupDataProvider' => $systemGroupDataProvider,
+            'userGroupDataProvider' => $userGroupDataProvider,
+            'systemGroupDataProvider' => $systemGroupDataProvider,
         ]);
     }
 
@@ -87,7 +87,7 @@ class UserGroupsController extends GlobalController
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -106,7 +106,7 @@ class UserGroupsController extends GlobalController
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }

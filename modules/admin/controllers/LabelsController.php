@@ -55,8 +55,8 @@ class LabelsController extends GlobalController
         $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -76,7 +76,7 @@ class LabelsController extends GlobalController
             return $this->redirect(['create', 'ordering' => $model->ordering + 1]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -95,7 +95,7 @@ class LabelsController extends GlobalController
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -179,9 +179,9 @@ class LabelsController extends GlobalController
     protected function findModel($id)
     {
         $model = Label::find()->where([
-                'id' => (int) $id,
-                'tenant_id' => Yad::getTenantId(),
-            ])->one();
+            'id' => (int) $id,
+            'tenant_id' => Yad::getTenantId(),
+        ])->one();
 
         if ($model !== null) {
             return $model;

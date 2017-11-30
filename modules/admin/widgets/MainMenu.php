@@ -57,7 +57,7 @@ class MainMenu extends Widget
     public function run()
     {
         return $this->render('MainMenu', [
-                'items' => $this->getItems(),
+            'items' => $this->getItems(),
         ]);
     }
 

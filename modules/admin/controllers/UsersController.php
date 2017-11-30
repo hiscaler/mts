@@ -57,8 +57,8 @@ class UsersController extends GlobalController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -82,7 +82,7 @@ class UsersController extends GlobalController
         }
 
         return $this->render('create', [
-                'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -94,7 +94,7 @@ class UsersController extends GlobalController
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -141,13 +141,14 @@ class UsersController extends GlobalController
             if ($user->save(false)) {
 //                Yii::$app->getDb()->createCommand('UPDATE {{%user}} SET [[last_change_password_time]] = :now WHERE [[id]] = :id', [':now' => time(), ':id' => $user->id])->execute();
                 Yii::$app->getSession()->setFlash('notice', "用户 {$user->username} 密码修改成功，请通知用户下次登录使用新的密码。");
+
                 return $this->redirect(['index']);
             }
         }
 
         return $this->render('change-password', [
-                'user' => $user,
-                'model' => $model,
+            'user' => $user,
+            'model' => $model,
         ]);
     }
 
@@ -163,16 +164,16 @@ class UsersController extends GlobalController
         $tenantId = Yad::getTenantId();
         $db = Yii::$app->getDb();
         $userExists = $db->createCommand('SELECT COUNT(*) FROM {{%user}} WHERE [[id]] = :id AND [[id]] IN (SELECT [[user_id]] FROM {{%tenant_user}} WHERE [[tenant_id]] = :tenantId)')->bindValues([
-                ':id' => $userId,
-                ':tenantId' => $tenantId
-            ])->queryScalar();
+            ':id' => $userId,
+            ':tenantId' => $tenantId
+        ])->queryScalar();
         if (!$userExists) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         $existCategoryIds = $db->createCommand('SELECT [[category_id]] FROM {{%user_auth_category}} WHERE [[user_id]] = :userId AND [[category_id]] IN (SELECT [[id]] FROM {{%category}} WHERE [[tenant_id]] = :tenantId)')->bindValues([
-                ':userId' => $userId,
-                ':tenantId' => $tenantId
-            ])->queryColumn();
+            ':userId' => $userId,
+            ':tenantId' => $tenantId
+        ])->queryColumn();
         $request = Yii::$app->getRequest();
         if ($request->isPost && $request->isAjax) {
             $choiceCategoryIds = $request->post('choiceCategoryIds');
@@ -206,6 +207,7 @@ class UsersController extends GlobalController
                     $transaction->commit();
                 } catch (\Exception $e) {
                     $transaction->rollBack();
+
                     return new Response([
                         'format' => Response::FORMAT_JSON,
                         'data' => [
@@ -237,7 +239,7 @@ class UsersController extends GlobalController
         $categories = ArrayHelper::toTree($categories, 'id', 'pId');
 
         return $this->renderAjax('auth', [
-                'categories' => $categories,
+            'categories' => $categories,
         ]);
     }
 

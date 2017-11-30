@@ -16,9 +16,9 @@ use yii\widgets\ActiveForm;
 
         <?php
         $form = ActiveForm::begin([
-                'options' => [
-                    'enctype' => 'multipart/form-data',
-                ],
+            'options' => [
+                'enctype' => 'multipart/form-data',
+            ],
         ]);
         ?>
 

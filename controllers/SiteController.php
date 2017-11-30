@@ -74,7 +74,7 @@ class SiteController extends Controller
         $next = strtolower($next);
         if ($next == 'message') {
             return $this->render('signup', [
-                    'next' => $next,
+                'next' => $next,
             ]);
         } else {
             $model = new SignupForm();
@@ -85,14 +85,15 @@ class SiteController extends Controller
                 $model->password_hash = (new Security())->generatePasswordHash($model->password);
                 if ($model->save()) {
                     Meta::saveValues($model, $dynamicModel, $this->tenantId); // 保存 Meta 数据
+
                     return $this->redirect(['signup', 'next' => 'message']);
                 }
             }
 
             return $this->render('signup', [
-                    'model' => $model,
-                    'metaItems' => $metaItems,
-                    'dynamicModel' => $dynamicModel,
+                'model' => $model,
+                'metaItems' => $metaItems,
+                'dynamicModel' => $dynamicModel,
             ]);
         }
     }
@@ -115,7 +116,7 @@ class SiteController extends Controller
         }
 
         return $this->render('signin', [
-                'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -144,8 +145,8 @@ class SiteController extends Controller
                 'url' => '<a href="' . Url::toRoute(['site/reset-password', 'token' => $model['token']], true) . '">点击修改密码</a>',
             ]);
             $send = Yii::$app->getMailer()->compose('layouts/html', [
-                    'content' => $body
-                ])->setFrom(Yii::$app->params['fromMailAddress'])->setTo($model->email)->setSubject('测试邮件')->setHtmlBody($body)->send();
+                'content' => $body
+            ])->setFrom(Yii::$app->params['fromMailAddress'])->setTo($model->email)->setSubject('测试邮件')->setHtmlBody($body)->send();
             if ($send) {
                 Yii::$app->getSession()->setFlash('notice', '邮件发送成功，请注意查收。');
             } else {
@@ -154,7 +155,7 @@ class SiteController extends Controller
         }
 
         return $this->render('forget-password', [
-                'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -174,7 +175,7 @@ class SiteController extends Controller
         }
 
         return $this->render('reset-password', [
-                'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -191,9 +192,9 @@ class SiteController extends Controller
         }
 
         $tenant = Yii::$app->getDb()->createCommand('SELECT [[id]], [[language]], [[timezone]], [[date_format]], [[time_format]], [[datetime_format]] FROM {{%tenant}} WHERE [[id]] = :id AND [[enabled]] = :enabled')->bindValues([
-                ':id' => $languages[$lang],
-                ':enabled' => Constant::BOOLEAN_TRUE
-            ])->queryOne();
+            ':id' => $languages[$lang],
+            ':enabled' => Constant::BOOLEAN_TRUE
+        ])->queryOne();
         if ($tenant) {
             $cookie = new Cookie(['name' => '_site', 'httpOnly' => true]);
             $cookie->value = [

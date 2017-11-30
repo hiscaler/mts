@@ -9,14 +9,16 @@ use yii\base\Widget;
  * 消息盒子
  *
  */
-class MessageBox extends Widget {
+class MessageBox extends Widget
+{
 
     public $title = null;
     public $showFooter = false;
     public $message;
     public $showCloseButton = false;
 
-    public function run() {
+    public function run()
+    {
         if ($this->title == null) {
             $this->title = Yii::t('app', 'Prompt Message');
         }
@@ -29,10 +31,12 @@ class MessageBox extends Widget {
         $body = '<div class="bd">{body}</div>';
         $body = str_replace('{body}', $this->getBodyContent(), $body);
         $footer = '<div class="ft"></div>';
+
         return '<div id="' . $this->id . '" class="message-box">' . $header . $body . ($this->showFooter ? $footer : '') . '</div>';
     }
 
-    protected function getBodyContent() {
+    protected function getBodyContent()
+    {
         if ($this->message == null) {
             $this->message = 'I am sorry. No message. Please input you message text try again......';
         }
@@ -44,6 +48,7 @@ class MessageBox extends Widget {
             }
             $this->message = $output . '</ol>';
         }
+
         return $this->message;
     }
 

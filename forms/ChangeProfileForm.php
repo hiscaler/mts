@@ -8,5 +8,5 @@ namespace app\forms;
  */
 class ChangeProfileForm extends \app\models\User
 {
-    
+
 }

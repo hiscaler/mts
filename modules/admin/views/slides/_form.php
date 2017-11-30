@@ -9,13 +9,13 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="form-outside">
-    <div class="slide-form form"> 
+    <div class="slide-form form">
 
         <?php
         $form = ActiveForm::begin([
-                'options' => [
-                    'enctype' => 'multipart/form-data',
-                ],
+            'options' => [
+                'enctype' => 'multipart/form-data',
+            ],
         ]);
         ?>
 

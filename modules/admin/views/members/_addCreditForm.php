@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="form-outside">
     <div class="form user-credit-log-form">
 
-        <?php $form = ActiveForm::begin(); ?> 
+        <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'credits')->textInput(['maxlength' => true]) ?>
 

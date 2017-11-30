@@ -16,7 +16,7 @@ use app\models\Lookup;
         <?= $form->errorSummary($model) ?>
 
         <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
-        
+
         <?= $form->field($model, 'label')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>

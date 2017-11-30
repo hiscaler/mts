@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'min_credits')->textInput() ?>
 
-        <?= $form->field($model, 'max_credits')->textInput() ?>   
+        <?= $form->field($model, 'max_credits')->textInput() ?>
 
         <div class="form-group buttons">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

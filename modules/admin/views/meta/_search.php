@@ -13,9 +13,9 @@ use yii\widgets\ActiveForm;
 
         <?php
         $form = ActiveForm::begin([
-                'id' => 'form-meta-search',
-                'action' => ['index'],
-                'method' => 'get',
+            'id' => 'form-meta-search',
+            'action' => ['index'],
+            'method' => 'get',
         ]);
         ?>
 
@@ -23,10 +23,10 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'object_name')->dropDownList(app\models\Meta::getObjectNames(), ['prompt' => '']) ?>
 
 
-            <?= $form->field($model, 'key') ?>    
+            <?= $form->field($model, 'key') ?>
         </div>
 
-        <div class="entry">            
+        <div class="entry">
             <?= $form->field($model, 'label') ?>
 
             <?= $form->field($model, 'enabled')->dropDownList(app\models\Option::booleanOptions(), ['prompt' => '']) ?>

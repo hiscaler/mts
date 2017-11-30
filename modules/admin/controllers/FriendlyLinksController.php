@@ -51,8 +51,8 @@ class FriendlyLinksController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -72,7 +72,7 @@ class FriendlyLinksController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -91,7 +91,7 @@ class FriendlyLinksController extends Controller
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -119,8 +119,8 @@ class FriendlyLinksController extends Controller
         $id = Yii::$app->request->post('id');
         $db = Yii::$app->getDb();
         $value = $db->createCommand('SELECT [[enabled]] FROM {{%friendly_link}} WHERE [[id]] = :id')->bindValues([
-                ':id' => (int) $id,
-            ])->queryScalar();
+            ':id' => (int) $id,
+        ])->queryScalar();
         if ($value !== null) {
             $value = !$value;
             $now = time();
@@ -158,8 +158,8 @@ class FriendlyLinksController extends Controller
     protected function findModel($id)
     {
         $model = FriendlyLink::find()->where([
-                'id' => (int) $id,
-            ])->one();
+            'id' => (int) $id,
+        ])->one();
 
         if ($model !== null) {
             return $model;

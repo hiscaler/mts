@@ -96,7 +96,7 @@ class EntityLabelsController extends Controller
             }
 
             return $this->renderAjax('index', [
-                    'dataProviders' => $dataProviders,
+                'dataProviders' => $dataProviders,
             ]);
         } else {
             throw new BadRequestHttpException('Bad Request.');
@@ -112,6 +112,7 @@ class EntityLabelsController extends Controller
     public function actionDelete($id)
     {
         Yii::$app->getDb()->createCommand()->delete('{{%entity_label}}', ['id' => (int) $id])->execute();
+
         return $this->redirect(Yii::$app->getRequest()->referrer);
     }
 
@@ -174,9 +175,9 @@ class EntityLabelsController extends Controller
             $tenantId = Yad::getTenantId();
             $db = Yii::$app->getDb();
             $entityEnabled = $db->createCommand('SELECT [[enabled]] FROM {{%label}} WHERE [[id]] = :id AND [[tenant_id]] = :tenantId')->bindValues([
-                    ':id' => $labelId,
-                    ':tenantId' => $tenantId
-                ])->queryScalar();
+                ':id' => $labelId,
+                ':tenantId' => $tenantId
+            ])->queryScalar();
             if ($entityEnabled === false) {
                 $responseData = [
                     'success' => false,
@@ -186,11 +187,11 @@ class EntityLabelsController extends Controller
                 ];
             } else {
                 $id = $db->createCommand('SELECT [[id]] FROM {{%entity_label}} WHERE [[entity_id]] = :entityId AND [[entity_name]] = :entityName AND [[label_id]] = :labelId AND [[tenant_id]] = :tenantId')->bindValues([
-                        ':entityId' => $entityId,
-                        ':entityName' => $entityName,
-                        ':labelId' => $labelId,
-                        ':tenantId' => $tenantId
-                    ])->queryScalar();
+                    ':entityId' => $entityId,
+                    ':entityName' => $entityName,
+                    ':labelId' => $labelId,
+                    ':tenantId' => $tenantId
+                ])->queryScalar();
                 $transaction = $db->beginTransaction();
                 try {
                     if ($id) {
@@ -287,11 +288,11 @@ class EntityLabelsController extends Controller
         }
         $select[] = "e.{$title} AS title";
         $query = (new Query)->select($select)->from(['{{%entity_label}} t'])
-                ->leftJoin($object::tableName() . ' e', 't.entity_id = e.id')
-                ->where([
-                    't.entity_name' => $modelName,
-                    'e.tenant_id' => Yad::getTenantId()
-                ])->orderBy(['ordering' => SORT_ASC]);
+            ->leftJoin($object::tableName() . ' e', 't.entity_id = e.id')
+            ->where([
+                't.entity_name' => $modelName,
+                'e.tenant_id' => Yad::getTenantId()
+            ])->orderBy(['ordering' => SORT_ASC]);
         if (!empty($labelId)) {
             $query->andWhere('t.label_id = :labelId', [':labelId' => (int) $labelId]);
         }
@@ -302,10 +303,10 @@ class EntityLabelsController extends Controller
         ]);
 
         return $this->render('entities', [
-                'modelName' => $modelName,
-                'labelId' => $labelId,
-                'labels' => $labels,
-                'dataProvider' => $dataProvider
+            'modelName' => $modelName,
+            'labelId' => $labelId,
+            'labels' => $labels,
+            'dataProvider' => $dataProvider
         ]);
     }
 

@@ -23,7 +23,7 @@ $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
 <div class="download-index">
 
 
-    <?php Pjax::begin(); ?>  
+    <?php Pjax::begin(); ?>
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,

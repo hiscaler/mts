@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="form-outside">
     <div class="form user-form">
 
-        <?php $form = ActiveForm::begin(); ?>       
+        <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($user, 'username')->textInput(['maxlength' => true, 'readonly' => 'readonly']) ?>
 

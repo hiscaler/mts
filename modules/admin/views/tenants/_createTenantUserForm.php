@@ -13,14 +13,14 @@ use yii\widgets\ActiveForm;
 <div class="form-outside">
     <div class="form user-form">
 
-        <?php $form = ActiveForm::begin(); ?>       
+        <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($model, 'user_group_id')->dropDownList(Tenant::userGroups(), ['prompt' => '']) ?>
 
         <?= $form->field($model, 'role')->dropDownList(User::roleOptions(), ['prompt' => '']) ?>
-        
+
         <?= $form->field($model, 'rule_id')->dropDownList(Tenant::workflowRules(), ['prompt' => '']) ?>
 
         <div class="form-group buttons">

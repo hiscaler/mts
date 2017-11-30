@@ -35,17 +35,17 @@ class CreateTenantUserForm extends Model
     {
         $db = Yii::$app->getDb();
         $userId = $db->createCommand('SELECT [[id]] FROM {{%user}} WHERE [[username]] = :username AND [[status]] = :status')->bindValues([
-                ':username' => $this->username,
-                ':status' => User::STATUS_ACTIVE
-            ])->queryScalar();
+            ':username' => $this->username,
+            ':status' => User::STATUS_ACTIVE
+        ])->queryScalar();
         if (!$userId) {
             $this->addError($attribute, '该用户不存在或者处于非激活状态。');
         } else {
             $this->user_id = $userId;
             $exists = $db->createCommand('SELECT COUNT(*) FROM {{%tenant_user}} WHERE [[tenant_id]] = :tenantId AND [[user_id]] = :userId')->bindValues([
-                    ':tenantId' => $this->tenant_id,
-                    ':userId' => $userId
-                ])->queryScalar();
+                ':tenantId' => $this->tenant_id,
+                ':userId' => $userId
+            ])->queryScalar();
             if ($exists) {
                 $this->addError($attribute, $this->username . ' 已经绑定「' . Yad::getTenantName() . '」站点，禁止重复绑定。');
             }

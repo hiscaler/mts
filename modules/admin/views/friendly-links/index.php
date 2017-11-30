@@ -21,47 +21,47 @@ $this->params['menus'] = [
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
-<div class="friendly-link-index">
+    <div class="friendly-link-index">
 
-    <?= $this->render('_search', ['model' => $searchModel]); ?>
+        <?= $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?php
-    Pjax::begin([
-        'formSelector' => '#form-friendly-links-search',
-    ]);
-    echo GridView::widget([
-        'dataProvider' => $dataProvider,
-        'tableOptions' => [
-            'class' => 'table table-striped'
-        ],
-        'columns' => [
-            [
-                'class' => 'yii\grid\SerialColumn',
-                'contentOptions' => ['class' => 'serial-number']
+        <?php
+        Pjax::begin([
+            'formSelector' => '#form-friendly-links-search',
+        ]);
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'tableOptions' => [
+                'class' => 'table table-striped'
             ],
-            [
-                'attribute' => 'ordering',
-                'contentOptions' => ['class' => 'ordering'],
-            ],
-            [
-                'attribute' => 'group_id',
-                'value' => function($model, $key, $index, $grid) use ($formatter) {
-                    return $formatter->asGroupName('friendly.link.group', $model['group_id']);
-                },
-                'format' => 'raw',
-                'contentOptions' => ['class' => 'group-name'],
-            ],
-            [
-                'attribute' => 'type',
-                'format' => 'friendlyLinkType',
-                'contentOptions' => ['class' => 'friendly-link-type center'],
-            ],
-            [
-                'attribute' => 'title',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return Html::a($model['title'], ['update', 'id' => $model['id']]);
-                }
+            'columns' => [
+                [
+                    'class' => 'yii\grid\SerialColumn',
+                    'contentOptions' => ['class' => 'serial-number']
+                ],
+                [
+                    'attribute' => 'ordering',
+                    'contentOptions' => ['class' => 'ordering'],
+                ],
+                [
+                    'attribute' => 'group_id',
+                    'value' => function ($model, $key, $index, $grid) use ($formatter) {
+                        return $formatter->asGroupName('friendly.link.group', $model['group_id']);
+                    },
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'group-name'],
+                ],
+                [
+                    'attribute' => 'type',
+                    'format' => 'friendlyLinkType',
+                    'contentOptions' => ['class' => 'friendly-link-type center'],
+                ],
+                [
+                    'attribute' => 'title',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        return Html::a($model['title'], ['update', 'id' => $model['id']]);
+                    }
                 ],
                 'description',
                 [
@@ -83,7 +83,7 @@ $this->params['menus'] = [
                 ],
                 [
                     'attribute' => 'created_by',
-                    'value' => function($model) {
+                    'value' => function ($model) {
                         return $model['creater']['nickname'];
                     },
                     'contentOptions' => ['class' => 'username']
@@ -95,7 +95,7 @@ $this->params['menus'] = [
                 ],
                 [
                     'attribute' => 'updated_by',
-                    'value' => function($model) {
+                    'value' => function ($model) {
                         return $model['updater']['nickname'];
                     },
                     'contentOptions' => ['class' => 'username']

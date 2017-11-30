@@ -147,6 +147,7 @@ class User extends ActiveRecord implements IdentityInterface
         if ($type !== null) {
             $condition['type'] = strtolower($type) == 'user' ? self::TYPE_USER : self::TYPE_MEMBER;
         }
+
         return static::findOne($condition);
     }
 
@@ -163,8 +164,8 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         return static::findOne([
-                'password_reset_token' => $token,
-                'status' => self::STATUS_ACTIVE,
+            'password_reset_token' => $token,
+            'status' => self::STATUS_ACTIVE,
         ]);
     }
 
@@ -182,6 +183,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+
         return $timestamp + $expire >= time();
     }
 
@@ -371,11 +373,11 @@ class User extends ActiveRecord implements IdentityInterface
     private static function _getList($where)
     {
         return (new \yii\db\Query())
-                ->select('username')
-                ->from(self::tableName())
-                ->where($where)
-                ->indexBy('id')
-                ->column();
+            ->select('username')
+            ->from(self::tableName())
+            ->where($where)
+            ->indexBy('id')
+            ->column();
     }
 
     /**

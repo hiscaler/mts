@@ -13,9 +13,9 @@ use app\models\FriendlyLink;
 
         <?php
         $form = ActiveForm::begin([
-                'options' => [
-                    'enctype' => 'multipart/form-data',
-                ],
+            'options' => [
+                'enctype' => 'multipart/form-data',
+            ],
         ]);
         ?>
 
@@ -64,11 +64,11 @@ use app\models\FriendlyLink;
                 ])->fileInput()
                 ?>
             </div>
-            
+
             <div class="col-md-3">
                 <?= $form->field($model, 'ordering')->textInput() ?>
             </div>
-            
+
             <div class="col-md-3">
                 <?= $form->field($model, 'enabled')->checkbox([], null) ?>
             </div>

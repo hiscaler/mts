@@ -35,7 +35,7 @@ class Member extends User
                 $referral = trim($this->referral);
                 if (!empty($referral)) {
                     $userId = Yii::$app->getDb()->createCommand('SELECT [[id]] FROM {{%user}} WHERE [[referral_code]] = :referralCode', [':referralCode' => $referral])->queryScalar();
-                    $this->referral_user_id = $userId ? : 0;
+                    $this->referral_user_id = $userId ?: 0;
                 }
             }
 

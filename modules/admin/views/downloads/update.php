@@ -18,10 +18,10 @@ $this->params['menus'] = [
 ?>
 <div class="download-update">
 
-<?=
-$this->render('_form', [
-    'model' => $model,
-])
-?>
+    <?=
+    $this->render('_form', [
+        'model' => $model,
+    ])
+    ?>
 
 </div>

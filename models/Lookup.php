@@ -207,6 +207,7 @@ class Lookup extends BaseActiveRecord
         }
 
         Yii::$app->getCache()->set('cache.model.lookup.refresh-cache', $keyValues);
+
         return $keyValues;
     }
 

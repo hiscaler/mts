@@ -17,9 +17,9 @@ class Toolbar extends Widget
         if (Yad::getTenantId()) {
             // 租赁列表
             $tenantsRawData = Yii::$app->getDb()->createCommand('SELECT [[id]], [[name]], [[language]] FROM {{%tenant}} WHERE [[enabled]] = :enabled AND [[id]] IN (SELECT [[tenant_id]] FROM {{%tenant_user}} WHERE [[user_id]] = :userId AND [[enabled]] = :enabled)')->bindValues([
-                    ':enabled' => Constant::BOOLEAN_TRUE,
-                    ':userId' => Yii::$app->getUser()->getId()
-                ])->queryAll();
+                ':enabled' => Constant::BOOLEAN_TRUE,
+                ':userId' => Yii::$app->getUser()->getId()
+            ])->queryAll();
             if ($tenantsRawData) {
                 $tenants = [];
                 if (count($tenantsRawData) > 1) {
@@ -70,7 +70,7 @@ class Toolbar extends Widget
     public function run()
     {
         return $this->render('Toolbar', [
-                'items' => $this->getItems(),
+            'items' => $this->getItems(),
         ]);
     }
 

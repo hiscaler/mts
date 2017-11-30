@@ -14,7 +14,7 @@ $this->params['menus'] = [
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 if ($dataProviders):
-?>
+    ?>
     <div id="attribute-entity-attributes" class="attribute-entity-attributes">
         <?php
         if (count($dataProviders) > 1):
@@ -28,8 +28,8 @@ if ($dataProviders):
          return false;
      });
 EOT;
-        $this->registerJs($js);
-        ?>
+            $this->registerJs($js);
+            ?>
             <ul id="tabs-entity-attributes" class="tabs-common">
                 <?php
                 $i = 0;
@@ -53,8 +53,8 @@ EOT;
         ?>
         <div class="panels">
             <?php
-                \yii\helpers\VarDumper::dump($dataProviders, 111, true);
-                exit;
+            \yii\helpers\VarDumper::dump($dataProviders, 111, true);
+            exit;
             $i = 0;
             foreach ($dataProviders as $key => $dataProvider):
                 $i++;
@@ -98,7 +98,7 @@ EOT;
         <?php Pjax::end(); ?>
     </div>
 
-<?php
+    <?php
     $this->registerJs('yadjet.actions.toggle("table td.set-entity-label-handler img", "' . Url::toRoute('set-entity-label') . '", {}, ["entity-id", "entity-name", "label-id"]);');
 else:
     echo \yii\helpers\Html::tag('div', '您还未设置推送位。', ['class' => 'notice']);

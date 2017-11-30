@@ -51,40 +51,40 @@ $this->params['menus'] = [
         <div class="grid-view">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>标题</th>
-                        <th>内容</th>
-                    </tr>
+                <tr>
+                    <th>标题</th>
+                    <th>内容</th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <?php
-                    $items = app\models\Meta::getItems($model);
-                    foreach ($items as $item):
-                        ?>
-                        <tr>
-                            <td style="width: 160px;"><?= $item['label'] ?></td>
-                            <td>
-                                <?php
-                                $value = $item['value'];
-                                if (is_array($value) || $item['input_candidate_value']) {
-                                    $output = [];
-                                    $value = is_array($value) ? $value : [$value];
-                                    foreach ($value as $v) {
-                                        if (isset($item['input_candidate_value'][$v])) {
-                                            $output[] = $item['input_candidate_value'][$v];
-                                        } else {
-                                            $output[] = $v;
-                                        }
+                <?php
+                $items = app\models\Meta::getItems($model);
+                foreach ($items as $item):
+                    ?>
+                    <tr>
+                        <td style="width: 160px;"><?= $item['label'] ?></td>
+                        <td>
+                            <?php
+                            $value = $item['value'];
+                            if (is_array($value) || $item['input_candidate_value']) {
+                                $output = [];
+                                $value = is_array($value) ? $value : [$value];
+                                foreach ($value as $v) {
+                                    if (isset($item['input_candidate_value'][$v])) {
+                                        $output[] = $item['input_candidate_value'][$v];
+                                    } else {
+                                        $output[] = $v;
                                     }
-                                    $value = implode('、', $output);
                                 }
+                                $value = implode('、', $output);
+                            }
 
-                                echo $value;
-                                ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                            echo $value;
+                            ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

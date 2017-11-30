@@ -17,6 +17,7 @@ trait ActiveRecordHelperTrait
         if ($className === null) {
             $className = static::className();
         }
+
         return str_replace('\\', '-', $className);
     }
 

@@ -1,5 +1,6 @@
 <?php
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use yii\helpers\Html;
@@ -7,8 +8,8 @@ use yii\helpers\Html;
 app\modules\admin\assets\AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+    <!DOCTYPE html>
+    <html lang="<?= Yii::$app->language ?>">
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,9 +18,9 @@ app\modules\admin\assets\AppAsset::register($this);
         <?php $this->head() ?>
     </head>
     <body id="mts-app">
-        <?php $this->beginBody() ?>
-        <?= $content ?>
-        <?php $this->endBody() ?>
+    <?php $this->beginBody() ?>
+    <?= $content ?>
+    <?php $this->endBody() ?>
     </body>
-</html>
+    </html>
 <?php $this->endPage() ?>

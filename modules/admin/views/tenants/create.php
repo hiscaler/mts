@@ -3,8 +3,8 @@
 /* @var $model app\models\Tenant */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-            'modelClass' => Yii::t('model', 'Tenant'),
-        ]);
+    'modelClass' => Yii::t('model', 'Tenant'),
+]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tenants'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create');
 

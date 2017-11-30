@@ -65,7 +65,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         if (!Yad::getTenantId()) {
-            
+
         }
 
         return $this->render('index');
@@ -81,9 +81,9 @@ class DefaultController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $tenantIds = Yii::$app->getDb()->createCommand('SELECT [[tenant_id]] FROM {{%tenant_user}} WHERE [[user_id]] = :userId AND [[enabled]] = :enabled')->bindValues([
-                    ':userId' => Yii::$app->getUser()->getId(),
-                    ':enabled' => Constant::BOOLEAN_TRUE
-                ])->queryColumn();
+                ':userId' => Yii::$app->getUser()->getId(),
+                ':enabled' => Constant::BOOLEAN_TRUE
+            ])->queryColumn();
             if (count($tenantIds) == 1) {
                 Yad::setTenantData($tenantIds[0]);
                 $url = ['/admin/default/index'];
@@ -94,7 +94,7 @@ class DefaultController extends Controller
             return $this->redirect($url);
         } else {
             return $this->render('login', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -118,10 +118,11 @@ class DefaultController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'User profile save successed.'));
+
             return $this->redirect(['profile']);
         } else {
             return $this->render('profile', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -140,13 +141,14 @@ class DefaultController extends Controller
             $user->setPassword($model->password);
             if ($user->save(false)) {
                 Yii::$app->getSession()->setFlash('notice', "您的密码修改成功，请下次登录使用新的密码。");
+
                 return $this->redirect(Url::previous());
             }
         }
 
         return $this->render('changePassword', [
-                'user' => $user,
-                'model' => $model,
+            'user' => $user,
+            'model' => $model,
         ]);
     }
 
@@ -165,7 +167,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('loginLogs', [
-                'loginLogs' => $loginLogs
+            'loginLogs' => $loginLogs
         ]);
     }
 
@@ -189,12 +191,12 @@ class DefaultController extends Controller
     {
         $this->layout = 'base';
         $tenants = Yii::$app->getDb()->createCommand('SELECT [[id]], [[name]], [[domain_name]], [[description]] FROM {{%tenant}} WHERE [[enabled]] = :enabled AND [[id]] IN (SELECT [[tenant_id]] FROM {{%tenant_user}} WHERE [[user_id]] = :userId)')->bindValues([
-                ':enabled' => Constant::BOOLEAN_TRUE,
-                ':userId' => Yii::$app->getUser()->getId()
-            ])->queryAll();
+            ':enabled' => Constant::BOOLEAN_TRUE,
+            ':userId' => Yii::$app->getUser()->getId()
+        ])->queryAll();
 
         return $this->render('choice-tenant', [
-                'tenants' => $tenants,
+            'tenants' => $tenants,
         ]);
     }
 

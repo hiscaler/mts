@@ -85,12 +85,12 @@ class Tenant extends BaseActiveRecord
     public function getUsers()
     {
         return (new Query())
-                ->select(['u.id', 'u.username', 'u.nickname', 'u.email', 'u.status', 't.enabled', 't.role', 'tug.name AS group_name'])
-                ->from('{{%tenant_user}} t')
-                ->leftJoin('{{%user}} u', '[[t.user_id]] = [[u.id]]')
-                ->leftJoin('{{%tenant_user_group}} tug', '[[t.user_group_id]] = [[tug.id]]')
-                ->where(['t.tenant_id' => $this->id])
-                ->all();
+            ->select(['u.id', 'u.username', 'u.nickname', 'u.email', 'u.status', 't.enabled', 't.role', 'tug.name AS group_name'])
+            ->from('{{%tenant_user}} t')
+            ->leftJoin('{{%user}} u', '[[t.user_id]] = [[u.id]]')
+            ->leftJoin('{{%tenant_user_group}} tug', '[[t.user_group_id]] = [[tug.id]]')
+            ->where(['t.tenant_id' => $this->id])
+            ->all();
     }
 
     /**

@@ -14,7 +14,7 @@ use yii\web\NotFoundHttpException;
 
 /**
  * 会员管理
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class MembersController extends ShopController
@@ -46,8 +46,8 @@ class MembersController extends ShopController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -59,7 +59,7 @@ class MembersController extends ShopController
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -83,8 +83,8 @@ class MembersController extends ShopController
         ]);
 
         return $this->render('view', [
-                'model' => $model,
-                'creditLogsDataProvider' => $creditLogsDataProvider
+            'model' => $model,
+            'creditLogsDataProvider' => $creditLogsDataProvider
         ]);
     }
 
@@ -105,7 +105,7 @@ class MembersController extends ShopController
         }
 
         return $this->render('add-credits', [
-                'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -122,13 +122,14 @@ class MembersController extends ShopController
             $user->setPassword($model->password);
             if ($user->save()) {
                 Yii::$app->getSession()->setFlash('notice', "用户 {$user->username} 密码修改成功，请通知用户下次登录使用新的密码。");
+
                 return $this->redirect(['index']);
             }
         }
 
         return $this->render('change-password', [
-                'user' => $user,
-                'model' => $model,
+            'user' => $user,
+            'model' => $model,
         ]);
     }
 

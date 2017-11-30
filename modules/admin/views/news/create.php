@@ -3,8 +3,8 @@
 /* @var $model common\models\News */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-            'modelClass' => Yii::t('model', 'News'),
-        ]);
+    'modelClass' => Yii::t('model', 'News'),
+]);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'News'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Create');

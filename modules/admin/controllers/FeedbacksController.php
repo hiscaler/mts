@@ -51,8 +51,8 @@ class FeedbacksController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -64,10 +64,11 @@ class FeedbacksController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
 //        $metaItems = Meta::getItems(Feedback::className2Id(), $model->id);
 
         return $this->render('view', [
-                'model' => $model,
+            'model' => $model,
 //                'metaItems' => $metaItems,
         ]);
     }
@@ -97,9 +98,9 @@ class FeedbacksController extends Controller
     protected function findModel($id)
     {
         $model = Feedback::find()->where([
-                'id' => (int) $id,
-                'tenant_id' => Yad::getTenantId(),
-            ])->one();
+            'id' => (int) $id,
+            'tenant_id' => Yad::getTenantId(),
+        ])->one();
 
         if ($model !== null) {
             return $model;

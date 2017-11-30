@@ -9,50 +9,50 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="form-outside form-search form-layout-column" style="display: none">
-    <div class="news-search form">
+    <div class="form-outside form-search form-layout-column" style="display: none">
+        <div class="news-search form">
 
-        <?php
-        $form = ActiveForm::begin([
+            <?php
+            $form = ActiveForm::begin([
                 'id' => 'form-news-search',
                 'action' => ['index'],
                 'method' => 'get',
-        ]);
-        ?>
+            ]);
+            ?>
 
-        <div class="entry">
-            <?= $form->field($model, 'id') ?>
+            <div class="entry">
+                <?= $form->field($model, 'id') ?>
 
-            <?= $form->field($model, 'title') ?>
+                <?= $form->field($model, 'title') ?>
+            </div>
+
+            <div class="entry">
+                <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::getOwnerTree(\app\models\Lookup::getValue('custom.models.category.type.news', 0)), ['prompt' => '', 'multiple' => 'multiple']) ?>
+
+                <?= $form->field($model, 'entityLabelId')->dropDownList(\app\models\Label::getItems(true), ['prompt' => '', 'multiple' => 'multiple'])->label(Yii::t('app', 'Entity Labels')) ?>
+            </div>
+
+            <div class="entry">
+                <?= $form->field($model, 'author') ?>
+
+                <?= $form->field($model, 'source') ?>
+            </div>
+
+            <div class="entry">
+                <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
+
+                <?= $form->field($model, 'enabled')->dropDownList(Option::booleanOptions(), ['prompt' => '']) ?>
+            </div>
+
+            <div class="form-group buttons">
+                <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
         </div>
-
-        <div class="entry">
-            <?= $form->field($model, 'category_id')->dropDownList(\app\models\Category::getOwnerTree(\app\models\Lookup::getValue('custom.models.category.type.news', 0)), ['prompt' => '', 'multiple' => 'multiple']) ?>
-
-            <?= $form->field($model, 'entityLabelId')->dropDownList(\app\models\Label::getItems(true), ['prompt' => '', 'multiple' => 'multiple'])->label(Yii::t('app', 'Entity Labels')) ?>
-        </div>
-
-        <div class="entry">
-            <?= $form->field($model, 'author') ?>
-
-            <?= $form->field($model, 'source') ?>
-        </div>
-
-        <div class="entry">
-            <?= $form->field($model, 'status')->dropDownList(Option::statusOptions(), ['prompt' => '']) ?>
-
-            <?= $form->field($model, 'enabled')->dropDownList(Option::booleanOptions(), ['prompt' => '']) ?>
-        </div>
-
-        <div class="form-group buttons">
-            <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-            <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
-        </div>
-
-        <?php ActiveForm::end(); ?>
-
     </div>
-</div>
 
 <?php
 $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';

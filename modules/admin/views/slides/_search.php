@@ -13,9 +13,9 @@ use yii\widgets\ActiveForm;
 
         <?php
         $form = ActiveForm::begin([
-                'id' => 'form-slide-search',
-                'action' => ['index'],
-                'method' => 'get',
+            'id' => 'form-slide-search',
+            'action' => ['index'],
+            'method' => 'get',
         ]);
         ?>
 

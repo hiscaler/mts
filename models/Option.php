@@ -41,6 +41,7 @@ class Option
         for ($i = $start; $i <= $max; $i++) {
             $options[$i] = $i;
         }
+
         return $options;
     }
 
@@ -69,6 +70,7 @@ class Option
                 $options[$modelName] = Yii::t('app', $item['label']);
             }
         }
+
         return $options;
     }
 

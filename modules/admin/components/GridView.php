@@ -30,9 +30,9 @@ class GridView extends \yii\grid\GridView
                 $column = $this->createDataColumn($column);
             } else {
                 $column = Yii::createObject(array_merge([
-                        'class' => $this->dataColumnClass ? : DataColumn::className(),
-                        'grid' => $this
-                            ], $column));
+                    'class' => $this->dataColumnClass ?: DataColumn::className(),
+                    'grid' => $this
+                ], $column));
             }
 
             $attribute = false;
@@ -67,10 +67,10 @@ class GridView extends \yii\grid\GridView
     private function getColumnConfigs()
     {
         return Yii::$app->getDb()->createCommand('SELECT [[name]], [[attribute]], [[css_class]], [[visible]] FROM {{%grid_column_config}} WHERE [[name]] = :name AND [[user_id]] = :userId AND [[tenant_id]] = :tenantId')->bindValues([
-                ':name' => $this->name,
-                ':userId' => Yii::$app->getUser()->getId(),
-                ':tenantId' => \app\models\Yad::getTenantId(),
-            ])->queryAll();
+            ':name' => $this->name,
+            ':userId' => Yii::$app->getUser()->getId(),
+            ':tenantId' => \app\models\Yad::getTenantId(),
+        ])->queryAll();
     }
 
 }

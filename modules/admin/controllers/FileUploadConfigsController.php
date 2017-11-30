@@ -48,8 +48,8 @@ class FileUploadConfigsController extends GlobalController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -61,7 +61,7 @@ class FileUploadConfigsController extends GlobalController
     public function actionView($id)
     {
         return $this->render('view', [
-                'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -79,7 +79,7 @@ class FileUploadConfigsController extends GlobalController
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -98,7 +98,7 @@ class FileUploadConfigsController extends GlobalController
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -126,9 +126,9 @@ class FileUploadConfigsController extends GlobalController
     protected function findModel($id)
     {
         $model = FileUploadConfig::find()->where([
-                'id' => (int) $id,
-                'tenant_id' => Yad::getTenantId(),
-            ])->one();
+            'id' => (int) $id,
+            'tenant_id' => Yad::getTenantId(),
+        ])->one();
 
         if ($model !== null) {
             return $model;

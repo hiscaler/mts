@@ -35,7 +35,7 @@ $this->params['menus'] = [
             ],
             [
                 'attribute' => 'group_id',
-                'value' => function($model, $key, $index, $grid) {
+                'value' => function ($model, $key, $index, $grid) {
                     return Yii::$app->getFormatter()->asGroupName('feedback.group', $model['group_id']);
                 },
                 'format' => 'raw',

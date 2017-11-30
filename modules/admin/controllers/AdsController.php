@@ -53,8 +53,8 @@ class AdsController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->getRequest()->getQueryParams(), $spaceId);
 
         return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -66,7 +66,7 @@ class AdsController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-                'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -85,7 +85,7 @@ class AdsController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -104,7 +104,7 @@ class AdsController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                    'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -126,7 +126,7 @@ class AdsController extends Controller
             'updated_at' => $now,
             'deleted_by' => $userId,
             'deleted_at' => $now
-            ], ['id' => $model['id']])->execute();
+        ], ['id' => $model['id']])->execute();
 
         return $this->redirect(['index']);
     }
@@ -146,7 +146,7 @@ class AdsController extends Controller
             'updated_at' => time(),
             'deleted_by' => null,
             'deleted_at' => null,
-            ], ['id' => $model['id']])->execute();
+        ], ['id' => $model['id']])->execute();
 
         return $this->redirect(['index']);
     }

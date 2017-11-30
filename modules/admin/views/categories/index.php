@@ -23,7 +23,7 @@ $this->params['menus'] = $menus;
 $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
 ?>
 <div class="categories-index">
- 
+
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
@@ -40,7 +40,7 @@ $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
                 'attribute' => 'name',
                 'header' => Yii::t('category', 'Name'),
                 'format' => 'raw',
-                'value' => function ($model)  {
+                'value' => function ($model) {
                     return "<span class=\"pk\">[ {$model['id']} ]</span>" . Html::a($model['name'], ['update', 'id' => $model['id']]) . '<span class="alias">' . $model['alias'] . '</span>';
                 },
             ],
@@ -63,7 +63,7 @@ $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
             [
                 'attribute' => 'created_by',
                 'header' => Yii::t('app', 'Created By'),
-                'value' => function($model) {
+                'value' => function ($model) {
 //                                return $model['creater']['nickname'];
                 },
                 'contentOptions' => ['class' => 'username']
@@ -77,7 +77,7 @@ $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
             [
                 'attribute' => 'updated_by',
                 'header' => Yii::t('app', 'Updated By'),
-                'value' => function($model) {
+                'value' => function ($model) {
 //                                return $model['updater']['nickname'];
                 },
                 'contentOptions' => ['class' => 'username']
@@ -115,7 +115,7 @@ $this->registerJs($js);
 
 \app\modules\admin\components\JsBlock::begin();
 ?>
-    <script type="text/javascript">
-        yadjet.actions.toggle("table td.enabled-handler img", "<?= yii\helpers\Url::toRoute('toggle') ?>");
-    </script>
+<script type="text/javascript">
+    yadjet.actions.toggle("table td.enabled-handler img", "<?= yii\helpers\Url::toRoute('toggle') ?>");
+</script>
 <?php \app\modules\admin\components\JsBlock::end() ?>
