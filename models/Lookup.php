@@ -115,6 +115,7 @@ class Lookup extends BaseActiveRecord
 
     /**
      * 分组选项
+     *
      * @return array
      */
     public static function getGroupOptions()
@@ -128,6 +129,7 @@ class Lookup extends BaseActiveRecord
 
     /**
      * 分组名称
+     *
      * @return string|mixed
      */
     public function getGroup_text()
@@ -167,6 +169,7 @@ class Lookup extends BaseActiveRecord
 
     /**
      * 刷新缓存
+     *
      * @return array
      */
     public static function refreshCache()
@@ -213,16 +216,31 @@ class Lookup extends BaseActiveRecord
 
     /**
      * 根据设定的标签获取值
+     *
      * @param string $key
      * @param string $defaultValue
+     * @param string $returnType
      * @return mixed
      */
-    public static function getValue($key, $defaultValue = null)
+    public static function getValue($key, $defaultValue = null, $returnType = 'string')
     {
         $labelValues = Yii::$app->getCache()->get('cache.mode.lookup.refresh-cache');
         $labelValues === false && $labelValues = self::refreshCache();
 
-        return isset($labelValues[$key]) ? $labelValues[$key] : $defaultValue;
+        $value = isset($labelValues[$key]) ? $labelValues[$key] : $defaultValue;
+        switch ($returnType) {
+            case 'int':
+                $value = (int) $value;
+                break;
+
+            case 'array':
+                $value = (array) $value;
+                break;
+
+        }
+
+        return $value;
+
     }
 
     // Events

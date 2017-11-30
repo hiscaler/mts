@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $menus = [];
 $typeOptions = \app\models\Category::typeOptions();
+
 foreach ($typeOptions as $key => $value) {
     $menus[] = ['label' => $value . Yii::t('app', 'Categories'), 'url' => ['index', 'CategorySearch[type]' => $key]];
     $menus[] = ['label' => Yii::t('app', 'Create') . $value . Yii::t('model', 'Category'), 'url' => ['create', 'type' => $key]];
@@ -110,12 +111,11 @@ $this->registerCssFile($baseUrl . '/css/jquery.treetable.theme.default.css');
 $this->registerJsFile($baseUrl . '/jquery.treetable.js', [
     'depends' => ['\yii\web\JqueryAsset']
 ]);
-$js = '$(".table").treetable({expandable: true, initialState: "expand"});';
-$this->registerJs($js);
 
 \app\modules\admin\components\JsBlock::begin();
 ?>
 <script type="text/javascript">
     yadjet.actions.toggle("table td.enabled-handler img", "<?= yii\helpers\Url::toRoute('toggle') ?>");
+    $(".table").treetable({expandable: true, initialState: "expand"});
 </script>
 <?php \app\modules\admin\components\JsBlock::end() ?>
