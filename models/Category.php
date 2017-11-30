@@ -80,11 +80,12 @@ class Category extends BaseActiveRecord
 
     /**
      * 类别选项
+     *
      * @return array
      */
     public static function typeOptions()
     {
-        return Lookup::getValue('system.models.category.type', []);
+        return Lookup::getValue('system.models.category.type', [], 'array');
     }
 
     /**
@@ -122,6 +123,7 @@ class Category extends BaseActiveRecord
 
     /**
      * 处理并生成分类数据缓存，供后续代码调取
+     *
      * @param boolean $toTree
      * @return array
      */
@@ -231,6 +233,7 @@ class Category extends BaseActiveRecord
 
     /**
      * 获取所有父节点数据
+     *
      * @param mixed|integer $id
      * @return array
      */
@@ -248,6 +251,7 @@ class Category extends BaseActiveRecord
 
     /**
      * 判断是否有子节点
+     *
      * @param integer $id
      * @return boolean
      */
@@ -260,6 +264,7 @@ class Category extends BaseActiveRecord
 
     /**
      * 获取所有子节点数据
+     *
      * @param mixed|integer $parent
      * @return array
      */
@@ -286,6 +291,7 @@ class Category extends BaseActiveRecord
 
     /**
      * 获取所有子节点 id 集合
+     *
      * @param mixed|integer $parent
      * @return array
      */
@@ -300,6 +306,14 @@ class Category extends BaseActiveRecord
     }
 
     // 事件
+    private $_alias;
+
+    public function afterFind()
+    {
+        parent::afterFind();
+        $this->_alias = $this->alias;
+    }
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
@@ -321,6 +335,22 @@ class Category extends BaseActiveRecord
     {
         parent::afterSave($insert, $changedAttributes);
         self::generateCache();
+        if (!$insert && $this->_alias != $this->alias) {
+            // 更新子栏目别名
+            $childrenIds = self::getChildrenIds($this->id);
+
+            if ($childrenIds) {
+                $db = Yii::$app->getDb();
+                $cmd = $db->createCommand();
+                $children = $db->createCommand('SELECT [[id]], [[alias]] FROM {{%category}} WHERE [[id]] IN (' . implode(', ', $childrenIds) . ')')->queryAll();
+                foreach ($children as $child) {
+                    $prefix = $this->parent_id ? '/' : '';
+                    /* @todo 需要验证子栏目雷同的名称如何处理 */
+                    $alias = str_replace($prefix . $this->_alias . '/', $prefix . $this->alias . '/', $child['alias']);
+                    $cmd->update('{{%category}}', ['alias' => $alias], ['id' => $child['id']])->execute();
+                }
+            }
+        }
     }
 
     public function afterDelete()
