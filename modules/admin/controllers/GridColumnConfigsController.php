@@ -7,6 +7,7 @@ use app\models\Constant;
 use app\models\GridColumnConfig;
 use app\models\Yad;
 use Yii;
+use yii\base\InvalidCallException;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -44,6 +45,7 @@ class GridColumnConfigsController extends Controller
 
     /**
      * Lists all GridColumnConfig models.
+     *
      * @return mixed
      */
     public function actionIndex($name)
@@ -52,7 +54,12 @@ class GridColumnConfigsController extends Controller
         if (!$request->isAjax && !$request->isPjax) {
             throw new \yii\web\BadRequestHttpException(Yii::t('app', 'Bad Request.'));
         }
-        $attributeLabels = Yii::createObject(BaseActiveRecord::id2ClassName($name))->attributeLabels();
+        try {
+            $attributeLabels = Yii::createObject(BaseActiveRecord::id2ClassName($name))->attributeLabels();
+        } catch (\Exception $ex) {
+            throw new InvalidCallException($ex->getMessage());
+        }
+
         if (!isset(Yii::$app->params['gridColumns'][$name])) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
