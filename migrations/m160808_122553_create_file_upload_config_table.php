@@ -20,7 +20,7 @@ class m160808_122553_create_file_upload_config_table extends Migration
             'attribute' => $this->string(60)->notNull()->comment('表字段名'),
             'extensions' => $this->string(60)->notNull()->comment('允许的文件后缀'),
             'min_size' => $this->integer()->notNull()->defaultValue(1)->comment('最小尺寸'),
-            'max_size' => $this->integer()->notNull()->comment('最大尺寸'),
+            'max_size' => $this->integer()->notNull()->defaultValue(200)->comment('最大尺寸'),
             'thumb_width' => $this->smallInteger()->comment('缩略图宽度'),
             'thumb_height' => $this->smallInteger()->comment('缩略图高度'),
             'tenant_id' => $this->integer()->notNull()->comment('站点 id'),
