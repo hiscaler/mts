@@ -9,7 +9,7 @@ use app\models\FileUploadConfig;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="form-outside search-form form-layout-column" style="display: none">
+<div class="form-outside form-search form-layout-column" style="display: none">
     <div class="file-upload-config-search form">
 
         <?php
