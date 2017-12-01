@@ -204,9 +204,8 @@ yadjet.actions = yadjet.actions || {
                 }, success: function (response) {
                     layer.open({
                         title: '表格栏位设定',
-                        content: response,
-                        lock: true,
-                        padding: '10px',
+                        content: '<div id="hiscaler">' + response + '</div>',
+                        skin: 'layer-grid-view',
                         yes: function () {
                             $.pjax.reload({container: '#' + $this.attr('data-reload-object')});
                         }

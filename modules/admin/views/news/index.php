@@ -21,6 +21,7 @@ $this->params['menus'] = [
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
+
     <div class="news-index">
 
         <?= $this->render('_search', ['model' => $searchModel]); ?>
@@ -182,33 +183,34 @@ $this->params['menus'] = [
 
     </div>
 
-<?php
-$this->registerJs('yadjet.actions.toggle("table td.news-enabled-handler img", "' . Url::toRoute('toggle') . '");');
-$this->registerJs('yadjet.actions.toggle("table td.news-enabled-comment-handler img", "' . Url::toRoute('toggle-comment') . '");');
+<?php \app\modules\admin\components\JsBlock::begin() ?>
+    <script type="text/javascript">
+        $(function () {
+            jQuery(document).on('click', 'a.setting-entity-labels', function () {
+                var $this = $(this);
+                $.ajax({
+                    type: 'GET',
+                    url: $this.attr('href'),
+                    beforeSend: function (xhr) {
+                        $.fn.lock();
+                    }, success: function (response) {
+                        layer.open({
+                            title: $this.attr('title'),
+                            content: response,
+                            skin: "layer-grid-view",
+                        });
+                        $.fn.unlock();
+                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        layer.alert('[ ' + XMLHttpRequest.status + ' ] ' + XMLHttpRequest.responseText);
+                        $.fn.unlock();
+                    }
+                });
 
-$js = <<<'EOT'
-jQuery(document).on('click', 'a.setting-entity-labels', function () {
-    var $this = $(this);
-    $.ajax({
-        type: 'GET',
-        url: $this.attr('href'),
-        beforeSend: function(xhr) {
-            $.fn.lock();
-        }, success: function(response) {
-            layer.open({
-                title: $this.attr('title'),
-                content: response,
-                lock: true,
-                padding: '10px'
+                return false;
             });
-            $.fn.unlock();
-        }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-            layer.alert('[ ' + XMLHttpRequest.status + ' ] ' + XMLHttpRequest.responseText);
-            $.fn.unlock();
-        }
-    });
+        });
 
-    return false;
-});
-EOT;
-$this->registerJs($js);
+        yadjet.actions.toggle("table td.news-enabled-handler img", "<?= Url::toRoute('toggle') ?>");
+        yadjet.actions.toggle("table td.news-enabled-comment-handler img", "<?= Url::toRoute('toggle-comment') ?>");
+    </script>
+<?php \app\modules\admin\components\JsBlock::end() ?>
