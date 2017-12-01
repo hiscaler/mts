@@ -84,14 +84,15 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['type', 'role', 'credits_count', 'register_ip', 'login_count', 'last_login_ip', 'last_login_time', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['username', 'email'], 'required'],
+            [['username'], 'required'],
+            ['username', 'match', 'pattern' => '/^[a-z0-9]+[a-z0-9-]+[a-z0-9]$/'],
             [['username', 'nickname', 'user_group', 'system_group'], 'string', 'max' => 20],
             [['auth_key'], 'string', 'max' => 32],
             [['password_hash', 'password_reset_token'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 50],
             [['credits_count'], 'default', 'value' => 0],
             [['username'], 'unique'],
-            [['email'], 'unique'],
+            ['email', 'email'],
             [['password_reset_token'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_PENDING],
             ['role', 'default', 'value' => self::ROLE_USER],
@@ -299,6 +300,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * 用户状态选项
+     *
      * @return array
      */
     public static function statusOptions()
@@ -313,6 +315,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * 用户状态
+     *
      * @return string|mixed
      */
     public function getStatus_text()
@@ -324,6 +327,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * 用户分组
+     *
      * @return string|mixed
      */
     public function getUser_group_text()
@@ -335,6 +339,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * 系统分组
+     *
      * @return string|mixed
      */
     public function getSystem_group_text()
@@ -346,6 +351,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * 根据用户积分修正用户所在分组
+     *
      * @param integer $userId
      * @return boolean
      */
@@ -383,6 +389,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * 获取人员列表
+     *
      * @return array
      */
     public static function getList()

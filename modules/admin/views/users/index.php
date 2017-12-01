@@ -134,8 +134,7 @@ $title = Yii::t('app', 'Please choice this user can manager nodes');
                         id: 'nodes-list',
                         title: "<?= $title ?>" + ' [ ' + t.attr('data-name') + ' ]',
                         content: response,
-                        lock: true,
-                        padding: '10px',
+                        skin: 'layer-grid-view',
                         yes: function (index, layero) {
                             var nodes = $.fn.zTree.getZTreeObj("__ztree__").getCheckedNodes(true);
                             var ids = [];
