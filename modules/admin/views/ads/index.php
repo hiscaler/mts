@@ -54,7 +54,7 @@ $this->params['menus'] = [
                     }
                 ],
                 [
-                    'attribute' => 'ad_type',
+                    'attribute' => 'type',
                     'contentOptions' => ['class' => 'ad-type'],
                 ],
                 [
