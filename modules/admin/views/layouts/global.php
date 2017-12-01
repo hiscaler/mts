@@ -16,7 +16,7 @@ $this->beginContent('@app/modules/admin/views/layouts/base.php');
                             'itemTemplate' => "<li>{link}<i>&raquo;</i></li>",
                             'homeLink' => [
                                 'label' => Yii::t('app', 'Homepage'),
-                                'url' => Yii::$app->homeUrl,
+                                'url' => ['/admin/default/index'],
                             ],
                             'links' => $this->params['breadcrumbs'],
                         ]);

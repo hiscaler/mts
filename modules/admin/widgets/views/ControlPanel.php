@@ -1,6 +1,6 @@
 <div class="control-panel">
     <div class="inner">
-        <div class="title shortcut">Mai3</div>
+        <div class="title shortcut">MTS</div>
         <div class="shortcuts">
             <?php
             echo yii\widgets\Menu::widget([
