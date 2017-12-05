@@ -78,7 +78,7 @@ EOT;
                             ],
                             [
                                 'attribute' => 'name',
-                                'header' => Yii::t('attribute', 'Name')
+                                'header' => Yii::t('label', 'Name')
                             ],
                             [
                                 'attribute' => 'enabled',

@@ -6,7 +6,6 @@ use app\models\Attribute;
 use app\models\BaseActiveRecord;
 use app\models\Constant;
 use app\models\Label;
-use app\models\Option;
 use app\models\Yad;
 use PDO;
 use Yii;
@@ -52,6 +51,7 @@ class EntityLabelsController extends Controller
 
     /**
      * 查看实体记录自定义属性
+     *
      * @param integer $entityId
      * @param string $entityName
      * @return mixed
@@ -106,6 +106,7 @@ class EntityLabelsController extends Controller
     /**
      * Deletes an existing Attribute model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -118,6 +119,7 @@ class EntityLabelsController extends Controller
 
     /**
      * 激活禁止操作
+     *
      * @return Response
      */
     public function actionToggle()
@@ -153,6 +155,7 @@ class EntityLabelsController extends Controller
 
     /**
      * 添加或者删除实体数据自定义属性
+     *
      * @param integer $entityId
      * @param string $entityName
      * @param integer $labelId
@@ -202,7 +205,7 @@ class EntityLabelsController extends Controller
                         $responseData = [
                             'success' => true,
                             'data' => [
-                                'value' => Option::BOOLEAN_FALSE
+                                'value' => Constant::BOOLEAN_FALSE
                             ]
                         ];
                     } else {
@@ -251,6 +254,7 @@ class EntityLabelsController extends Controller
 
     /**
      * 自定义属性关联的实体数据
+     *
      * @param string $modelName
      * @return ActiveDataProvider
      */
@@ -313,6 +317,7 @@ class EntityLabelsController extends Controller
     /**
      * Finds the Attribute model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Attribute the loaded model
      * @throws NotFoundHttpException if the model cannot be found
