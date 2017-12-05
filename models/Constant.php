@@ -4,6 +4,7 @@ namespace app\models;
 
 /**
  * 常量定义
+ *
  * @package app\models
  *
  * @author hiscaler <hiscaler@gmail.com>

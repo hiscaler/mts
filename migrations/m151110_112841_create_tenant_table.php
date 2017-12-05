@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 /**
  * 租赁站点管理
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class m151110_112841_create_tenant_table extends Migration

@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 /**
  * 推送位管理
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class m151110_140123_create_label_table extends Migration

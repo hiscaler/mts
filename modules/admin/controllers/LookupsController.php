@@ -44,6 +44,7 @@ class LookupsController extends Controller
 
     /**
      * Lists all Lookup models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -103,6 +104,7 @@ class LookupsController extends Controller
     /**
      * Creates a new Lookup model.
      * If creation is successful, the browser will be redirected to the 'index' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -123,6 +125,7 @@ class LookupsController extends Controller
     /**
      * Updates an existing Lookup model.
      * If update is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -142,6 +145,7 @@ class LookupsController extends Controller
     /**
      * Deletes an existing Lookup model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -186,6 +190,7 @@ class LookupsController extends Controller
     /**
      * Finds the Lookup model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Lookup the loaded model
      * @throws NotFoundHttpException if the model cannot be found

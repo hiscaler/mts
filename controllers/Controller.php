@@ -12,6 +12,7 @@ class Controller extends \yii\web\Controller
 
     /**
      * 获取保存在 COOKIE 中的站点信息记录
+     *
      * @param string $key
      * @param mixed $default
      * @return mixed

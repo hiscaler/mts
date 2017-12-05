@@ -15,6 +15,7 @@ class GridView extends \yii\grid\GridView
 
     /**
      * 对应的表格名称
+     *
      * @var string
      */
     public $name;
@@ -49,6 +50,7 @@ class GridView extends \yii\grid\GridView
 
     /**
      * 返回所有不可见的项目
+     *
      * @return array
      */
     private function invisibleColumns()

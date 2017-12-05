@@ -38,6 +38,7 @@ class MembersController extends ShopController
 
     /**
      * Lists all User models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -66,6 +67,7 @@ class MembersController extends ShopController
 
     /**
      * 会员详情
+     *
      * @param integer $id
      * @return mixed
      */
@@ -90,6 +92,7 @@ class MembersController extends ShopController
 
     /**
      * 添加积分
+     *
      * @param integer $id
      * @return mixed
      */
@@ -111,6 +114,7 @@ class MembersController extends ShopController
 
     /**
      * 修改密码
+     *
      * @return mixed
      */
     public function actionChangePassword($id)
@@ -136,6 +140,7 @@ class MembersController extends ShopController
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found

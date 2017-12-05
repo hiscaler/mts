@@ -101,6 +101,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 输入类型选项
+     *
      * @return array
      */
     public static function inputTypeOptions()
@@ -116,6 +117,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 数据输入方式
+     *
      * @return string|mixed
      */
     public function getInput_type_text()
@@ -127,6 +129,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 返回数据类型选项
+     *
      * @retrun array
      */
     public static function returnValueTypeOptions()
@@ -140,6 +143,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 返回数据类型
+     *
      * @return string|mixed
      */
     public function getReturn_value_type_text()
@@ -151,6 +155,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 对象集合
+     *
      * @return array
      */
     public static function getObjectNames()
@@ -185,6 +190,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 格式化之后的对对象名称
+     *
      * @return string
      */
     public function getObject_name_formatted()
@@ -194,6 +200,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 获取对象的 Meta 数据
+     *
      * @param \yii\db\ActiveRecord $activeRecord
      * @return array
      */
@@ -284,6 +291,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 获取 Meta 对象的验证规则
+     *
      * @param integer $metaId
      * @return arrya
      */
@@ -306,6 +314,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 保存 Meta 数据
+     *
      * @param \yii\db\ActiveRecord $activeRecord
      * @param \yii\base\DynamicModel $dynamicModel
      * @param type $throwException
@@ -369,6 +378,7 @@ class Meta extends \yii\db\ActiveRecord
 
     /**
      * 获取自定义字段内容值
+     *
      * @param \yii\db\ActiveRecord $activeRecord
      * @param integer $objectId
      * @param array $keys 需要获取字段列表

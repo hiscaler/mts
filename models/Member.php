@@ -12,12 +12,14 @@ class Member extends User
 
     /**
      * 用户类型
+     *
      * @var integer
      */
     public $type = self::TYPE_MEMBER;
 
     /**
      * 用户推荐码
+     *
      * @var string
      */
     public $referral;

@@ -53,6 +53,7 @@ class NewsController extends GlobalController
 
     /**
      * Lists all News models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -68,6 +69,7 @@ class NewsController extends GlobalController
 
     /**
      * Displays a single News model.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -86,6 +88,7 @@ class NewsController extends GlobalController
     /**
      * Creates a new News model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -124,6 +127,7 @@ class NewsController extends GlobalController
     /**
      * Updates an existing News model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -149,6 +153,7 @@ class NewsController extends GlobalController
     /**
      * Deletes an existing News model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -171,6 +176,7 @@ class NewsController extends GlobalController
     /**
      * Undo Delete an existing News model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -190,6 +196,7 @@ class NewsController extends GlobalController
 
     /**
      * Toggle enabled
+     *
      * @return Response
      */
     public function actionToggle()
@@ -226,6 +233,7 @@ class NewsController extends GlobalController
 
     /**
      * Toggle enabled comment function
+     *
      * @return Response
      */
     public function actionToggleComment()
@@ -265,6 +273,7 @@ class NewsController extends GlobalController
 
     /**
      * 删除案例附件中的截图
+     *
      * @param integer $id
      * @return Response
      */
@@ -303,6 +312,7 @@ class NewsController extends GlobalController
 
     /**
      * 选择资讯来源和作者
+     *
      * @param string $label
      * @return mixed
      */
@@ -324,6 +334,7 @@ class NewsController extends GlobalController
     /**
      * Finds the News model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return News the loaded model
      * @throws NotFoundHttpException if the model cannot be found

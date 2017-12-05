@@ -39,6 +39,7 @@ class BaseActiveRecord extends ActiveRecord
 
     /**
      * `app\model\Post` To `app-model-Post`
+     *
      * @param string $className
      * @return string
      */
@@ -54,6 +55,7 @@ class BaseActiveRecord extends ActiveRecord
 
     /**
      * `app-model-Post` To `app\model\Post`
+     *
      * @param string $id
      * @return string
      */
@@ -128,6 +130,7 @@ class BaseActiveRecord extends ActiveRecord
 
     /**
      * 数据关联的推送位
+     *
      * @return ActiveRecord
      */
     public function getRelatedLabels()
@@ -142,6 +145,7 @@ class BaseActiveRecord extends ActiveRecord
 
     /**
      * Creater relational
+     *
      * @return ActiveQueryInterface the relational query object.
      */
     public function getCreater()
@@ -151,6 +155,7 @@ class BaseActiveRecord extends ActiveRecord
 
     /**
      * Updater relational
+     *
      * @return ActiveQueryInterface the relational query object.
      */
     public function getUpdater()
@@ -160,6 +165,7 @@ class BaseActiveRecord extends ActiveRecord
 
     /**
      * Deleter relational
+     *
      * @return ActiveQueryInterface the relational query object.
      */
     public function getDeleter()

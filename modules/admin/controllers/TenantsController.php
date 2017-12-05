@@ -48,6 +48,7 @@ class TenantsController extends GlobalController
 
     /**
      * Lists all Tenant models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -63,6 +64,7 @@ class TenantsController extends GlobalController
 
     /**
      * Displays a single Tenant model.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -76,6 +78,7 @@ class TenantsController extends GlobalController
     /**
      * Creates a new Tenant model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -98,6 +101,7 @@ class TenantsController extends GlobalController
     /**
      * Updates an existing Tenant model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -117,6 +121,7 @@ class TenantsController extends GlobalController
     /**
      * Deletes an existing Tenant model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -139,6 +144,7 @@ class TenantsController extends GlobalController
     /**
      * Undo delete an existing Special model.
      * If undo delete is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -158,6 +164,7 @@ class TenantsController extends GlobalController
 
     /**
      * 切换记录禁止、激活状态
+     *
      * @return Response
      */
     public function actionToggle()
@@ -191,6 +198,7 @@ class TenantsController extends GlobalController
 
     /**
      * 添加站点管理用户
+     *
      * @return mixed
      */
     public function actionCreateUser($id)
@@ -229,6 +237,7 @@ class TenantsController extends GlobalController
     /**
      * Finds the Tenant model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Tenant the loaded model
      * @throws NotFoundHttpException if the model cannot be found

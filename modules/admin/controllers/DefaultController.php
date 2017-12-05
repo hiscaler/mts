@@ -110,6 +110,7 @@ class DefaultController extends Controller
 
     /**
      * 修改帐号资料
+     *
      * @return mixed
      */
     public function actionProfile()
@@ -129,6 +130,7 @@ class DefaultController extends Controller
 
     /**
      * Change current logined user password
+     *
      * @return mixed
      */
     public function actionChangePassword()
@@ -154,6 +156,7 @@ class DefaultController extends Controller
 
     /**
      * 用户登录日志
+     *
      * @return mixed
      */
     public function actionLoginLogs()
@@ -173,6 +176,7 @@ class DefaultController extends Controller
 
     /**
      * 设置当前用户管理的租赁
+     *
      * @param integer $tenantId
      * @return mixed
      */
@@ -185,6 +189,7 @@ class DefaultController extends Controller
 
     /**
      * 选择租赁站点
+     *
      * @return mixed
      */
     public function actionChoiceTenant()

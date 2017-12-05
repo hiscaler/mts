@@ -43,6 +43,7 @@ class FriendlyLinksController extends Controller
 
     /**
      * Lists all FriendlyLink models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -59,6 +60,7 @@ class FriendlyLinksController extends Controller
     /**
      * Creates a new FriendlyLink model.
      * If creation is successful, the browser will be redirected to the 'index' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -81,6 +83,7 @@ class FriendlyLinksController extends Controller
     /**
      * Updates an existing FriendlyLink model.
      * If update is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -100,6 +103,7 @@ class FriendlyLinksController extends Controller
     /**
      * Deletes an existing FriendlyLink model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -113,6 +117,7 @@ class FriendlyLinksController extends Controller
 
     /**
      * 切换是否激活开关
+     *
      * @return Response
      */
     public function actionToggle()
@@ -152,6 +157,7 @@ class FriendlyLinksController extends Controller
     /**
      * Finds the FriendlyLink model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return FriendlyLink the loaded model
      * @throws NotFoundHttpException if the model cannot be found

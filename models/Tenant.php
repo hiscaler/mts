@@ -80,6 +80,7 @@ class Tenant extends BaseActiveRecord
 
     /**
      * 管理用户
+     *
      * @return array
      */
     public function getUsers()
@@ -95,6 +96,7 @@ class Tenant extends BaseActiveRecord
 
     /**
      * 获取站点定义的 access token
+     *
      * @return ActiveRecord
      */
     public function getAccessTokens()
@@ -104,6 +106,7 @@ class Tenant extends BaseActiveRecord
 
     /**
      * 获取租赁站点管理用户分组
+     *
      * @param integer $tenantId
      * @return array
      */
@@ -127,6 +130,7 @@ class Tenant extends BaseActiveRecord
 
     /**
      * 获取租赁站点管理用户
+     *
      * @return array
      */
     public static function users()
@@ -147,6 +151,7 @@ class Tenant extends BaseActiveRecord
 
     /**
      * 租赁站点定义的审核流程规则
+     *
      * @return array
      */
     public static function workflowRules($tenantId = null)

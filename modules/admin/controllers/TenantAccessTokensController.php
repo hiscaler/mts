@@ -46,6 +46,7 @@ class TenantAccessTokensController extends GlobalController
 
     /**
      * Lists all TenantAccessToken models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -61,6 +62,7 @@ class TenantAccessTokensController extends GlobalController
 
     /**
      * Displays a single TenantAccessToken model.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -74,6 +76,7 @@ class TenantAccessTokensController extends GlobalController
     /**
      * Creates a new TenantAccessToken model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -95,6 +98,7 @@ class TenantAccessTokensController extends GlobalController
     /**
      * Updates an existing TenantAccessToken model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -114,6 +118,7 @@ class TenantAccessTokensController extends GlobalController
     /**
      * Deletes an existing TenantAccessToken model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -136,6 +141,7 @@ class TenantAccessTokensController extends GlobalController
     /**
      * Undo delete an existing Special model.
      * If undo delete is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -155,6 +161,7 @@ class TenantAccessTokensController extends GlobalController
 
     /**
      * 切换是否激活开关
+     *
      * @return Response
      */
     public function actionToggle()
@@ -192,6 +199,7 @@ class TenantAccessTokensController extends GlobalController
     /**
      * Finds the TenantAccessToken model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return TenantAccessToken the loaded model
      * @throws NotFoundHttpException if the model cannot be found

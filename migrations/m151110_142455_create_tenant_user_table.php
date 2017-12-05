@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 /**
  * 站点用户
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class m151110_142455_create_tenant_user_table extends Migration

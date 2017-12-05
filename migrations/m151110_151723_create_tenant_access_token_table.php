@@ -5,7 +5,7 @@ use yii\db\Migration;
 
 /**
  * 用户站点访问令牌
- * 
+ *
  * @author hiscaler <hiscaler@gmail.com>
  */
 class m151110_151723_create_tenant_access_token_table extends Migration

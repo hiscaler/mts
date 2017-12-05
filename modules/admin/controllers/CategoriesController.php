@@ -46,6 +46,7 @@ class CategoriesController extends GlobalController
 
     /**
      * Lists all Category models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -62,6 +63,7 @@ class CategoriesController extends GlobalController
     /**
      * Creates a new Category model.
      * If creation is successful, the browser will be redirected to the 'index' page.
+     *
      * @return mixed
      */
     public function actionCreate($type, $parentId = 0, $ordering = 1)
@@ -84,6 +86,7 @@ class CategoriesController extends GlobalController
     /**
      * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -103,6 +106,7 @@ class CategoriesController extends GlobalController
     /**
      * Deletes an existing Category model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -121,6 +125,7 @@ class CategoriesController extends GlobalController
 
     /**
      * 激活禁止操作
+     *
      * @return Response
      */
     public function actionToggle()
@@ -165,6 +170,7 @@ class CategoriesController extends GlobalController
     /**
      * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found

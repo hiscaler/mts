@@ -66,6 +66,7 @@ class SiteController extends Controller
 
     /**
      * 用户注册
+     *
      * @return mixed
      */
     public function actionSignup($next = null)
@@ -134,6 +135,7 @@ class SiteController extends Controller
 
     /**
      * 忘记密码
+     *
      * @return mixed
      */
     public function actionForgetPassword()
@@ -161,6 +163,7 @@ class SiteController extends Controller
 
     /**
      * 重置密码
+     *
      * @param string $token
      * @return mixed
      */
@@ -181,6 +184,7 @@ class SiteController extends Controller
 
     /**
      * 切换语言
+     *
      * @param string $lang
      */
     public function actionLanguage($lang = null)

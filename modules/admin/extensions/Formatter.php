@@ -40,6 +40,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 图片展示
+     *
      * @param string $value
      * @param array $options
      * @return string
@@ -60,6 +61,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 下载按钮
+     *
      * @param string $value
      * @return string
      */
@@ -74,6 +76,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 获取分组名称
+     *
      * @param string $groupName
      * @param string $value
      * @return mixed
@@ -89,6 +92,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * Get data status text view
+     *
      * @param integer $value
      * @return mixed
      */
@@ -104,6 +108,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * Get model name text view
+     *
      * @param integer $value
      * @return mixed
      */
@@ -203,6 +208,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 返回类型
+     *
      * @param integer $value
      * @return mixed
      */
@@ -221,6 +227,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 链接类型
+     *
      * @param integer $value
      * @return mixed
      */
@@ -237,6 +244,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 链接打开方式
+     *
      * @param integer $value
      * @return mixed
      */
@@ -255,6 +263,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 广告类型
+     *
      * @param integer $value
      * @return mixed
      */
@@ -271,6 +280,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 广告文件
+     *
      * @param integer $value
      * @return mixed
      */
@@ -292,6 +302,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 链接打开方式
+     *
      * @param integer $value
      * @return mixed
      */
@@ -304,6 +315,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 记录状态
+     *
      * @param integer $value
      * @return mixed
      */
@@ -322,6 +334,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 视频路径保存类型
+     *
      * @param integer $value
      * @return mixed
      */
@@ -340,6 +353,7 @@ class Formatter extends \yii\i18n\Formatter
 
     /**
      * 任务状态
+     *
      * @param integer $value
      * @return mixed
      */

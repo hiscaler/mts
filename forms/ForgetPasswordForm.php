@@ -33,6 +33,7 @@ class ForgetPasswordForm extends Model
 
     /**
      * 验证请求的帐号和邮箱是否正确
+     *
      * @param string $attribute
      * @param array $params
      */

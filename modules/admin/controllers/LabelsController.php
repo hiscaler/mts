@@ -48,6 +48,7 @@ class LabelsController extends GlobalController
 
     /**
      * Lists all Label models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -64,6 +65,7 @@ class LabelsController extends GlobalController
     /**
      * Creates a new Label model.
      * If creation is successful, the browser will be redirected to the 'create' page.
+     *
      * @return mixed
      */
     public function actionCreate($ordering = 1)
@@ -85,6 +87,7 @@ class LabelsController extends GlobalController
     /**
      * Updates an existing Label model.
      * If update is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -104,6 +107,7 @@ class LabelsController extends GlobalController
     /**
      * Deletes an existing Label model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -130,6 +134,7 @@ class LabelsController extends GlobalController
 
     /**
      * 激活禁止操作
+     *
      * @return Response
      */
     public function actionToggle()
@@ -173,6 +178,7 @@ class LabelsController extends GlobalController
     /**
      * Finds the Label model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Label the loaded model
      * @throws NotFoundHttpException if the model cannot be found

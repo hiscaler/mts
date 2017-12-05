@@ -131,6 +131,7 @@ class News extends BaseActiveRecord
 
     /**
      * 保存资讯正文内容
+     *
      * @param ActiveReocrd $newsContent
      * @return boolean
      */
@@ -143,6 +144,7 @@ class News extends BaseActiveRecord
 
     /**
      * 处理正文内容中的图片，如果没有上传附件图片并且设定了图片的获取位置才会进行解析操作
+     *
      * @param ActiveRecord $model
      */
     public function processPicturePath($model)

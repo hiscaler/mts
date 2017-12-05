@@ -21,6 +21,7 @@ class InitController extends Controller
 
     /**
      * 初始化默认管理用户
+     *
      * @return int
      */
     private function _initAdminUser()
@@ -103,6 +104,7 @@ class InitController extends Controller
 
     /**
      * 初始化配置资料
+     *
      * @return int
      */
     public function _initLookups($tenantId)
@@ -276,10 +278,10 @@ class InitController extends Controller
                 $key = trim($key);
                 // Check exists, ignore it if exists.
                 $exists = $existsCmd->bindValues([
-                        ':type' => $type,
-                        ':key' => $key,
-                        ':tenantId' => $tenantId
-                    ])->queryScalar();
+                    ':type' => $type,
+                    ':key' => $key,
+                    ':tenantId' => $tenantId
+                ])->queryScalar();
                 if ($exists) {
                     echo "{$key} is exists, ignore it..." . PHP_EOL;
                     continue;
@@ -320,6 +322,7 @@ class InitController extends Controller
 
     /**
      * yii init 1
+     *
      * @param integer $tenantId
      */
     public function actionIndex($tenantId)

@@ -45,6 +45,7 @@ class DownloadsController extends GlobalController
 
     /**
      * Lists all Download models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -60,6 +61,7 @@ class DownloadsController extends GlobalController
 
     /**
      * Displays a single Download model.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -73,6 +75,7 @@ class DownloadsController extends GlobalController
     /**
      * Creates a new Download model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -92,6 +95,7 @@ class DownloadsController extends GlobalController
     /**
      * Updates an existing Download model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -111,6 +115,7 @@ class DownloadsController extends GlobalController
     /**
      * Deletes an existing Download model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -123,6 +128,7 @@ class DownloadsController extends GlobalController
 
     /**
      * 激活禁止操作
+     *
      * @return Response
      */
     public function actionToggle()
@@ -162,6 +168,7 @@ class DownloadsController extends GlobalController
 
     /**
      * 下载文件
+     *
      * @param integer $id
      */
     public function actionDownload($id)
@@ -179,6 +186,7 @@ class DownloadsController extends GlobalController
     /**
      * Finds the Download model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return Download the loaded model
      * @throws NotFoundHttpException if the model cannot be found

@@ -54,6 +54,7 @@ class ApiController extends \yii\rest\Controller
 
     /**
      * 数据验证规则
+     *
      * @return Response
      */
     public function actionValidators()
@@ -119,6 +120,7 @@ class ApiController extends \yii\rest\Controller
 
     /**
      * 指定数据的验证规则
+     *
      * @param integer $metaId
      * @return yii\web\Response
      */

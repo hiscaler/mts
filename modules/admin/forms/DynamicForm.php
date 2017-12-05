@@ -6,6 +6,7 @@ use yii\base\DynamicModel;
 
 /**
  * 动态表单
+ *
  * @author hiscaler<hiscaler@gmail.com>
  */
 class DynamicForm extends DynamicModel

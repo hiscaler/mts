@@ -44,6 +44,7 @@ class AdSpacesController extends Controller
 
     /**
      * Lists all AdSpace models.
+     *
      * @return mixed
      */
     public function actionIndex()
@@ -59,6 +60,7 @@ class AdSpacesController extends Controller
 
     /**
      * Displays a single AdSpace model.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -72,6 +74,7 @@ class AdSpacesController extends Controller
     /**
      * Creates a new AdSpace model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     *
      * @return mixed
      */
     public function actionCreate()
@@ -91,6 +94,7 @@ class AdSpacesController extends Controller
     /**
      * Updates an existing AdSpace model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -110,6 +114,7 @@ class AdSpacesController extends Controller
     /**
      * Deletes an existing AdSpace model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -132,6 +137,7 @@ class AdSpacesController extends Controller
     /**
      * Undo delete an existing Special model.
      * If undo delete is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @return mixed
      */
@@ -183,6 +189,7 @@ class AdSpacesController extends Controller
     /**
      * Finds the AdSpace model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param integer $id
      * @return AdSpace the loaded model
      * @throws NotFoundHttpException if the model cannot be found

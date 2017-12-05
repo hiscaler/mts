@@ -52,6 +52,7 @@ class Yad
 
     /**
      * 时区列表
+     *
      * @return array
      */
     public static function getTimezones()
@@ -78,6 +79,7 @@ class Yad
 
     /**
      * 设置租赁站点信息
+     *
      * @param integer $tenantId
      * @return boolean
      */
@@ -123,6 +125,7 @@ class Yad
 
     /**
      * 获取保存在 COOKIE 中的站点信息记录
+     *
      * @param string $key
      * @param mixed $default
      * @return mixed
@@ -164,6 +167,7 @@ class Yad
 
     /**
      * 用户系统角色
+     *
      * @return mixed
      */
     public static function getUserRole()
@@ -173,6 +177,7 @@ class Yad
 
     /**
      * 租赁站点的用户角色
+     *
      * @return mixed
      */
     public static function getTenantUserRole()
@@ -182,6 +187,7 @@ class Yad
 
     /**
      * 租赁站点用户审核规则
+     *
      * @return mixed
      */
     public static function getTenantUserRule()
@@ -193,6 +199,7 @@ class Yad
      * Return table name by special model name
      * For Example: Yad::modelName2TableName('app\models\news') return `news`, if
      * Use table prefix, will return `table_prifix_news` name
+     *
      * @param string $modelName
      * @return string
      */
@@ -208,6 +215,7 @@ class Yad
 
     /**
      * 获取文本内容中的所有图片路径
+     *
      * @param string $content
      * @param string|integer $order
      * @return array|string|null

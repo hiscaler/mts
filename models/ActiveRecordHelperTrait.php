@@ -9,6 +9,7 @@ trait ActiveRecordHelperTrait
 
     /**
      * `app\model\Post` To `app-model-Post`
+     *
      * @param string $className
      * @return string
      */
@@ -23,6 +24,7 @@ trait ActiveRecordHelperTrait
 
     /**
      * `app-model-Post` To `app\model\Post`
+     *
      * @param string $id
      * @return string
      */
