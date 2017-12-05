@@ -25,7 +25,7 @@ class Toolbar extends Widget
                 if (count($tenantsRawData) > 1) {
                     foreach ($tenantsRawData as $data) {
                         $tenants[] = [
-                            'label' => '[ ' . Yii::t('language', $data['language']) . " ] {$data['name']}",
+                            'label' => $data['name'] . ' [ ' . Yii::t('language', $data['language']) . ' ]',
                             'url' => ['default/change-tenant', 'tenantId' => $data['id']],
                         ];
                     }
@@ -33,7 +33,7 @@ class Toolbar extends Widget
 
                 $items = [
                     [
-                        'label' => '[ ' . Yii::t('language', Yad::getLanguage()) . ' ] ' . Yad::getTenantName(),
+                        'label' => Yad::getTenantName() . ' [ ' . Yii::t('language', Yad::getLanguage()) . ' ]',
                         'url' => '###',
                         'options' => ['class' => 'change-tenant'],
                         'items' => $tenants,
