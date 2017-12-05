@@ -15,11 +15,19 @@ use app\models\Lookup;
         <?php $form = ActiveForm::begin(); ?>
         <?= $form->errorSummary($model) ?>
 
-        <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
+        <?php
+        $options = ['maxlength' => true];
+        if (!$model->isNewRecord && strncmp($model['key'], 'system', 6) == 0) {
+            $options['readonly'] = 'readonly';
+            $options['class'] = 'disabled';
+        }
+        ?>
 
-        <?= $form->field($model, 'label')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'key')->textInput($options) ?>
 
-        <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'label')->textInput($options) ?>
+
+        <?= $form->field($model, 'description')->textInput($options) ?>
 
         <?= $form->field($model, 'input_method')->dropDownList(Lookup::inputMethodOptions()) ?>
 
