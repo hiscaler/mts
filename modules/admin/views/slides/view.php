@@ -27,7 +27,16 @@ $this->params['menus'] = [
             'title',
             'url:url',
             'url_open_target_text',
-            'picture_path:image',
+            [
+
+                'attribute' => 'picture_path',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $picturePath = $model->picture_path;
+
+                    return empty($picturePath) ? null : \yii\helpers\Html::img($picturePath, ['class' => 'thumbnail']);
+                }
+            ],
             'enabled:boolean',
             'created_at:datetime',
             'updated_at:datetime',

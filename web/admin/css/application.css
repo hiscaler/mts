@@ -185,6 +185,14 @@ table.detail-view tr.odd th {
 table.detail-view tr.even th {
     background: #F8F8F8;
 }
+table.detail-view td img.thumbnail {
+    border: #ccc solid 1px;
+    padding: 3px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    max-width: 80%;
+}
 /*******************************************************************************
  * data list
  ******************************************************************************/
