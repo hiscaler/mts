@@ -80,6 +80,7 @@ class AdSpacesController extends Controller
     public function actionCreate()
     {
         $model = new AdSpace();
+        $model->loadDefaultValues();
         $model->enabled = Constant::BOOLEAN_TRUE;
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {

@@ -84,6 +84,7 @@ class TenantsController extends GlobalController
     public function actionCreate()
     {
         $model = new Tenant();
+        $model->loadDefaultValues();
         $model->date_format = 'php:Y-m-d';
         $model->time_format = 'php:H:i:s';
         $model->datetime_format = 'php:Y-m-d H:i:s';

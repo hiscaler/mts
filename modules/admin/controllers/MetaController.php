@@ -81,6 +81,7 @@ class MetaController extends Controller
     public function actionCreate()
     {
         $model = new Meta();
+        $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

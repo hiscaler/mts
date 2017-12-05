@@ -110,6 +110,7 @@ class LookupsController extends Controller
     public function actionCreate()
     {
         $model = new Lookup();
+        $model->loadDefaultValues();
         $model->return_type = Lookup::RETURN_TYPE_STRING;
         $model->enabled = Constant::BOOLEAN_TRUE;
 

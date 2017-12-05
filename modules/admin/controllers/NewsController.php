@@ -94,6 +94,7 @@ class NewsController extends GlobalController
     public function actionCreate()
     {
         $model = new News();
+        $model->loadDefaultValues();
         $model->author = Yii::$app->getUser()->getIdentity()->nickname;
         $model->source = Lookup::getValue('system.models.news.source');
         $model->ordering = News::DEFAULT_ORDERING_VALUE;
