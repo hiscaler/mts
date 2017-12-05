@@ -3,6 +3,7 @@
 namespace app\modules\admin\forms;
 
 use app\models\User;
+use app\models\UserLoginLog;
 use Yii;
 use yii\base\Model;
 
@@ -70,7 +71,7 @@ class LoginForm extends Model
                     ':id' => Yii::$app->getUser()->getId()
                 ])->execute();
                 // Write user login log
-//                UserLoginLog::write();
+                UserLoginLog::write();
             }
 
             return $logined;
