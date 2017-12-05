@@ -35,7 +35,7 @@ return [
             'app-models-Lookup' => [
                 'id' => 'lookups',
                 'label' => 'Lookups',
-                'url' => ['lookups/index'],
+                'url' => ['lookups/form'],
                 'forceEmbed' => false,
             ],
             'app-models-Category' => [
