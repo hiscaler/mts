@@ -26,7 +26,7 @@ class LookupsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'list', 'create', 'update', 'delete', 'toggle'],
+                        'actions' => ['index', 'form', 'create', 'update', 'delete', 'toggle'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -47,7 +47,7 @@ class LookupsController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionForm()
     {
         $db = Yii::$app->getDb();
         if (Yii::$app->getRequest()->isPost) {
@@ -85,17 +85,17 @@ class LookupsController extends Controller
             $items[$key][] = $item;
         }
 
-        return $this->render('index', [
+        return $this->render('form', [
             'items' => $items,
         ]);
     }
 
-    public function actionList()
+    public function actionIndex()
     {
         $searchModel = new LookupSearch();
         $dataProvider = $searchModel->search(Yii::$app->getRequest()->queryParams);
 
-        return $this->render('list', [
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

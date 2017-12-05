@@ -8,13 +8,13 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="form-outside search-form form-layout-column" style="display: none">
+<div class="form-outside form-search form-layout-column" style="display: none">
     <div class="form lookup-search">
 
         <?php
         $form = ActiveForm::begin([
             'id' => 'form-lookups',
-            'action' => ['index'],
+            'action' => ['form'],
             'method' => 'get',
         ]);
         ?>
