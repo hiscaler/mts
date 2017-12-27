@@ -232,27 +232,29 @@ class Tenant extends BaseActiveRecord
             $deleteModules = array_diff($this->_modules, $modules);
         }
 
-        $transaction = $db->beginTransaction();
-        try {
-            // Insert data
-            if ($insertModules) {
-                $rows = [];
-                foreach ($insertModules as $moduleName) {
-                    $rows[] = [$this->id, $moduleName];
+        if ($insertModules || $deleteModules) {
+            $transaction = $db->beginTransaction();
+            try {
+                // Insert data
+                if ($insertModules) {
+                    $rows = [];
+                    foreach ($insertModules as $moduleName) {
+                        $rows[] = [$this->id, $moduleName];
+                    }
+                    $cmd->batchInsert('{{%tenant_module}}', ['tenant_id', 'module_name'], $rows)->execute();
                 }
-                $cmd->batchInsert('{{%tenant_module}}', ['tenant_id', 'module_name'], $rows)->execute();
+                // Delete data
+                if ($deleteModules) {
+                    $cmd->delete('{{%tenant_module}}', [
+                        'tenant_id' => $this->id,
+                        'module_name' => $deleteModules
+                    ])->execute();
+                }
+                $transaction->commit();
+            } catch (HttpException $e) {
+                $transaction->rollback();
+                new HttpException(500, $e->getMessage());
             }
-            // Delete data
-            if ($deleteModules) {
-                $cmd->delete('{{%tenant_module}}', [
-                    'tenant_id' => $this->id,
-                    'module_name' => $deleteModules
-                ])->execute();
-            }
-            $transaction->commit();
-        } catch (HttpException $e) {
-            $transaction->rollback();
-            new HttpException(500, $e->getMessage());
         }
     }
 
