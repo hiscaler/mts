@@ -112,14 +112,11 @@ class Tenant extends BaseActiveRecord
      */
     public static function userGroups($tenantId = null)
     {
-        if ($tenantId === null) {
-            $tenantId = Yad::getTenantId();
-        }
         $items = (new Query())
             ->select('name')
             ->from('{{%tenant_user_group}}')
             ->where([
-                'tenant_id' => $tenantId === null ? Yad::getTenantId() : $tenantId,
+                'tenant_id' => $tenantId ?: Yad::getTenantId(),
                 'enabled' => Constant::BOOLEAN_TRUE
             ])
             ->indexBy('id')
@@ -161,7 +158,7 @@ class Tenant extends BaseActiveRecord
             ->select('name')
             ->from('{{%workflow_rule}}')
             ->where([
-                'tenant_id' => $tenantId === null ? Yad::getTenantId() : $tenantId
+                'tenant_id' => $tenantId ?: Yad::getTenantId(),
             ])
             ->indexBy('id')
             ->column();
@@ -234,7 +231,6 @@ class Tenant extends BaseActiveRecord
             $insertModules = array_diff($modules, $this->_modules);
             $deleteModules = array_diff($this->_modules, $modules);
         }
-
 
         $transaction = $db->beginTransaction();
         try {
