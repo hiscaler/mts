@@ -118,7 +118,7 @@ return array(
     'Nodes' => '内容节点管理',
     'Tags' => '标签管理',
     'Slides' => '幻灯片管理',
-    'Cases' => '案例管理',
+    'Classic Cases' => '案例管理',
     'File Upload Configs' => '附件上传设定管理',
     'IP Access Rules' => 'IP 访问规则管理',
     'Group Options' => '分组数据管理',
