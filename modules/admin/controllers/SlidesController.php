@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class SlidesController extends GlobalController
 {
+
     /**
      * @inheritdoc
      */
