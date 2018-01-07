@@ -16,9 +16,7 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="feedback-index">
-
     <?= $this->render('_search', ['model' => $searchModel]); ?>
-
     <?php
     Pjax::begin([
         'formSelector' => '#form-search-feedbacks',
@@ -78,5 +76,4 @@ $this->params['menus'] = [
     ]);
     Pjax::end();
     ?>
-
 </div>

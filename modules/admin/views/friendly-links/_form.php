@@ -10,7 +10,6 @@ use app\models\FriendlyLink;
 ?>
 <div class="form-outside form-layout-column">
     <div class="friendly-link-form form">
-
         <?php
         $form = ActiveForm::begin([
             'options' => [
@@ -18,7 +17,6 @@ use app\models\FriendlyLink;
             ],
         ]);
         ?>
-
         <div class="row">
             <div class="col-md-4">
                 <?= $form->field($model, 'group_id')->dropDownList(FriendlyLink::groupOptions(), ['prompt' => '']) ?>
@@ -26,22 +24,17 @@ use app\models\FriendlyLink;
             <div class="col-md-4">
                 <?= $form->field($model, 'type')->dropDownList(FriendlyLink::typeOptions()) ?>
             </div>
-
             <div class="col-md-4">
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
-
         <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
         <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
-
         <div class="row">
-
             <div class="col-md-3">
                 <?= $form->field($model, 'url_open_target')->dropDownList(FriendlyLink::urlOpenTargetOptions()) ?>
             </div>
-
             <div class="col-md-3">
                 <?php
                 $imagePreview = null;
@@ -64,21 +57,16 @@ use app\models\FriendlyLink;
                 ])->fileInput()
                 ?>
             </div>
-
             <div class="col-md-3">
                 <?= $form->field($model, 'ordering')->textInput() ?>
             </div>
-
             <div class="col-md-3">
                 <?= $form->field($model, 'enabled')->checkbox([], null) ?>
             </div>
         </div>
-
         <div class="form-group buttons">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
-
         <?php ActiveForm::end(); ?>
-
     </div>
 </div>

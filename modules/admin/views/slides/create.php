@@ -12,11 +12,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="slide-create">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

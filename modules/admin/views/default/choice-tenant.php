@@ -11,7 +11,6 @@ $this->title = Yii::$app->name;
 
 $isAdministrator = true;
 ?>
-
     <div id="tenants-list" class="message-box">
         <div class="hd">
             <?= $tenants ? '请选择您要管理的站点' : '提示信息' ?>
@@ -59,7 +58,6 @@ $isAdministrator = true;
             <?php endif; ?>
         </div>
     </div>
-
 <?php
 $js = <<<'EOT'
    jQuery(document).on('click', 'a.btn-disable-tenant', function () {

@@ -6,13 +6,11 @@ $this->title = '常规设定';
 $this->params['breadcrumbs'][] = ['label' => '基本设置', 'url' => ['lookups/index']];
 $this->params['breadcrumbs'][] = '常规设定';
 
-
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
 ];
 ?>
-
 <div class="clearfix">
     <ul class="tabs-common">
         <?php
@@ -29,12 +27,10 @@ $this->params['menus'] = [
             <li <?= $i == 1 ? ' class="active"' : '' ?>><a href="javascript:;" data-toggle="tab-group-<?= $group ?>"><?= $name ?></a></li>
         <?php endforeach; ?>
     </ul>
-
     <?php if ($items): ?>
         <?php echo Html::beginForm(['index']); ?>
         <div class="panels">
             <div id="form-lookup" class="form">
-
                 <?php
                 foreach ($items as $group => $data):
                     ?>
@@ -89,11 +85,9 @@ $this->params['menus'] = [
                         <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
-
                 <div class="form-group buttons">
                     <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-success']) ?>
                 </div>
-
                 <?= Html::endForm(); ?>
             </div>
         </div>

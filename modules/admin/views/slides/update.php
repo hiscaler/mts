@@ -14,9 +14,7 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="slide-update">
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

@@ -18,7 +18,6 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="news-view">
-
     <?php
     $attributes = [
         'ordering',
@@ -78,5 +77,4 @@ $this->params['menus'] = [
         'attributes' => $attributes,
     ]);
     ?>
-
 </div>

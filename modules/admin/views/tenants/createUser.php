@@ -14,14 +14,10 @@ $this->params['menus'] = [
     ['label' => Yii::t('tenant', 'Create Tenant Manage User'), 'url' => ['create-user', 'id' => $tenant->id]],
 ];
 ?>
-
-
 <div class="user-create">
-
     <?=
     $this->render('_createTenantUserForm', [
         'model' => $model
     ])
     ?>
-
 </div>

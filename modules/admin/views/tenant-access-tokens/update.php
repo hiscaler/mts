@@ -16,11 +16,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="tenant-access-token-update">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

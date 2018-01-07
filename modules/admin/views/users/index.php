@@ -21,11 +21,8 @@ $this->params['menus'] = [
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
-
 <div class="user-index">
-
     <?= $this->render('_search', ['model' => $searchModel]) ?>
-
     <?php
     $session = Yii::$app->getSession();
     if ($session->hasFlash('notice')) {
@@ -109,9 +106,7 @@ $this->params['menus'] = [
     ]);
     Pjax::end();
     ?>
-
 </div>
-
 <?php
 $this->registerJs('yadjet.actions.toggle("table td.enabled-enable-handler img", "' . Url::toRoute('toggle') . '");');
 
@@ -141,7 +136,7 @@ $title = Yii::t('app', 'Please choice this user can manager nodes');
                             for (var i = 0, l = nodes.length; i < l; i++) {
                                 ids.push(nodes[i].id);
                             }
-
+                            
                             $.ajax({
                                 type: 'POST',
                                 url: url,
@@ -159,7 +154,7 @@ $title = Yii::t('app', 'Please choice this user can manager nodes');
                                     $.fn.unlock();
                                 }
                             });
-
+                            
                             layer.close(index);
                         }
                     });
@@ -169,7 +164,7 @@ $title = Yii::t('app', 'Please choice this user can manager nodes');
                     $.fn.unlock();
                 }
             });
-
+            
             return false;
         });
     });

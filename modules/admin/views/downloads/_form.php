@@ -7,11 +7,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Download */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
-
 <div class="form-outside">
     <div class="download-form form">
-
         <?php
         $form = ActiveForm::begin();
         ?>
@@ -33,12 +30,9 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'pay_credits')->textInput() ?>
 
         <?= $form->field($model, 'enabled')->checkbox([], null) ?>
-
         <div class="form-group buttons">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
-
         <?php ActiveForm::end(); ?>
-
     </div>
 </div>

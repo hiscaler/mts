@@ -14,11 +14,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="friendly-link-create">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

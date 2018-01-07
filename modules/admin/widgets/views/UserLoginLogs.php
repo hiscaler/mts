@@ -16,7 +16,7 @@ $formatter = Yii::$app->getFormatter();
                     <li class="item">
                         <?= $formatter->asTime($data['login_at']) ?><em class="ip">[ <?= $data['login_ip'] ?> ]</em><em class="client-informations"><?= $data['client_informations'] ?></em>
                     </li>
-                    <?php
+                <?php
                 endforeach;
             endforeach;
             ?>

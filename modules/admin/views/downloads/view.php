@@ -17,7 +17,6 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="download-view">
-
     <?=
     DetailView::widget([
         'model' => $model,
@@ -45,5 +44,4 @@ $this->params['menus'] = [
         ],
     ])
     ?>
-
 </div>

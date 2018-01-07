@@ -24,7 +24,6 @@ $this->params['menus'] = $menus;
 $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
 ?>
 <div class="categories-index">
-
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
@@ -103,7 +102,6 @@ $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
     ]);
     ?>
 </div>
-
 <?php
 $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin/jquery-treetable-3.2.0';
 $this->registerCssFile($baseUrl . '/css/jquery.treetable.css');

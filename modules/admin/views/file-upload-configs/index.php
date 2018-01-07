@@ -18,9 +18,7 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="upload-config-index">
-
     <?= $this->render('_search', ['model' => $searchModel]); ?>
-
     <?php
     Pjax::begin([
         'formSelector' => '#form-upload-configs-search',
@@ -109,5 +107,4 @@ $this->params['menus'] = [
     ]);
     Pjax::end();
     ?>
-
 </div>

@@ -14,11 +14,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="attribute-create">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

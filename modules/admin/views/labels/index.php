@@ -19,9 +19,7 @@ $this->params['menus'] = [
 ];
 ?>
     <div class="labels-index">
-
         <?= $this->render('_search', ['model' => $searchModel]) ?>
-
         <?php
         Pjax::begin([
             'formSelector' => '#form-attribute-search',
@@ -90,9 +88,7 @@ $this->params['menus'] = [
         ]);
         Pjax::end();
         ?>
-
     </div>
-
 <?php \app\modules\admin\components\JsBlock::begin() ?>
     <script type="text/javascript">
         yadjet.actions.toggle("table td.enabled-handler img", "<?= Url::toRoute('toggle') ?>");

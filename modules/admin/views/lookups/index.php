@@ -17,9 +17,7 @@ $this->params['menus'] = [
 ];
 ?>
     <div class="lookup-index">
-
         <?= $this->render('_search', ['model' => $searchModel]); ?>
-
         <?php
         Pjax::begin([
             'formSelector' => '#form-lookups',
@@ -104,9 +102,7 @@ $this->params['menus'] = [
         ]);
         Pjax::end();
         ?>
-
     </div>
-
 <?php
 $this->registerJs('yadjet.actions.toggle("table td.lookup-enabled-handler img", "' . Url::toRoute('toggle') . '");');
     

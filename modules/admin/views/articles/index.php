@@ -10,18 +10,14 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Articles');
 $this->params['breadcrumbs'][] = $this->title;
 
-
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
-
     <div class="article-index">
-
         <?= $this->render('_search', ['model' => $searchModel]); ?>
-
         <?php
         Pjax::begin([
             'formSelector' => '#form-article-search',
@@ -92,7 +88,6 @@ $this->params['menus'] = [
         ?>
         <?php Pjax::end(); ?>
     </div>
-
 <?php \app\modules\admin\components\JsBlock::begin() ?>
     <script type="text/javascript">
         yadjet.actions.toggle("table td.enabled-handler img", "<?= yii\helpers\Url::toRoute('toggle') ?>");

@@ -16,7 +16,6 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="tenant-access-token-view">
-
     <?=
     DetailView::widget([
         'model' => $model,
@@ -38,5 +37,4 @@ $this->params['menus'] = [
         ],
     ])
     ?>
-
 </div>

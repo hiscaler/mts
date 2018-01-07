@@ -13,11 +13,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="tenant-access-token-create">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

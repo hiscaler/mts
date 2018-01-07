@@ -65,7 +65,6 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         if (!Yad::getTenantId()) {
-
         }
 
         return $this->render('index');

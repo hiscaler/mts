@@ -15,14 +15,12 @@ $this->params['menus'] = [
     ['label' => Yii::t('app', 'Update'), 'url' => ['update', 'id' => $model->id]],
 ];
 ?>
-
 <ul class="tabs-common clearfix">
     <li class="active"><a href="javascript:;" data-toggle="panel-base">基本资料</a></li>
     <li><a href="javascript:;" data-toggle="panel-meta">扩展信息</a></li>
     <li><a href="javascript:;" data-toggle="panel-credits">积分情况</a></li>
     <li><a href="javascript:;" data-toggle="panel-login-logs">登录日志</a></li>
 </ul>
-
 <div class="panels">
     <div id="panel-base" class="tab-pane">
         <?=
@@ -45,7 +43,6 @@ $this->params['menus'] = [
         ])
         ?>
     </div>
-
     <!-- 扩展信息 -->
     <div id="panel-meta" class="tab-pane" style="display: none;">
         <div class="grid-view">
@@ -56,7 +53,6 @@ $this->params['menus'] = [
                     <th>内容</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <?php
                 $items = app\models\Meta::getItems($model);
@@ -90,7 +86,6 @@ $this->params['menus'] = [
         </div>
     </div>
     <!-- // 扩展信息 -->
-
     <div id="panel-credits" class="tab-pane" style="display: none;">
         <?php
         echo GridView::widget([
@@ -127,7 +122,6 @@ $this->params['menus'] = [
         ]);
         ?>
     </div>
-
     <div id="panel-login-logs" class="tab-pane" style="display: none;">
         登录日志
     </div>

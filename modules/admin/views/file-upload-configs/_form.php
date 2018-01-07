@@ -8,10 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\FileUploadConfig */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="form-outside">
     <div class="file-upload-config-form form">
-
         <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'type')->dropDownList(FileUploadConfig::typeOptions()) ?>
@@ -43,12 +41,9 @@ use yii\widgets\ActiveForm;
             'template' => "{label}\n{input} PX\n{hint}\n{error}",
         ])->textInput(['class' => 'g-text-number'])
         ?>
-
         <div class="form-group buttons">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
-
         <?php ActiveForm::end(); ?>
-
     </div>
 </div>

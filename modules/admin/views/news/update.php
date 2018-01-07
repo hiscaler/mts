@@ -16,12 +16,10 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="news-update">
-
     <?=
     $this->render('_form', [
         'model' => $model,
         'newsContent' => $newsContent,
     ])
     ?>
-
 </div>

@@ -15,11 +15,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="friendly-link-update">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

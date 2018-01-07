@@ -17,8 +17,6 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="article-view">
-
-
     <?=
     DetailView::widget([
         'model' => $model,
@@ -41,5 +39,4 @@ $this->params['menus'] = [
         ],
     ])
     ?>
-
 </div>

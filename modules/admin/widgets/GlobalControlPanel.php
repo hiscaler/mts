@@ -17,7 +17,6 @@ class GlobalControlPanel extends Widget
 
     public function getItems()
     {
-
         $items = [];
         $controller = $this->view->context;
         $controllerId = $controller->id;

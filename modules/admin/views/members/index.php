@@ -19,11 +19,8 @@ $this->params['menus'] = [
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
-
 <div class="user-index">
-
     <?= $this->render('_search', ['model' => $searchModel]) ?>
-
     <?php
     $session = Yii::$app->getSession();
     if ($session->hasFlash('notice')) {
@@ -96,5 +93,4 @@ $this->params['menus'] = [
     ]);
     Pjax::end();
     ?>
-
 </div>

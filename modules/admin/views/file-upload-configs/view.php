@@ -16,7 +16,6 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="upload-config-view">
-
     <?=
     DetailView::widget([
         'model' => $model,
@@ -52,5 +51,4 @@ $this->params['menus'] = [
         ],
     ])
     ?>
-
 </div>

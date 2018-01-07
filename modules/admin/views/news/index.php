@@ -21,11 +21,8 @@ $this->params['menus'] = [
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
-
     <div class="news-index">
-
         <?= $this->render('_search', ['model' => $searchModel]); ?>
-
         <?php
         Pjax::begin([
             'formSelector' => '#form-news-search',
@@ -180,9 +177,7 @@ $this->params['menus'] = [
         ]);
         Pjax::end();
         ?>
-
     </div>
-
 <?php \app\modules\admin\components\JsBlock::begin() ?>
     <script type="text/javascript">
         $(function () {
@@ -205,11 +200,11 @@ $this->params['menus'] = [
                         $.fn.unlock();
                     }
                 });
-
+                
                 return false;
             });
         });
-
+        
         yadjet.actions.toggle("table td.news-enabled-handler img", "<?= Url::toRoute('toggle') ?>");
         yadjet.actions.toggle("table td.news-enabled-comment-handler img", "<?= Url::toRoute('toggle-comment') ?>");
     </script>

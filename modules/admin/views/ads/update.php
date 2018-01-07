@@ -16,11 +16,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="ad-update">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

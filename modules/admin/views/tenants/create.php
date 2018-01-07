@@ -13,11 +13,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="tenant-create">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

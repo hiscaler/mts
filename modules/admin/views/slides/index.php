@@ -18,10 +18,7 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="slide-index">
-
-
     <?= $this->render('_search', ['model' => $searchModel]); ?>
-
     <?php
     Pjax::begin([
         'formSelector' => '#form-slide-search',

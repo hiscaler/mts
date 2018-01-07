@@ -7,11 +7,9 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Article */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="form-outside">
     <div class="form">
         <div class="article-form">
-
             <?php
             $form = ActiveForm::begin([
                 'options' => [
@@ -48,13 +46,10 @@ use yii\widgets\ActiveForm;
             ?>
 
             <?= $form->field($model, 'enabled')->checkbox([], null) ?>
-
             <div class="form-group buttons">
                 <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
-
             <?php ActiveForm::end(); ?>
-
         </div>
     </div>
 </div>

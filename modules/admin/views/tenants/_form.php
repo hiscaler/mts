@@ -8,10 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Tenant */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="form-outside">
     <div class="tenant-form form">
-
         <?php
         $form = ActiveForm::begin();
         $keyOptions = [
@@ -48,12 +46,9 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'description')->textInput(['maxlength' => true, 'class' => 'form-control g-text-large']) ?>
 
         <?= $form->field($model, 'enabled')->checkbox([], false) ?>
-
         <div class="form-group buttons">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
-
         <?php ActiveForm::end(); ?>
-
     </div>
 </div>

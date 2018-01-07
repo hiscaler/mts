@@ -19,9 +19,7 @@ $this->params['menus'] = [
 ];
 ?>
     <div class="ad-index">
-
         <?= $this->render('_search', ['model' => $searchModel]); ?>
-
         <?php
         Pjax::begin([
             'formSelector' => '#form-search-ads',
@@ -120,8 +118,6 @@ $this->params['menus'] = [
         ]);
         Pjax::end();
         ?>
-
     </div>
-
 <?php
 $this->registerJs('yadjet.actions.toggle("table td.enabled-handler img", "' . Url::toRoute('toggle') . '");');

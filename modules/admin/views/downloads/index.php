@@ -20,8 +20,6 @@ $this->params['menus'] = [
 $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
 ?>
 <div class="download-index">
-
-
     <?php Pjax::begin(); ?>
     <?=
     GridView::widget([
@@ -75,7 +73,6 @@ $baseUrl = Yii::$app->getRequest()->getBaseUrl() . '/admin';
     ?>
     <?php Pjax::end(); ?>
 </div>
-
 <?php \app\modules\admin\components\JsBlock::begin() ?>
 <script type="text/javascript">
     yadjet.actions.toggle("table td.enabled-handler img", "<?= Url::toRoute('toggle') ?>");

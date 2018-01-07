@@ -15,7 +15,6 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="feedback-view">
-
     <?php
     $attributes = [
         [
@@ -37,7 +36,6 @@ $this->params['menus'] = [
         'created_at:datetime',
     ];
 
-
     //    if ($metaItems) {
     //        foreach ($metaItems as $attribute => $item) {
     //            $attributes[] = [
@@ -52,5 +50,4 @@ $this->params['menus'] = [
         'attributes' => $attributes,
     ]);
     ?>
-
 </div>

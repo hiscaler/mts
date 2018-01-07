@@ -14,10 +14,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\News */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
     <div class="form-outside form-layout-column">
         <div class="news-form form">
-
             <?php
             $form = ActiveForm::begin([
                 'options' => [
@@ -38,9 +36,7 @@ use yii\widgets\ActiveForm;
             $choiceNodesText = Yii::t('app', 'Choice Nodes');
             $btnChoiceNodes = Html::a($choiceNodesText, ['nodes/choice'], ['class' => 'dialog-choice-nodes button']) . '<span id="node-names">' . $names . '</span>';
             ?>
-
             <div id="panel-common" class="panel">
-
                 <?= $form->field($model, 'category_id')->dropDownList(Category::getOwnerTree(Lookup::getValue('custom.models.category.type.news', 0)), ['prompt' => '']) ?>
 
                 <?= $form->field($model, 'entityNodeIds', ['template' => "{label}\n{input}{$btnChoiceNodes}\n{hint}\n{error}",])->hiddenInput() ?>
@@ -88,7 +84,6 @@ use yii\widgets\ActiveForm;
                     'attribute' => 'content',
                 ])
                 ?>
-
                 <div class="entry">
                     <?php
                     $imagePreview = $imageCropperHtml = null;
@@ -114,7 +109,6 @@ use yii\widgets\ActiveForm;
                     ])->fileInput()
                     ?>
                 </div>
-
                 <div class="entry">
                     <?=
                     DatePicker::widget([
@@ -127,30 +121,23 @@ use yii\widgets\ActiveForm;
 
                     <?= $form->field($model, 'enabled_comment')->checkbox([], false) ?>
                 </div>
-
                 <div class="entry">
                     <?= $form->field($model, 'clicks_count')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-number']) ?>
 
                     <?= $form->field($model, 'ordering')->textInput(['maxlength' => 255, 'class' => 'g-text g-text-number']) ?>
                 </div>
-
                 <?php if ($model->isNewRecord || $model->isDraft): ?>
                     <div class="entry">
                         <?= $form->field($model, 'isDraft')->checkbox([], false) ?>
                     </div>
                 <?php endif; ?>
-
             </div>
-
             <div class="form-group buttons">
                 <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
-
             <?php ActiveForm::end(); ?>
-
         </div>
     </div>
-
 <?php
 $js = <<<EOT
 jQuery(document).on('click', 'a.dialog-choice-nodes', function () {

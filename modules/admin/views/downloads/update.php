@@ -9,7 +9,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Downloads'), 'url' =
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
-
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
@@ -17,11 +16,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="download-update">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

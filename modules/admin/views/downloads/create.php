@@ -11,11 +11,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="download-create">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

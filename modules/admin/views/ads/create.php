@@ -13,11 +13,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="ad-create">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

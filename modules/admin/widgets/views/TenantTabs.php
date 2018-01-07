@@ -7,7 +7,6 @@ use yii\widgets\DetailView;
 $formatter = Yii::$app->getFormatter();
 $tab = Yii::$app->getRequest()->get('tab', 'detail');
 ?>
-
 <div class="clearfix">
     <ul id="tenant-tabs" class="tabs-common">
         <?php
@@ -20,7 +19,6 @@ $tab = Yii::$app->getRequest()->get('tab', 'detail');
     <div class="panels">
         <div id="panel-tenant-detail" class="tenant-view tab-pane"
              style="<?= $tab == 'detail' ? '' : 'display: none' ?>">
-
             <?=
             DetailView::widget([
                 'model' => $model,
@@ -54,9 +52,7 @@ $tab = Yii::$app->getRequest()->get('tab', 'detail');
                 ],
             ])
             ?>
-
         </div>
-
         <div id="panel-tenant-modules" class="tenant-view tab-pane"
              style="<?= $tab == 'modules' ? '' : 'display: none' ?>">
             <div class="clearfix">
@@ -67,7 +63,6 @@ $tab = Yii::$app->getRequest()->get('tab', 'detail');
                 </ul>
             </div>
         </div>
-
         <div id="panel-tenant-users" class="tenant-view tab-pane" style="<?= $tab == 'users' ? '' : 'display: none' ?>">
             <div class="grid-view clearfix">
                 <table class="table table-striped table-bordered">
@@ -102,7 +97,6 @@ $tab = Yii::$app->getRequest()->get('tab', 'detail');
                 </table>
             </div>
         </div>
-
         <div id="panel-tenant-access-tokens" class="tenant-view tab-pane"
              style="<?= $tab == 'access-tokens' ? '' : 'display: none' ?>">
             <div class="grid-view clearfix">
@@ -130,6 +124,5 @@ $tab = Yii::$app->getRequest()->get('tab', 'detail');
                 </table>
             </div>
         </div>
-
     </div>
 </div>

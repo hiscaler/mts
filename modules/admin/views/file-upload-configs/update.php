@@ -17,11 +17,9 @@ $this->params['menus'] = [
 ];
 ?>
 <div class="upload-config-update">
-
     <?=
     $this->render('_form', [
         'model' => $model,
     ])
     ?>
-
 </div>

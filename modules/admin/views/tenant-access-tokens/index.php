@@ -18,7 +18,6 @@ $this->params['menus'] = [
 ];
 ?>
     <div class="tenant-access-token-index">
-
         <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
         <?=
@@ -111,8 +110,6 @@ $this->params['menus'] = [
             ],
         ]);
         ?>
-
     </div>
-
 <?php
 $this->registerJs('yadjet.actions.toggle("table td.enabled-handler img", "' . Url::toRoute('toggle') . '");');

@@ -9,10 +9,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="form-outside">
     <div class="form user-form">
-
         <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
@@ -22,12 +20,9 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'role')->dropDownList(User::roleOptions(), ['prompt' => '']) ?>
 
         <?= $form->field($model, 'rule_id')->dropDownList(Tenant::workflowRules(), ['prompt' => '']) ?>
-
         <div class="form-group buttons">
             <?= Html::submitButton(Yii::t('app', 'OK'), ['class' => 'btn btn-primary']) ?>
         </div>
-
         <?php ActiveForm::end(); ?>
-
     </div>
 </div>
