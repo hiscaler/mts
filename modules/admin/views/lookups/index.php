@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['menus'] = [
     ['label' => Yii::t('app', 'List'), 'url' => ['index']],
     ['label' => Yii::t('app', 'Create'), 'url' => ['create']],
+    ['label' => Yii::t('app', 'Grid Column Config'), 'url' => ['grid-column-configs/index', 'name' => 'app-models-Lookup'], 'htmlOptions' => ['class' => 'grid-column-config', 'data-reload-object' => 'grid-view-lookups']],
     ['label' => Yii::t('app', 'Search'), 'url' => '#'],
 ];
 ?>
@@ -23,9 +24,9 @@ $this->params['menus'] = [
             'formSelector' => '#form-lookups',
             'linkSelector' => '#grid-view-lookups a',
         ]);
-        echo \yii\grid\GridView::widget([
+        echo \app\modules\admin\components\GridView::widget([
             'id' => 'grid-view-lookups',
-//        'name' => 'common-models-Lookup',
+            'name' => 'app-models-Lookup',
             'dataProvider' => $dataProvider,
             'columns' => [
                 [
@@ -43,8 +44,16 @@ $this->params['menus'] = [
                 'description',
                 [
                     'attribute' => 'value',
+                    'format' => 'raw',
                     'value' => function ($model) {
-                        return StringHelper::truncate(unserialize($model['value']), 20);
+                        $value = unserialize($model['value']);
+                        if (is_string($value) && $value) {
+                            return StringHelper::truncate($value, 20);
+                        } elseif (is_array($value)) {
+                            return var_export($value, true);
+                        } else {
+                            return $value;
+                        }
                     }
                 ],
                 [
@@ -95,8 +104,7 @@ $this->params['menus'] = [
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{update} {delete}',
-                    'headerOptions' => ['class' => 'last'],
-                    'contentOptions' => ['class' => 'buttons-2'],
+                    'headerOptions' => ['class' => 'buttons-2 last'],
                 ],
             ],
         ]);
