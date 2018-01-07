@@ -236,11 +236,9 @@ class Lookup extends BaseActiveRecord
             case 'array':
                 $value = (array) $value;
                 break;
-
         }
 
         return $value;
-
     }
 
     // Events

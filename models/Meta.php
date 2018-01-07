@@ -180,7 +180,6 @@ class Meta extends \yii\db\ActiveRecord
                         }
                     }
                 } catch (Exception $exc) {
-
                 }
             }
         }
